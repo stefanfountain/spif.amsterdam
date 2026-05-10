@@ -879,25 +879,30 @@ section:first-of-type { border-top: 0; }
 }
 .colophon a:hover { color: var(--paper); }
 
-/* ---------- Sticky right-edge sidebar (index of works) ---------- */
+/* ---------- Sticky right-edge sidebar — brutalist yellow/green ---------- */
 
 .sidenav {
   position: fixed;
-  right: clamp(1rem, 2.5vw, 2.25rem);
+  right: clamp(1rem, 2.5vw, 2rem);
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
-  max-width: 220px;
+  max-width: 240px;
+  background: oklch(0.91 0.19 95);              /* saturated yellow */
+  color: oklch(0.32 0.16 145);                  /* dark green */
+  border: 4px solid var(--ink-deep);            /* heavy black-navy border */
+  padding: 1rem 1.1rem 1.1rem;
 }
 .sidenav-head {
   font-family: var(--mono);
-  font-size: 0.6rem;
+  font-size: 0.62rem;
+  font-weight: 700;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--brass);
-  margin-bottom: 0.85rem;
+  color: oklch(0.30 0.18 145);                  /* deeper green */
+  margin: 0 0 0.85rem;
   padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 2px solid oklch(0.32 0.16 145);
 }
 .sidenav-list {
   list-style: none;
@@ -905,45 +910,47 @@ section:first-of-type { border-top: 0; }
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.4rem;
 }
 .sidenav-list a {
   display: grid;
-  grid-template-columns: 1.6rem 1fr auto;
+  grid-template-columns: 1.5rem 1fr auto;
   gap: 0.55rem;
   align-items: baseline;
   text-decoration: none;
   font-family: var(--mono);
   font-size: 0.62rem;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--paper-faint);
-  transition: color 0.18s ease;
-  padding: 0.1rem 0;
+  color: oklch(0.32 0.16 145);                  /* green */
+  padding: 0.18rem 0;
+  transition: none;                              /* brutalist: no transitions */
 }
 .sidenav-list a .num {
-  color: var(--paper-faint);
-  opacity: 0.55;
-  font-weight: 500;
+  color: oklch(0.45 0.16 145);                  /* lighter green */
+  font-weight: 700;
 }
 .sidenav-list a .ttl {
-  color: var(--paper-dim);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .sidenav-list a .yr {
-  color: var(--paper-faint);
-  opacity: 0.55;
+  color: oklch(0.45 0.16 145);
   font-size: 0.56rem;
+  font-weight: 500;
 }
-.sidenav-list a:hover { color: var(--brass); }
+/* Hover: invert — green block, yellow text. Brutalist. */
+.sidenav-list a:hover {
+  background: oklch(0.32 0.16 145);             /* green bg */
+  color: oklch(0.91 0.19 95);                   /* yellow text */
+  margin: 0 -1.1rem;                             /* full-bleed inside the padding */
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+}
 .sidenav-list a:hover .num,
-.sidenav-list a:hover .ttl,
-.sidenav-list a:hover .yr {
-  color: var(--brass);
-  opacity: 1;
-}
+.sidenav-list a:hover .yr { color: oklch(0.91 0.19 95); }
 
 /* ---------- Responsive ---------- */
 
