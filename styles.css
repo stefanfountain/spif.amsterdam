@@ -622,6 +622,18 @@ section:first-of-type { border-top: 0; }
   font-weight: 500;
 }
 
+/* Subtitle that sits under a work title (used by The Spark to clarify Diepgang relationship) */
+.work-head .title-sub {
+  grid-column: 2;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-top: 0.5rem;
+  white-space: nowrap;
+}
+
 .status-pill {
   display: inline-flex;
   align-items: center;
