@@ -335,9 +335,10 @@ section:first-of-type { border-top: 0; }
 }
 
 #hero.hero-brutalist {
-  /* break out of main's gutter — full bleed */
-  margin-left: calc(var(--gutter) * -1);
-  margin-right: calc(var(--gutter) * -1);
+  /* break out of main's max-width — true viewport-width */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .hero-banner {
@@ -775,8 +776,10 @@ section:first-of-type { border-top: 0; }
 }
 
 #contact.contact-brutalist {
-  margin-left: calc(var(--gutter) * -1);
-  margin-right: calc(var(--gutter) * -1);
+  /* break out of main's max-width — true viewport-width */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .contact-banner {
