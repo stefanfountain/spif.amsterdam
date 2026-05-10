@@ -10,7 +10,7 @@ Personal artist site for **Spif** — Amsterdam-based artist working at the inte
 - **Meditation Station** *(2025)* — Tactile meditation installation in 1950s bakelite TV. Raspberry Pi + dual rotary encoders.
 - **Rubic's Cube of Life** — Large-scale interactive installation, Brave Festival, Tuinen van West, Amsterdam.
 - **Find Your Inner Unicorn** — Interactive installation, Brave Festival, Tuinen van West, Amsterdam.
-- **Tardis** *(year TBC)* — 20-minute psychological installation: travel to the future and talk to yourself. Conceptual prototype for *Vox Futuri*.
+- **Tardis** *(year TBC)* — 20-minute participatory psychological installation. Recreated the TARDIS as a time machine; participants stepped 5 years into the future to converse with the self that had already achieved their goal. Created and built with a 5-person team; performed with hired actors. The Next Web Conference, Amsterdam. *Conceptual prototype for Vox Futuri.*
 
 ## Tech
 
