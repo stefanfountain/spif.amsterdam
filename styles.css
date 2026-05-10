@@ -598,6 +598,7 @@ section:first-of-type { border-top: 0; }
   margin-bottom: 2rem;
   text-wrap: balance;
 }
+.about-portrait { max-width: 100%; }
 .about-grid .body p + p { margin-top: 1rem; }
 
 .kvs {
@@ -988,6 +989,11 @@ section:first-of-type { border-top: 0; }
 .sidenav-list a:hover .num,
 .sidenav-list a:hover .yr { color: oklch(0.91 0.19 95); }
 
+/* Mobile nav toggle — hidden on desktop */
+.nav-toggle-checkbox { display: none; }
+.nav-toggle-button { display: none; }
+.nav-toggle-close { display: none; }
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -1005,8 +1011,51 @@ section:first-of-type { border-top: 0; }
   .work.featured .work-body .content { grid-template-columns: 1fr; }
   .work.featured .plate.feature { aspect-ratio: 4/5; }
   .imgrow { grid-template-columns: 1fr; }
-  .topbar .right { display: none; }
-  .sidenav { display: none; }
+  /* === Mobile nav: floating brutalist toggle + slide-up sidebar === */
+  .nav-toggle-button {
+    display: block;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 60;
+    background: oklch(0.91 0.19 95);
+    color: oklch(0.32 0.16 145);
+    border: 4px solid var(--ink-deep);
+    padding: 0.85rem 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+    min-width: 5.5rem;
+    text-align: center;
+    line-height: 1;
+  }
+  .nav-toggle-checkbox:checked ~ .nav-toggle-button .nav-toggle-open { display: none; }
+  .nav-toggle-checkbox:checked ~ .nav-toggle-button .nav-toggle-close { display: inline; }
+  /* Sidebar repositions for mobile — slides up from bottom-right */
+  .sidenav {
+    right: 1rem;
+    left: auto;
+    top: auto;
+    bottom: 5rem;
+    transform: translateY(calc(100% + 6rem));
+    transition: transform 0.22s ease-out;
+    max-width: min(320px, calc(100vw - 2rem));
+    max-height: 70vh;
+    overflow-y: auto;
+    will-change: transform;
+  }
+  .nav-toggle-checkbox:checked ~ .sidenav {
+    transform: translateY(0);
+  }
+  /* Bigger touch targets inside sidebar on mobile */
+  .sidenav-list a {
+    padding: 0.6rem 0;
+    font-size: 0.7rem;
+  }
 }
 
 @media (max-width: 540px) {

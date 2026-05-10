@@ -12,6 +12,13 @@
 </head>
 <body data-mood="dusk" data-pace="monograph" data-plate="engraving">
 
+  <!-- Mobile-only toggle for the index sidebar -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox" aria-hidden="true" />
+  <label for="nav-toggle" class="nav-toggle-button" aria-label="Open index of works">
+    <span class="nav-toggle-open">Index</span>
+    <span class="nav-toggle-close">Close</span>
+  </label>
+
   <!-- Sticky right-edge sidebar — index of works -->
   <nav class="sidenav" aria-label="Index of works">
     <div class="sidenav-head">Index</div>
@@ -75,6 +82,14 @@
         <div class="left">
           <div class="section-label" style="position: static;">№ 01 — On the work</div>
           <h2>An artist of<br />resonant systems.</h2>
+          <figure class="plate has-image about-portrait" style="aspect-ratio: 923/1998;">
+            <img src="/img/about-portrait.jpg" alt="Spif portrait — silver chrome jacket, futurist goggles with prismatic lenses, spiked hair, telephone-rotary necklace, smoky studio backdrop" />
+            <span class="reg">PLATE II</span>
+            <figcaption class="caption">
+              <b>Spif</b>
+              Portrait, MMXXVI
+            </figcaption>
+          </figure>
         </div>
         <div class="body">
           <p class="lede">
@@ -309,7 +324,7 @@
             wider theatre programme — MC duties, ensemble performance, and
             sound design across other works in the run.
           </p>
-          <figure class="plate has-image" style="aspect-ratio: 1800/2400; max-width: 700px;">
+          <figure class="plate has-image" style="aspect-ratio: 4032/3024;">
             <img src="/img/mayor-manor.jpg" alt="Mayor Manor stage — green and blue lights, white branching sculpture, modular rig, video screen with projection, mirrorball" />
             <span class="reg">PLATE VII</span>
             <figcaption class="caption">
@@ -342,24 +357,22 @@
             five-person team and performed with hired actors.
             <span class="pull">The conceptual prototype for Vox Futuri.</span>
           </p>
-          <div class="imgrow imgrow-portraits">
-            <figure class="plate a has-image">
-              <img src="/img/tardis-portrait.jpg" alt="Spif at the Tardis — top hat with monocle, long grey wool coat, beaded necklaces, holding a wooden tool, Tardis police box behind" />
-              <span class="reg">PLATE VIII·a</span>
-              <figcaption class="caption">
-                <b>Tardis — TNW, 2017</b>
-                Spif as the Time Lord
-              </figcaption>
-            </figure>
-            <figure class="plate b has-image" style="aspect-ratio: 1800/2400;">
-              <img src="/img/tardis-closeup.jpg" alt="The TARDIS — life-sized blue police box recreation in a brick-vaulted hall, red lighting overhead, signage reading 'PR.CO PUBLIC BOX' and 'POLICE TELEPHONE FREE FOR USE OF PUBLIC'" />
-              <span class="reg">PLATE VIII·b</span>
-              <figcaption class="caption">
-                <b>Tardis — TNW, 2017</b>
-                The chamber, exterior
-              </figcaption>
-            </figure>
-          </div>
+          <figure class="plate has-image" style="aspect-ratio: 768/1024; max-width: 600px;">
+            <img src="/img/tardis-portrait.jpg" alt="Spif at the Tardis — top hat with monocle, long grey wool coat, beaded necklaces, holding a wooden tool, Tardis police box behind" />
+            <span class="reg">PLATE VIII·a</span>
+            <figcaption class="caption">
+              <b>Tardis — TNW, 2017</b>
+              Spif as the Time Lord
+            </figcaption>
+          </figure>
+          <figure class="plate has-image" style="aspect-ratio: 4032/3024; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
+            <img src="/img/tardis-closeup.jpg" alt="The TARDIS — life-sized blue police box recreation in a brick-vaulted hall, red lighting overhead, signage reading 'PR.CO PUBLIC BOX' and 'POLICE TELEPHONE FREE FOR USE OF PUBLIC'" />
+            <span class="reg">PLATE VIII·b</span>
+            <figcaption class="caption">
+              <b>Tardis — TNW, 2017</b>
+              The chamber, exterior
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -474,6 +487,16 @@
     </section>
 
   </main>
+
+  <script>
+    // Close mobile nav sheet when a section link is tapped
+    document.querySelectorAll('.sidenav-list a').forEach(a => {
+      a.addEventListener('click', () => {
+        const t = document.getElementById('nav-toggle');
+        if (t) t.checked = false;
+      });
+    });
+  </script>
 
   <footer class="colophon">
     <div>© MMXXVI · Spif · Amsterdam</div>
