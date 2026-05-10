@@ -335,10 +335,16 @@ section:first-of-type { border-top: 0; }
 }
 
 #hero.hero-brutalist {
-  /* break out of main's max-width — true viewport-width */
+  /* break out of main's max-width — true viewport-width.
+     position relative + left:50%/right:50% with -50vw margins is the
+     most robust pattern across iOS Safari for full-bleed inside a padded ancestor. */
+  position: relative;
   width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  max-width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 .hero-banner {
@@ -373,6 +379,19 @@ section:first-of-type { border-top: 0; }
   margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
   font-weight: 500;
 }
+.hero-banner .eyebrow-chip {
+  display: inline-block;
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: clamp(0.62rem, 0.9vw, 0.78rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-deep);
+  background: transparent;
+  border: 1.5px solid var(--ink-deep);
+  padding: 0.4rem 0.8rem;
+  opacity: 1;
+}
 
 .hero-banner h1 {
   font-family: var(--serif);
@@ -386,6 +405,16 @@ section:first-of-type { border-top: 0; }
   margin-left: -0.04em;
 }
 
+.hero-banner .tagline {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: clamp(0.95rem, 1.5vw, 1.3rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-deep);
+  line-height: 1.4;
+  margin: clamp(0.85rem, 1.75vw, 1.4rem) 0 0;
+}
 .hero-banner .credo {
   font-family: var(--serif);
   font-style: italic;
@@ -393,7 +422,7 @@ section:first-of-type { border-top: 0; }
   font-size: clamp(1.25rem, 2.2vw, 2rem);
   line-height: 1.2;
   color: var(--ink-deep);
-  max-width: 30ch;
+  max-width: 56ch;
   border-top: 2px solid var(--ink-deep);
   padding-top: clamp(0.75rem, 1.25vw, 1.25rem);
   margin: clamp(1.25rem, 2.5vw, 2rem) 0 0;
@@ -490,9 +519,10 @@ section:first-of-type { border-top: 0; }
   .hero-banner-inner {
     grid-template-columns: 1fr;
     gap: clamp(1.5rem, 4vw, 2.5rem);
+    justify-items: stretch;
   }
-  /* keep source 2:3 ratio on mobile too — no crop */
-  .hero-image-banner { max-height: 75vh; order: 2; }
+  /* mobile: let aspect-ratio drive height naturally — drop max-height conflict */
+  .hero-image-banner { max-height: none; order: 2; width: 100%; }
 }
 
 @media (max-width: 540px) {
@@ -504,12 +534,14 @@ section:first-of-type { border-top: 0; }
 
 .plate {
   position: relative;
+  margin: 0;                                /* reset UA <figure> margin: 1em 40px */
   background: var(--ink-deep);
   border: 1px solid var(--rule);
   overflow: hidden;
   isolation: isolate;
 }
-.plate img {
+.plate img,
+.plate video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -518,32 +550,20 @@ section:first-of-type { border-top: 0; }
   z-index: 0;
   display: block;
 }
-
-/* Caption readability — repurpose ::before on plates that have images
-   for a bottom gradient. Subtle dark always-on (mobile-friendly).
-   Intensifies to orange wash on hover for desktop emphasis. */
+/* Caption readability — brutalist hard-edge solid bar at the bottom. */
 .plate.has-image::before {
   display: block;
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    oklch(0.10 0.025 255 / 0.75) 0%,
-    oklch(0.10 0.025 255 / 0.0) 28%
-  );
+  left: 0; right: 0; bottom: 0;
+  height: 3.25rem;
+  background: oklch(0.10 0.025 255 / 0.85);
   z-index: 1;
   pointer-events: none;
-  transition: background 0.2s ease;
 }
 @media (hover: hover) {
   .plate.has-image:hover::before {
-    background: linear-gradient(
-      to top,
-      oklch(0.68 0.15 50 / 0.92) 0%,
-      oklch(0.68 0.15 50 / 0.55) 22%,
-      oklch(0.68 0.15 50 / 0.0) 50%
-    );
+    background: oklch(0.68 0.15 50 / 0.92);
   }
   .plate.has-image:hover .caption,
   .plate.has-image:hover .caption b {
@@ -733,7 +753,7 @@ section:first-of-type { border-top: 0; }
 
 .work-body {
   display: grid;
-  grid-template-columns: 5rem 1fr;
+  grid-template-columns: 12rem 1fr;
   gap: clamp(1rem, 3vw, 2.5rem);
 }
 .work-body .gutter-meta {
@@ -801,8 +821,6 @@ section:first-of-type { border-top: 0; }
   gap: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 .imgrow .plate { aspect-ratio: auto; }
-.imgrow .plate.a { aspect-ratio: 5/4; }
-.imgrow .plate.b { aspect-ratio: 4/5; }
 
 /* Two portrait images side by side — both 4/5 */
 .imgrow-portraits .plate.a,
@@ -818,7 +836,6 @@ section:first-of-type { border-top: 0; }
 }
 .work.featured .plate.feature {
   grid-row: span 2;
-  aspect-ratio: 4 / 5.4;
   align-self: stretch;
 }
 .work.featured .featured-text {
@@ -870,9 +887,13 @@ section:first-of-type { border-top: 0; }
 
 #contact.contact-brutalist {
   /* break out of main's max-width — true viewport-width */
+  position: relative;
   width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  max-width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 .contact-banner {
@@ -1054,14 +1075,13 @@ section:first-of-type { border-top: 0; }
   .work-body { grid-template-columns: 1fr; }
   .work-body .gutter-meta { flex-direction: row; flex-wrap: wrap; gap: 1rem 1.5rem; }
   .work.featured .work-body .content { grid-template-columns: 1fr; }
-  .work.featured .plate.feature { aspect-ratio: 4/5; }
   .imgrow { grid-template-columns: 1fr; }
   /* === Mobile nav: floating brutalist toggle + slide-up sidebar === */
   .nav-toggle-button {
     display: block;
     position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    bottom: 0.25rem;
+    right: 0.5rem;
     z-index: 60;
     background: oklch(0.91 0.19 95);
     color: oklch(0.32 0.16 145);

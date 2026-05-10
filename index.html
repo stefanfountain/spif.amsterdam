@@ -3,12 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spif — spif.amsterdam</title>
-  <meta name="description" content="Spif is an Amsterdam-based artist working at the intersection of live electronic music, ritual performance, immersive installation, and AI." />
+  <title>Spif — Installation artist</title>
+  <meta name="description" content="Live electronic rituals + immersive performance installations. Amsterdam-based. Will travel." />
+
+  <!-- Social previews (Open Graph + Twitter).
+       Brand intentionally omitted from title/site_name — domain carries it.
+       Title = the credo (distinctive). Description = the practice (concrete). -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://spif.amsterdam" />
+  <meta property="og:title" content="Installations that resonate, moving people to grow." />
+  <meta property="og:description" content="Live electronic rituals + immersive performance installations. Amsterdam-based. Will travel." />
+  <meta property="og:image" content="https://spif.amsterdam/img/vox-arboris-stage.jpg" />
+  <meta property="og:image:width" content="900" />
+  <meta property="og:image:height" content="1600" />
+  <meta property="og:image:alt" content="Modular rig and white branching tree sculpture under sunset — Vox Arboris stage, A'dam Tower" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Installations that resonate, moving people to grow." />
+  <meta name="twitter:description" content="Live electronic rituals + immersive performance installations. Amsterdam-based. Will travel." />
+  <meta name="twitter:image" content="https://spif.amsterdam/img/vox-arboris-stage.jpg" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2026-05-10g" />
 </head>
 <body data-mood="dusk" data-pace="monograph" data-plate="engraving">
 
@@ -44,15 +62,14 @@
       <div class="hero-banner">
         <div class="hero-banner-inner">
           <div class="hero-banner-text">
-            <div class="eyebrow">№ 00 · MMXXVI</div>
+            <div class="eyebrow eyebrow-chip">Installation artist</div>
             <h1>SPIF</h1>
-            <p class="credo">Resonations that move people to growth.</p>
+            <p class="tagline">
+              Live electronic rituals<br />
+              Immersive performance installations
+            </p>
+            <p class="credo">Installations that resonate, moving people to grow.</p>
             <div class="hero-meta">
-              <div class="hero-meta-row hero-meta-primary">
-                <span>Live electronic</span>
-                <span>Ritual performance</span>
-                <span>Immersive installation</span>
-              </div>
               <div class="hero-meta-row hero-meta-secondary">
                 <span>Modular synthesizers</span>
                 <span>Science experiments</span>
@@ -126,39 +143,15 @@
     </section>
 
     <!-- 02 — Workshop ======================================== -->
-    <section id="studio" class="work" data-screen-label="02 Workshop">
-      <div class="work-head">
-        <div class="num">№ 02</div>
-        <h2 class="title">Workshop</h2>
-        <div class="year"><b>By hand</b><br />+ pros when needed</div>
-      </div>
-      <div class="work-body">
-        <div class="gutter-meta">
-          <span>Materials<em>HPL · 19 mm plywood · MDF · aluminium · 3D-printed parts</em></span>
-          <span>Tools<em>CNC (wood + aluminium) · 3D printer · soldering · welding</em></span>
-          <span>Where<em>Shared workshops, Amsterdam</em></span>
-        </div>
-        <div class="content">
-          <p class="descr">
-            I build by hand, in shared workshops across Amsterdam — not in a
-            studio I own. <a href="https://birmann.amsterdam" target="_blank" rel="noopener" class="inline-link">Birmann</a>
-            for woodwork; <a href="http://www.openbarewerkplaats.nl/" target="_blank" rel="noopener" class="inline-link">Open Werkplaats</a>
-            (East Amsterdam) for larger CNC work and metal. Materials are mixed:
-            HPL, 19 mm plywood, aluminium machined on a metal CNC, 3D-printed
-            parts, MDF where it earns its place. Specialist work — certain
-            welds, finishes — gets handed off to professionals when it needs to.
-            <span class="pull">The work is the time it takes.</span>
-          </p>
-          <figure class="plate has-image" style="aspect-ratio: 1874/418;">
-            <img src="/img/studio-pano.jpg" alt="Spif at a shared Amsterdam workshop, panoramic — wearing a top hat, working at a CNC machine, doubled by the panorama stitch artifact" />
-            <span class="reg">PLATE II</span>
-            <figcaption class="caption">
-              <b>Workshop</b>
-              Building Vox Arboris parts on the CNC. The panoramic stitch shows me twice — present + future, in the same frame.
-            </figcaption>
-          </figure>
-        </div>
-      </div>
+    <section id="studio" class="work studio-image-only" data-screen-label="02 Workshop">
+      <figure class="plate has-image" style="aspect-ratio: 1874/418;">
+        <img src="/img/studio-pano.jpg" alt="Spif at a shared Amsterdam workshop, panoramic — wearing a top hat, working at a CNC machine, doubled by the panorama stitch artifact" />
+        <span class="reg">PLATE II</span>
+        <figcaption class="caption">
+          <b>Workshop</b>
+          Building Vox Arboris parts on the CNC. The panoramic stitch shows me twice — present + future, in the same frame.
+        </figcaption>
+      </figure>
     </section>
 
     <!-- 03 — Vox Futuri ====================================== -->
@@ -220,7 +213,7 @@
       </div>
       <div class="work-body">
         <div class="content">
-          <figure class="plate feature has-image">
+          <figure class="plate feature has-image" style="aspect-ratio: 919/1998;">
             <img src="/img/spark-tesla-coil.jpg" alt="Tesla coil mid-discharge with branching purple arcs against an Amsterdam apartment building at night" />
             <span class="reg">PLATE IV</span>
             <figcaption class="caption">
@@ -279,7 +272,7 @@
             their time, and only certain frequencies make it to the canopy.
           </p>
           <div class="imgrow">
-            <figure class="plate a has-image">
+            <figure class="plate a has-image" style="aspect-ratio: 1182/665;">
               <img src="/img/vox-arboris-wihh.jpg" alt="Vox Arboris installation at WIHH gallery, Summer 2023" />
               <span class="reg">PLATE V·a</span>
               <figcaption class="caption">
@@ -287,7 +280,7 @@
                 Installation residency, gallery interior
               </figcaption>
             </figure>
-            <figure class="plate b has-image">
+            <figure class="plate b has-image" style="aspect-ratio: 665/1182;">
               <img src="/img/vox-arboris-adam-tower.jpg" alt="Vox Arboris live performance at A'dam Tower, April 2026" />
               <span class="reg">PLATE V·b</span>
               <figcaption class="caption">
@@ -302,6 +295,16 @@
             <figcaption class="caption">
               <b>Vox Arboris — stage, A'dam Tower, 2026</b>
               The Arboris sculpture, modular rig, sunset over the IJ
+            </figcaption>
+          </figure>
+          <figure class="plate has-image has-video" style="aspect-ratio: 16/9; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
+            <video controls preload="metadata" playsinline poster="/img/vox-arboris-clip-poster.jpg">
+              <source src="/img/vox-arboris-clip.mp4" type="video/mp4" />
+            </video>
+            <span class="reg">PLATE V·d</span>
+            <figcaption class="caption">
+              <b>Vox Arboris — live, A'dam Tower, 2026</b>
+              From the floor, mid-set
             </figcaption>
           </figure>
         </div>
