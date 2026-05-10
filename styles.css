@@ -716,6 +716,10 @@ section:first-of-type { border-top: 0; }
 .imgrow .plate.a { aspect-ratio: 5/4; }
 .imgrow .plate.b { aspect-ratio: 4/5; }
 
+/* Two portrait images side by side — both 4/5 */
+.imgrow-portraits .plate.a,
+.imgrow-portraits .plate.b { aspect-ratio: 4/5; }
+
 /* Featured (full-bleed-ish) work — for Vox Futuri & Spark */
 .work.featured .work-body { grid-template-columns: 1fr; gap: clamp(2rem, 4vw, 3rem);}
 .work.featured .work-body .gutter-meta { display: none; }
