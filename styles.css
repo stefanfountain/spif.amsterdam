@@ -486,7 +486,7 @@ section:first-of-type { border-top: 0; }
   border-color: var(--brass);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1500px) {
   .hero-banner-inner {
     grid-template-columns: 1fr;
     gap: clamp(1.5rem, 4vw, 2.5rem);
@@ -996,7 +996,7 @@ section:first-of-type { border-top: 0; }
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 900px) {
+@media (max-width: 1500px) {
   .hero-stage {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
