@@ -419,9 +419,9 @@ section:first-of-type { border-top: 0; }
   opacity: 1;
 }
 
-/* Hero image inside the banner */
+/* Hero image inside the banner — preserves source aspect ratio (1612x2400 = 2:3) */
 .hero-image-banner {
-  aspect-ratio: 4/5;
+  aspect-ratio: 1612 / 2400;
   position: relative;
   background: var(--ink-deep);
   border: 3px solid var(--ink-deep);
@@ -435,7 +435,7 @@ section:first-of-type { border-top: 0; }
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* no crop because aspect-ratio matches image */
 }
 .hero-image-banner .caption {
   color: var(--paper);
@@ -455,7 +455,8 @@ section:first-of-type { border-top: 0; }
     grid-template-columns: 1fr;
     gap: clamp(1.5rem, 4vw, 2.5rem);
   }
-  .hero-image-banner { aspect-ratio: 4/3; max-height: 55vh; order: 2; }
+  /* keep source 2:3 ratio on mobile too — no crop */
+  .hero-image-banner { max-height: 75vh; order: 2; }
 }
 
 @media (max-width: 540px) {
