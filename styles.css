@@ -402,21 +402,57 @@ section:first-of-type { border-top: 0; }
 .hero-banner .hero-meta {
   margin-top: clamp(1.25rem, 2vw, 2rem);
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem 2rem;
+  flex-direction: column;
+  gap: 0.55rem;
   font-family: var(--mono);
   font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-deep);
-  opacity: 0.85;
   border-top: 1px solid var(--ink-deep);
   padding-top: clamp(0.75rem, 1.25vw, 1.25rem);
 }
-.hero-banner .hero-meta b {
-  color: var(--ink-deep);
+.hero-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+}
+.hero-meta-primary {
   font-weight: 700;
-  opacity: 1;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+}
+.hero-meta-secondary {
+  font-weight: 500;
+  font-size: 0.66rem;
+  opacity: 0.7;
+  letter-spacing: 0.16em;
+}
+.hero-meta-secondary span {
+  position: relative;
+}
+.hero-meta-secondary span:not(:last-child)::after {
+  content: "·";
+  position: absolute;
+  right: -0.85rem;
+  opacity: 0.5;
+}
+
+/* Location pill — brutalist hard-edged stamp */
+.hero-location {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+}
+.location-pill {
+  display: inline-block;
+  background: var(--ink-deep);
+  color: var(--paper);
+  padding: 0.55rem 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: 2px solid var(--ink-deep);
 }
 
 /* Hero image inside the banner — preserves source aspect ratio (1612x2400 = 2:3) */
