@@ -653,12 +653,6 @@ section:first-of-type { border-top: 0; }
   content: "";
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--amber);
-  box-shadow: 0 0 7px oklch(0.68 0.15 50 / 0.7);
-  animation: pulse 2.4s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
 }
 .status-pill.calm { color: var(--brass); border-color: var(--brass); }
 .status-pill.calm::before { background: var(--brass); box-shadow: none; animation: none; }
