@@ -879,57 +879,71 @@ section:first-of-type { border-top: 0; }
 }
 .colophon a:hover { color: var(--paper); }
 
-/* ---------- Sticky dot navigation ---------- */
+/* ---------- Sticky right-edge sidebar (index of works) ---------- */
 
-.dotnav {
+.sidenav {
   position: fixed;
-  right: clamp(1rem, 2vw, 1.75rem);
+  right: clamp(1rem, 2.5vw, 2.25rem);
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
+  max-width: 220px;
+}
+.sidenav-head {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.sidenav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  padding: 0.5rem 0;
+  gap: 0.55rem;
 }
-.dotnav a {
-  display: block;
-  width: 28px; height: 18px;
-  position: relative;
+.sidenav-list a {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto;
+  gap: 0.55rem;
+  align-items: baseline;
   text-decoration: none;
-}
-.dotnav a::before {
-  content: "";
-  position: absolute;
-  right: 0; top: 50%;
-  width: 8px; height: 8px;
-  border: 1px solid var(--paper-faint);
-  border-radius: 50%;
-  transform: translateY(-50%);
-  transition: background 0.2s ease, border-color 0.2s ease, width 0.25s ease;
-}
-.dotnav a:hover::before {
-  background: var(--brass);
-  border-color: var(--brass);
-}
-.dotnav a .label {
-  position: absolute;
-  right: 18px; top: 50%;
-  transform: translateY(-50%);
   font-family: var(--mono);
   font-size: 0.62rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--paper-faint);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  background: var(--ink-deep);
-  padding: 0.3rem 0.55rem;
-  border: 1px solid var(--rule);
+  transition: color 0.18s ease;
+  padding: 0.1rem 0;
 }
-.dotnav a:hover .label { opacity: 1; }
+.sidenav-list a .num {
+  color: var(--paper-faint);
+  opacity: 0.55;
+  font-weight: 500;
+}
+.sidenav-list a .ttl {
+  color: var(--paper-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidenav-list a .yr {
+  color: var(--paper-faint);
+  opacity: 0.55;
+  font-size: 0.56rem;
+}
+.sidenav-list a:hover { color: var(--brass); }
+.sidenav-list a:hover .num,
+.sidenav-list a:hover .ttl,
+.sidenav-list a:hover .yr {
+  color: var(--brass);
+  opacity: 1;
+}
 
 /* ---------- Responsive ---------- */
 
@@ -949,7 +963,7 @@ section:first-of-type { border-top: 0; }
   .work.featured .plate.feature { aspect-ratio: 4/5; }
   .imgrow { grid-template-columns: 1fr; }
   .topbar .right { display: none; }
-  .dotnav { display: none; }
+  .sidenav { display: none; }
 }
 
 @media (max-width: 540px) {
