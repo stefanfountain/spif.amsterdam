@@ -518,7 +518,44 @@ section:first-of-type { border-top: 0; }
   z-index: 0;
   display: block;
 }
-.plate.has-image::before { display: none; }
+
+/* Caption readability — repurpose ::before on plates that have images
+   for a bottom gradient. Subtle dark always-on (mobile-friendly).
+   Intensifies to orange wash on hover for desktop emphasis. */
+.plate.has-image::before {
+  display: block;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    oklch(0.10 0.025 255 / 0.75) 0%,
+    oklch(0.10 0.025 255 / 0.0) 28%
+  );
+  z-index: 1;
+  pointer-events: none;
+  transition: background 0.2s ease;
+}
+@media (hover: hover) {
+  .plate.has-image:hover::before {
+    background: linear-gradient(
+      to top,
+      oklch(0.68 0.15 50 / 0.92) 0%,
+      oklch(0.68 0.15 50 / 0.55) 22%,
+      oklch(0.68 0.15 50 / 0.0) 50%
+    );
+  }
+  .plate.has-image:hover .caption,
+  .plate.has-image:hover .caption b {
+    color: var(--ink-deep);
+  }
+  .plate.has-image:hover .reg {
+    color: var(--ink-deep);
+  }
+  .plate.has-image:hover .reg::before {
+    border-color: var(--ink-deep);
+  }
+}
 .plate::before {
   content: "";
   position: absolute; inset: 0;
@@ -734,6 +771,14 @@ section:first-of-type { border-top: 0; }
   color: var(--brass);
   font-size: 1.25rem;
 }
+.work-body .descr a.inline-link,
+.about-grid a.inline-link {
+  color: var(--brass);
+  border-bottom: 1px solid currentColor;
+  text-decoration: none;
+}
+.work-body .descr a.inline-link:hover,
+.about-grid a.inline-link:hover { color: var(--amber); }
 
 /* Image variants */
 .work .plate.full {
