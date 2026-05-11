@@ -14,4 +14,14 @@ Personal artist site for **Spif** — Amsterdam-based artist working at the inte
 
 ## Tech
 
-Static site. Single `index.html` + `styles.css`. Deploys to GitHub Pages or Vercel. Custom domain: [spif.amsterdam](https://spif.amsterdam).
+Static site. Single `index.html` + `styles.css`. Hosted on **Cloudflare Pages** (project `spif-amsterdam`). Custom domain: [spif.amsterdam](https://spif.amsterdam).
+
+## Deploy
+
+```sh
+wrangler pages deploy . --project-name=spif-amsterdam --branch=main --commit-dirty=true
+```
+
+Run from the repo root after committing. The Cloudflare Pages project has **no Git integration** — `git push` does **not** trigger a redeploy on its own. Wrangler is the deploy path.
+
+Cloudflare zone ID: `ea57ce46cef5a018a068fc904e0c39d5` (for future cache-purge / API work).
