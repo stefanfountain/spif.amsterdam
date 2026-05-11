@@ -11,7 +11,7 @@
  *   npm run portfolio:local    # spins up local http.server on port 8765
  *
  * Output:
- *   ../../../2026-vox-arboris-show/docs/applications/nxt-night-academy/portfolio/
+ *   ../../docs/applications/nxt-night-academy/portfolio/
  *     spif-amsterdam-slides.pdf
  */
 
@@ -23,9 +23,11 @@ import puppeteer from "puppeteer-core";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SITE_ROOT = resolve(__dirname, "..");
+// spif.amsterdam lives inside the 2026-vox-arboris-show workspace; the
+// portfolio output dir is two levels up from this script.
 const OUT_DIR = resolve(
   __dirname,
-  "../../2026-vox-arboris-show/docs/applications/nxt-night-academy/portfolio"
+  "../../docs/applications/nxt-night-academy/portfolio"
 );
 const FINAL_PDF = resolve(OUT_DIR, "spif-amsterdam-slides.pdf");
 

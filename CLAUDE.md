@@ -1,5 +1,12 @@
 # spif.amsterdam — Claude notes
 
+## Location
+
+This repo lives **inside** the `2026-vox-arboris-show` workspace at
+`/Users/spif/Sites/2026-vox-arboris-show/spif.amsterdam/`. It has its
+own git history and remote (`github.com/stefanfountain/spif.amsterdam`);
+the outer workspace gitignores this folder so commits stay isolated.
+
 ## Deploy
 
 Hosted on **Cloudflare Pages** — project `spif-amsterdam`. **There is no Git integration.** A `git push` does *not* redeploy the site. You must deploy explicitly via wrangler:
@@ -8,7 +15,7 @@ Hosted on **Cloudflare Pages** — project `spif-amsterdam`. **There is no Git i
 wrangler pages deploy . --project-name=spif-amsterdam --branch=main --commit-dirty=true
 ```
 
-Run from the repo root, after committing. Live site updates in ~30 seconds.
+Run from this repo's root (`spif.amsterdam/`), after committing. Live site updates in ~30 seconds.
 
 Wrangler is installed globally (`/opt/homebrew/bin/wrangler`) and authenticated via OAuth as `stefan.j.fountain@gmail.com` (`pages:write` scope is present).
 
