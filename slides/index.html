@@ -304,6 +304,21 @@
       object-fit: cover;
       object-position: center;
     }
+    /* "contain" modifier — show full image, letterbox with slide background.
+       Used for the workshop panorama whose aspect ratio is far from 16:9. */
+    .layout-plate.contain .img-side {
+      background: var(--ink-deep);
+    }
+    .layout-plate.contain .img-side img {
+      object-fit: contain;
+      padding: clamp(48px, 4vw, 96px);
+    }
+    .layout-plate.contain .caption-bar {
+      background: linear-gradient(180deg,
+        oklch(0.10 0.04 255 / 0) 0%,
+        oklch(0.10 0.04 255 / 0.5) 40%,
+        oklch(0.08 0.04 255 / 0.95) 100%);
+    }
     .layout-plate .caption-bar {
       position: absolute;
       bottom: 0;
@@ -519,7 +534,7 @@
           <div class="scrim"></div>
           <div class="cover-content">
             <div class="eyebrow">Installation artist · Amsterdam</div>
-            <h1>Spif</h1>
+            <h1>SPIF</h1>
             <p class="tagline">Live electronic rituals.<br/>Immersive performance installations.</p>
             <div class="credo">Installations that resonate, moving people to grow.</div>
           </div>
@@ -559,7 +574,7 @@
           <span class="num">№ 03 / 15</span>
           <span class="reg">Plate II · Workshop</span>
         </div>
-        <div class="layout-plate">
+        <div class="layout-plate contain">
           <div class="img-side"><img src="/img/studio-pano.jpg" alt="Spif at the CNC, panoramic" /></div>
           <div class="caption-bar">
             <div class="label">№ 02 — Workshop</div>
