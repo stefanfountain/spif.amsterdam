@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2026-05-10g" />
+  <link rel="stylesheet" href="styles.css?v=2026-05-11o" />
 </head>
 <body data-mood="dusk" data-pace="monograph" data-plate="engraving">
 
@@ -40,19 +40,24 @@
   <!-- Sticky right-edge sidebar — index of works -->
   <nav class="sidenav" aria-label="Index of works">
     <div class="sidenav-head">Index</div>
-    <ol class="sidenav-list">
-      <li><a href="#about"><span class="num">01</span><span class="ttl">About</span></a></li>
-      <li><a href="#studio"><span class="num">02</span><span class="ttl">Workshop</span></a></li>
-      <li><a href="#vox-futuri"><span class="num">03</span><span class="ttl">Vox Futuri</span><span class="yr">2026</span></a></li>
-      <li><a href="#spark"><span class="num">04</span><span class="ttl">The Spark</span><span class="yr">2026</span></a></li>
-      <li><a href="#vox-arboris"><span class="num">05</span><span class="ttl">Vox Arboris</span><span class="yr">'23 / '26</span></a></li>
-      <li><a href="#meditation-station"><span class="num">06</span><span class="ttl">Meditation Station</span><span class="yr">2025</span></a></li>
-      <li><a href="#mayor-manor"><span class="num">07</span><span class="ttl">Mayor Manor</span><span class="yr">2022</span></a></li>
-      <li><a href="#tardis"><span class="num">08</span><span class="ttl">Tardis</span><span class="yr">2017</span></a></li>
-      <li><a href="#cubic-reset"><span class="num">09</span><span class="ttl">Cubic Reset</span><span class="yr">2015</span></a></li>
-      <li><a href="#unicorn"><span class="num">10</span><span class="ttl">Find Your Inner Unicorn</span><span class="yr">2014</span></a></li>
-      <li><a href="#contact"><span class="num">11</span><span class="ttl">Contact</span></a></li>
-    </ol>
+    <ul class="sidenav-list">
+      <li><a href="#about"><span class="ttl">About</span></a></li>
+
+      <li class="sidenav-group" aria-hidden="true">Future</li>
+      <li><a href="#vox-futuri"><span class="ttl">Vox Futuri</span></a></li>
+      <li><a href="#ignis"><span class="ttl">Vox Ignis</span></a></li>
+
+      <li class="sidenav-group" aria-hidden="true">Current</li>
+      <li><a href="#vox-arboris"><span class="ttl">Vox Arboris</span></a></li>
+      <li><a href="#meditation-station"><span class="ttl">Meditation Station</span></a></li>
+
+      <li class="sidenav-group" aria-hidden="true">Past</li>
+      <li><a href="#tardis"><span class="ttl">Tardis</span></a></li>
+      <li><a href="#cubic-reset"><span class="ttl">Cubic Reset</span></a></li>
+      <li><a href="#unicorn"><span class="ttl">Find Your Inner Unicorn</span></a></li>
+
+      <li><a href="#contact"><span class="ttl">Contact</span></a></li>
+    </ul>
   </nav>
 
   <main>
@@ -71,12 +76,10 @@
             <p class="credo">Installations that resonate, moving people to grow.</p>
             <div class="hero-meta">
               <div class="hero-meta-row hero-meta-secondary">
-                <span>Modular synthesizers</span>
-                <span>Science experiments</span>
-                <span>Tesla coils</span>
-                <span>TouchDesigner</span>
-                <span>Hypnosis</span>
-                <span>Machine elves</span>
+                <span>Modular bio synthesis</span>
+                <span>High voltage healing</span>
+                <span>Visual emotion explosions</span>
+                <span>Hypnotic machine elves</span>
               </div>
             </div>
             <div class="hero-location">
@@ -100,7 +103,7 @@
         <div class="left">
           <div class="section-label" style="position: static;">№ 01 — On the work</div>
           <h2>An artist of<br />resonant systems.</h2>
-          <figure class="plate has-image about-portrait" style="aspect-ratio: 923/1998;">
+          <figure class="plate has-image about-portrait" style="aspect-ratio: 923/1518;">
             <img src="/img/about-portrait.jpg" alt="Spif portrait — silver chrome jacket, futurist goggles with prismatic lenses, spiked hair, telephone-rotary necklace, smoky studio backdrop" />
             <span class="reg">PLATE II</span>
             <figcaption class="caption">
@@ -142,8 +145,8 @@
       </div>
     </section>
 
-    <!-- 02 — Workshop ======================================== -->
-    <section id="studio" class="work studio-image-only" data-screen-label="02 Workshop">
+    <!-- Workshop image (unsectioned interstitial — not in the Index) ====== -->
+    <section id="studio" class="studio-image-only" data-screen-label="Workshop">
       <figure class="plate has-image" style="aspect-ratio: 1874/418;">
         <img src="/img/studio-pano.jpg" alt="Spif at a shared Amsterdam workshop, panoramic — wearing a top hat, working at a CNC machine, doubled by the panorama stitch artifact" />
         <span class="reg">PLATE II</span>
@@ -155,9 +158,9 @@
     </section>
 
     <!-- 03 — Vox Futuri ====================================== -->
-    <section id="vox-futuri" class="work featured" data-screen-label="03 Vox Futuri">
+    <section id="vox-futuri" class="work featured" data-screen-label="02 Vox Futuri">
       <div class="work-head">
-        <div class="num">№ 03</div>
+        <div class="num">№ 02</div>
         <h2 class="title">
           Vox Futuri
           <span class="status-pill">In development · 2026</span>
@@ -176,11 +179,10 @@
           </figure>
           <div class="featured-text">
             <p class="lede">
-              An oracle for one. Tune a brass dial; a rendering of you,
-              thirty years on, appears on the screen and answers. The
-              trick — proven by the analog predecessor — is that the
-              future self knows nothing you don't. The device just asks
-              the questions that release the answer.
+              An oracle for one.<br />
+              Tune a brass dial; a rendering of you, thirty years on, appears on the screen and answers.<br />
+              The trick — proven by the analog predecessor — is that the future self knows nothing you don't.<br />
+              The device just asks the questions that release the answer.
             </p>
             <p>
               Vintage brass-trimmed cockpit television. Stripped Soviet
@@ -192,7 +194,6 @@
             <dl class="meta-block">
               <dt>Form</dt>     <dd>Single-participant installation</dd>
               <dt>Materials</dt><dd>Brass cockpit TV · Soviet tank radio · 2-way mirror · Raspberry Pi</dd>
-              <dt>Status</dt>   <dd>In proposal: Nxt Museum Night Academy residency</dd>
               <dt>Lineage</dt>  <dd>Successor to <span class="serif-italic">Tardis</span> (2017)</dd>
             </dl>
           </div>
@@ -200,121 +201,131 @@
       </div>
     </section>
 
-    <!-- 04 — The Spark / Diepgang ============================ -->
-    <section id="spark" class="work featured" data-screen-label="04 The Spark / Diepgang">
+    <!-- 04 — Vox Ignis / Diepgang ============================ -->
+    <section id="ignis" class="work featured" data-screen-label="03 Vox Ignis / Diepgang">
       <div class="work-head">
-        <div class="num">№ 04</div>
+        <div class="num">№ 03</div>
         <h2 class="title">
-          The Spark
+          Vox Ignis
           <span class="status-pill">Premiering · 29 May 2026</span>
         </h2>
-        <div class="title-sub">first piece of <span class="serif-italic">Diepgang</span></div>
         <div class="year"><b>2026</b><br />premiere</div>
       </div>
       <div class="work-body">
         <div class="content">
-          <figure class="plate feature has-image" style="aspect-ratio: 919/1998;">
-            <img src="/img/spark-tesla-coil.jpg" alt="Tesla coil mid-discharge with branching purple arcs against an Amsterdam apartment building at night" />
+          <figure class="plate feature has-image" style="aspect-ratio: 1/1;">
+            <img src="/img/spark-broadside.png" alt="Vox Ignis broadside — linocut figure in profile carrying a bouquet, swirling foliage, decorative botanical border panel" />
             <span class="reg">PLATE IV</span>
             <figcaption class="caption">
-              <b>The Spark — Tesla coil</b>
-              Branching purple arcs, Amsterdam night
+              <b>Vox Ignis</b>
+              Premiere art, WAAN/ZIN 2026
             </figcaption>
           </figure>
           <div class="featured-text">
             <p class="lede">
-              A 90-minute spoken-word and live electronic ritual.
-              <span class="serif-italic">Ayahuasca without ayahuasca.</span>
-              A Tesla coil reveal late in the set.
+              A 30-minute spoken-word and live electronic ritual.
+              Guided from silence to movement — a search for the signal
+              that lives beneath the everyday noise, and a glimpse,
+              somewhere, of the one thing that counts.
             </p>
             <p>
-              The Spark is the seed of <span class="serif-italic">Diepgang</span> —
-              an evening that holds the audience the way a good ceremony does:
-              gradual descent, a long middle, a reveal that earns itself.
-              Composed for modular synthesis, voice, and a single high-voltage
-              moment of light.
+              An evening that holds the audience the way a good ceremony does:
+              gradual descent, a long middle, a release that earns itself.
+              Composed for modular synthesis, voice, and one act of light
+              that arrives only when the room is ready.
             </p>
             <dl class="meta-block">
               <dt>Premiere</dt>  <dd>WAAN/ZIN Festival · De Lievelinge · 29 May – 1 June 2026</dd>
-              <dt>Duration</dt>  <dd>≈ 90 minutes</dd>
+              <dt>Duration</dt>  <dd>≈ 30 minutes</dd>
               <dt>Form</dt>      <dd>Spoken word · live electronics · staged ritual</dd>
-              <dt>Reveal</dt>    <dd>Tesla coil — final movement</dd>
             </dl>
-            <div class="callout">
+            <a class="callout" href="https://lievelinge.nl/waanzin/" target="_blank" rel="noopener">
               <span class="label">Dates</span>
               <span>WAAN/ZIN — 29 May → 1 June 2026 — De Lievelinge, NL</span>
-            </div>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
     <!-- 05 — Vox Arboris ===================================== -->
-    <section id="vox-arboris" class="work" data-screen-label="05 Vox Arboris">
+    <section id="vox-arboris" class="work" data-screen-label="04 Vox Arboris">
       <div class="work-head">
-        <div class="num">№ 05</div>
+        <div class="num">№ 04</div>
         <h2 class="title">Vox Arboris</h2>
-        <div class="year"><b>2023, 2026</b><br />two stagings</div>
+        <div class="year"><b>2022 →</b><br />ongoing</div>
       </div>
       <div class="work-body">
         <div class="gutter-meta">
           <span>Live · A'dam Tower<em>Amsterdam — April 2026</em></span>
+          <span>Live · Odonien<em>Cologne, DE</em></span>
           <span>Installation · WIHH Gallery<em>Amsterdam — Summer 2023, one-month residency</em></span>
+          <span>Live · Mayor Manor<em>Ten Club, Amsterdam — November 2022, one-month residency</em></span>
           <span>Form<em>Modular performance + gallery installation</em></span>
         </div>
         <div class="content">
           <p class="descr">
-            <span class="pull">Vox Arboris</span> began as a one-month installation
-            residency at WIHH Gallery in 2023 — a slow, branching modular score
-            that the room learned by heart — and returned in April 2026 as a
-            live performance high above the IJ at the A'dam Tower. The piece
-            treats the modular rig like a tree: signals enter the roots, take
-            their time, and only certain frequencies make it to the canopy.
+            <span class="pull">Vox Arboris</span> began as a month-long residency
+            at Ten Club's <em>Mayor Manor</em> in November 2022, returned as a
+            one-month installation at WIHH Gallery in 2023 — a slow, branching
+            modular score the room learned by heart — and has since travelled:
+            a live set at <em>Odonien</em> in Cologne, and high above the IJ
+            at the A'dam Tower in April 2026. The piece treats the modular rig
+            like a tree: signals enter the roots, take their time, and only
+            certain frequencies make it to the canopy.
           </p>
           <div class="imgrow">
-            <figure class="plate a has-image" style="aspect-ratio: 1182/665;">
-              <img src="/img/vox-arboris-wihh.jpg" alt="Vox Arboris installation at WIHH gallery, Summer 2023" />
-              <span class="reg">PLATE V·a</span>
-              <figcaption class="caption">
-                <b>Vox Arboris — WIHH, 2023</b>
-                Installation residency, gallery interior
-              </figcaption>
-            </figure>
-            <figure class="plate b has-image" style="aspect-ratio: 665/1182;">
+            <figure class="plate a has-image" style="aspect-ratio: 665/1182;">
               <img src="/img/vox-arboris-adam-tower.jpg" alt="Vox Arboris live performance at A'dam Tower, April 2026" />
-              <span class="reg">PLATE V·b</span>
+              <span class="reg">PLATE V·a</span>
               <figcaption class="caption">
                 <b>Vox Arboris — A'dam Tower, 2026</b>
                 Live set, IJ skyline behind the rig
               </figcaption>
             </figure>
+            <figure class="plate b has-image" style="aspect-ratio: 900/1600;">
+              <img src="/img/vox-arboris-stage.jpg" alt="Vox Arboris stage at A'dam Tower — modular rig and white branching tree sculpture, sunset behind" />
+              <span class="reg">PLATE V·b</span>
+              <figcaption class="caption">
+                <b>Vox Arboris — stage, A'dam Tower, 2026</b>
+                The Arboris sculpture, modular rig, sunset over the IJ
+              </figcaption>
+            </figure>
           </div>
-          <figure class="plate has-image" style="aspect-ratio: 900/1600; max-width: 600px; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <img src="/img/vox-arboris-stage.jpg" alt="Vox Arboris stage at A'dam Tower — modular rig and white branching tree sculpture, sunset behind" />
-            <span class="reg">PLATE V·c</span>
-            <figcaption class="caption">
-              <b>Vox Arboris — stage, A'dam Tower, 2026</b>
-              The Arboris sculpture, modular rig, sunset over the IJ
-            </figcaption>
-          </figure>
           <figure class="plate has-image has-video" style="aspect-ratio: 16/9; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
             <video controls preload="metadata" playsinline poster="/img/vox-arboris-clip-poster.jpg">
               <source src="/img/vox-arboris-clip.mp4" type="video/mp4" />
             </video>
-            <span class="reg">PLATE V·d</span>
+            <span class="reg">PLATE V·c</span>
             <figcaption class="caption">
               <b>Vox Arboris — live, A'dam Tower, 2026</b>
               From the floor, mid-set
+            </figcaption>
+          </figure>
+          <figure class="plate has-image" style="aspect-ratio: 1182/665; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
+            <img src="/img/vox-arboris-wihh.jpg" alt="Vox Arboris installation at WIHH gallery, Summer 2023" />
+            <span class="reg">PLATE V·d</span>
+            <figcaption class="caption">
+              <b>Vox Arboris — WIHH, 2023</b>
+              Installation residency, gallery interior
+            </figcaption>
+          </figure>
+          <figure class="plate has-image" style="aspect-ratio: 4032/3024; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
+            <img src="/img/mayor-manor.jpg" alt="Mayor Manor stage at Ten Club — green and blue lights, white branching sculpture, modular rig, video screen with projection, mirrorball" />
+            <span class="reg">PLATE V·e</span>
+            <figcaption class="caption">
+              <b>Vox Arboris — Mayor Manor, Ten Club, 2022</b>
+              First staging, month-long residency
             </figcaption>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- 06 — Meditation Station ============================== -->
-    <section id="meditation-station" class="work" data-screen-label="06 Meditation Station">
+    <!-- 05 — Meditation Station ============================== -->
+    <section id="meditation-station" class="work" data-screen-label="05 Meditation Station">
       <div class="work-head">
-        <div class="num">№ 06</div>
+        <div class="num">№ 05</div>
         <h2 class="title">Meditation Station</h2>
         <div class="year"><b>2025</b></div>
       </div>
@@ -344,42 +355,10 @@
       </div>
     </section>
 
-    <!-- 07 — Mayor Manor ===================================== -->
-    <section id="mayor-manor" class="work" data-screen-label="07 Mayor Manor">
+    <!-- 06 — Tardis ========================================== -->
+    <section id="tardis" class="work" data-screen-label="06 Tardis">
       <div class="work-head">
-        <div class="num">№ 07</div>
-        <h2 class="title">Mayor Manor — performance residency</h2>
-        <div class="year"><b>2022</b><br />November</div>
-      </div>
-      <div class="work-body">
-        <div class="gutter-meta">
-          <span>Venue<em>Ten Club · theatre venue · Amsterdam</em></span>
-          <span>Duration<em>One month</em></span>
-          <span>Roles<em>MC · performance · sound design</em></span>
-        </div>
-        <div class="content">
-          <p class="descr">
-            A month-long residency at Ten Club's theatre venue: a full
-            evening-length show alongside continuous contributions to the
-            wider theatre programme — MC duties, ensemble performance, and
-            sound design across other works in the run.
-          </p>
-          <figure class="plate has-image" style="aspect-ratio: 4032/3024;">
-            <img src="/img/mayor-manor.jpg" alt="Mayor Manor stage — green and blue lights, white branching sculpture, modular rig, video screen with projection, mirrorball" />
-            <span class="reg">PLATE VII</span>
-            <figcaption class="caption">
-              <b>Mayor Manor — Ten Club, November 2022</b>
-              Stage at the residency, mid-set
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- 08 — Tardis ========================================== -->
-    <section id="tardis" class="work" data-screen-label="08 Tardis">
-      <div class="work-head">
-        <div class="num">№ 08</div>
+        <div class="num">№ 06</div>
         <h2 class="title">Tardis</h2>
         <div class="year"><b>2017</b></div>
       </div>
@@ -418,9 +397,9 @@
     </section>
 
     <!-- 09 — Cubic Reset — Unscramble Your Life ============== -->
-    <section id="cubic-reset" class="work" data-screen-label="09 Cubic Reset">
+    <section id="cubic-reset" class="work" data-screen-label="07 Cubic Reset">
       <div class="work-head">
-        <div class="num">№ 09</div>
+        <div class="num">№ 07</div>
         <h2 class="title">Cubic Reset <span class="serif-italic" style="opacity:0.6">—</span> Unscramble Your Life</h2>
         <div class="year"><b>2015</b></div>
       </div>
@@ -480,9 +459,9 @@
     </section>
 
     <!-- 10 — Find Your Inner Unicorn ========================= -->
-    <section id="unicorn" class="work" data-screen-label="10 Find Your Inner Unicorn">
+    <section id="unicorn" class="work" data-screen-label="08 Find Your Inner Unicorn">
       <div class="work-head">
-        <div class="num">№ 10</div>
+        <div class="num">№ 08</div>
         <h2 class="title">Find Your Inner Unicorn</h2>
         <div class="year"><b>2014</b></div>
       </div>

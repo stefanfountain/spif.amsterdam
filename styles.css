@@ -40,6 +40,15 @@
 
   /* Rhythm */
   --maxw: 1440px;
+
+  /* Space reserved on the right for the persistent sidenav.
+     0 on phones (sidenav becomes a slide-up sheet);
+     280px from 1024px upward (240px sidenav + 32px right offset + 8px buffer). */
+  --sidebar-rail: 0px;
+}
+
+@media (min-width: 1024px) {
+  :root { --sidebar-rail: 280px; }
 }
 
 /* =========================================================
@@ -208,6 +217,9 @@ body {
     radial-gradient(120% 80% at 50% 0%, oklch(0.21 0.04 255) 0%, var(--ink) 55%, var(--ink-deep) 100%);
   min-height: 100vh;
   overflow-x: hidden;
+  /* Make space for the persistent sidenav on the right.
+     0 on phones, 280px at >=1024px (set via --sidebar-rail above). */
+  padding-right: var(--sidebar-rail);
 }
 
 /* Subtle film-grain via SVG noise overlay */
@@ -221,7 +233,15 @@ body::before {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.9  0 0 0 0 0.78  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
-::selection { background: var(--amber); color: var(--ink-deep); }
+/* Text selection: brighter/more saturated orange on the dark body for visibility,
+   menu-yellow inside the amber hero + contact banners so the highlight contrasts
+   the amber background instead of disappearing into it. */
+::selection { background: oklch(0.72 0.20 45); color: var(--ink-deep); }
+#hero ::selection,
+#contact ::selection {
+  background: oklch(0.91 0.19 95);              /* menu yellow */
+  color: oklch(0.32 0.16 145);                  /* dark green (matches sidenav) */
+}
 
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
@@ -335,16 +355,15 @@ section:first-of-type { border-top: 0; }
 }
 
 #hero.hero-brutalist {
-  /* break out of main's max-width — true viewport-width.
-     position relative + left:50%/right:50% with -50vw margins is the
-     most robust pattern across iOS Safari for full-bleed inside a padded ancestor. */
+  /* Outer banner bleeds to the full viewport (amber goes under the sidebar) —
+     the sidebar's yellow over amber is intentional brutalist juxtaposition.
+     Inner content is kept clear of the sidebar via .hero-banner-inner padding. */
   position: relative;
   width: 100vw;
   max-width: 100vw;
   left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  margin-left: calc((var(--sidebar-rail) - 100vw) / 2);
+  margin-right: 0;
 }
 
 .hero-banner {
@@ -358,9 +377,13 @@ section:first-of-type { border-top: 0; }
 }
 
 .hero-banner-inner {
-  max-width: var(--maxw);
+  /* Allow the inner to span up to maxw + rail so the content can be
+     positioned in the same column as the rest of the body (left of sidebar).
+     Asymmetric right padding keeps the content clear of the sidebar. */
+  max-width: calc(var(--maxw) + var(--sidebar-rail));
   margin: 0 auto;
   padding: clamp(2rem, 4vw, 3.5rem) var(--gutter);
+  padding-right: calc(var(--gutter) + var(--sidebar-rail));
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: clamp(1.5rem, 4vw, 4rem);
@@ -550,16 +573,46 @@ section:first-of-type { border-top: 0; }
   z-index: 0;
   display: block;
 }
-/* Caption readability — brutalist hard-edge solid bar at the bottom. */
+/* Video plates: drop caption / reg / overlay bar / crop marks
+   so they don't fight the native video controls. Triple-class selector to
+   win over .plate.has-image::before { height: 13rem } which has the same
+   specificity (2 classes + 1 pseudo) and appears later in the file. */
+.plate.has-image.has-video::before,
+.plate.has-image.has-video::after,
+.plate.has-video::before,
+.plate.has-video::after,
+.plate.has-video .caption,
+.plate.has-video .reg {
+  display: none;
+}
+.plate.has-video {
+  border: 0;
+}
+/* Caption readability — brutalist hard-edge solid bar at the bottom.
+   Note: must explicitly set top: auto to override inset: 0 from .plate::before;
+   when top + bottom + height are all set, browsers keep top and discard bottom. */
 .plate.has-image::before {
   display: block;
   content: "";
   position: absolute;
+  top: auto;
   left: 0; right: 0; bottom: 0;
-  height: 3.25rem;
+  height: 13rem;
   background: oklch(0.10 0.025 255 / 0.85);
   z-index: 1;
   pointer-events: none;
+}
+/* Plates with horizontal/short proportions get a halved overlay so it doesn't
+   swallow the image. Tall portrait plates keep the full 13rem dramatic wash. */
+.studio-image-only .plate.has-image::before,
+#vox-futuri .plate.has-image::before {
+  height: 6.5rem;
+}
+/* Hero image: no overlay at all — the orange banner around it already
+   carries the brutalist color statement. */
+.hero-image-banner.has-image::before,
+.hero-image-banner.has-image:hover::before {
+  display: none;
 }
 @media (hover: hover) {
   .plate.has-image:hover::before {
@@ -836,7 +889,8 @@ section:first-of-type { border-top: 0; }
 }
 .work.featured .plate.feature {
   grid-row: span 2;
-  align-self: stretch;
+  align-self: start;                            /* don't stretch — let aspect-ratio drive size within column */
+  max-width: 100%;
 }
 .work.featured .featured-text {
   display: grid;
@@ -876,6 +930,16 @@ section:first-of-type { border-top: 0; }
   background: oklch(0.19 0.035 255 / 0.6);
 }
 .callout .label { color: var(--brass); }
+/* If the callout itself is a link, kill default styling and hint at clickability on hover */
+a.callout {
+  text-decoration: none;
+  color: var(--paper);
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+a.callout:hover {
+  border-color: var(--paper);
+  background: oklch(0.22 0.04 255 / 0.75);
+}
 
 /* ---------- Contact (brutalist orange bookend) ---------- */
 
@@ -886,14 +950,13 @@ section:first-of-type { border-top: 0; }
 }
 
 #contact.contact-brutalist {
-  /* break out of main's max-width — true viewport-width */
+  /* Same bleed treatment as #hero — full viewport, sidebar overlays */
   position: relative;
   width: 100vw;
   max-width: 100vw;
   left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  margin-left: calc((var(--sidebar-rail) - 100vw) / 2);
+  margin-right: 0;
 }
 
 .contact-banner {
@@ -906,9 +969,12 @@ section:first-of-type { border-top: 0; }
 }
 
 .contact-banner-inner {
-  max-width: var(--maxw);
+  /* Mirror .hero-banner-inner — bleed banner full-viewport but keep
+     the content column clear of the sidebar via asymmetric right padding */
+  max-width: calc(var(--maxw) + var(--sidebar-rail));
   margin: 0 auto;
   padding: clamp(3rem, 6vw, 5rem) var(--gutter);
+  padding-right: calc(var(--gutter) + var(--sidebar-rail));
 }
 
 .contact-banner .eyebrow {
@@ -1016,10 +1082,7 @@ section:first-of-type { border-top: 0; }
   gap: 0.4rem;
 }
 .sidenav-list a {
-  display: grid;
-  grid-template-columns: 1.5rem 1fr auto;
-  gap: 0.55rem;
-  align-items: baseline;
+  display: block;
   text-decoration: none;
   font-family: var(--mono);
   font-size: 0.62rem;
@@ -1030,19 +1093,35 @@ section:first-of-type { border-top: 0; }
   padding: 0.18rem 0;
   transition: none;                              /* brutalist: no transitions */
 }
-.sidenav-list a .num {
-  color: oklch(0.45 0.16 145);                  /* lighter green */
-  font-weight: 700;
-}
 .sidenav-list a .ttl {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.sidenav-list a .yr {
-  color: oklch(0.45 0.16 145);
-  font-size: 0.56rem;
+/* Group heading: brutalist eyebrow above each tense cluster.
+   Label + thin rule running from end of text to the right edge.
+   Non-interactive (no <a> inside, pointer-events off, no hover). */
+.sidenav-list .sidenav-group {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.55rem;
   font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: oklch(0.32 0.16 145 / 0.5);             /* green @ 50% alpha */
+  padding: 0.8rem 0 0.3rem;
+  margin-top: 0.25rem;
+  pointer-events: none;
+  user-select: none;
+  cursor: default;
+}
+.sidenav-list .sidenav-group::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: oklch(0.32 0.16 145 / 0.5);
 }
 /* Hover: invert — green block, yellow text. Brutalist. */
 .sidenav-list a:hover {
@@ -1052,8 +1131,6 @@ section:first-of-type { border-top: 0; }
   padding-left: 1.1rem;
   padding-right: 1.1rem;
 }
-.sidenav-list a:hover .num,
-.sidenav-list a:hover .yr { color: oklch(0.91 0.19 95); }
 
 /* Mobile nav toggle — hidden on desktop */
 .nav-toggle-checkbox { display: none; }
@@ -1076,7 +1153,11 @@ section:first-of-type { border-top: 0; }
   .work-body .gutter-meta { flex-direction: row; flex-wrap: wrap; gap: 1rem 1.5rem; }
   .work.featured .work-body .content { grid-template-columns: 1fr; }
   .imgrow { grid-template-columns: 1fr; }
-  /* === Mobile nav: floating brutalist toggle + slide-up sidebar === */
+}
+
+/* === Phones / tablets in portrait: floating INDEX toggle + slide-up sheet.
+   Above 1024px the sidenav becomes a persistent right rail (see :root). === */
+@media (max-width: 1023.98px) {
   .nav-toggle-button {
     display: block;
     position: fixed;
@@ -1100,20 +1181,25 @@ section:first-of-type { border-top: 0; }
   }
   .nav-toggle-checkbox:checked ~ .nav-toggle-button .nav-toggle-open { display: none; }
   .nav-toggle-checkbox:checked ~ .nav-toggle-button .nav-toggle-close { display: inline; }
-  /* Sidebar repositions for mobile — slides up from bottom-right */
+  /* Sidebar repositions for mobile — sits flush above the INDEX button.
+     Uses opacity + pointer-events for hide (transform hide was unreliable
+     on iOS Safari due to body { overflow-x: hidden } interactions). */
   .sidenav {
-    right: 1rem;
+    right: 0.5rem;
     left: auto;
     top: auto;
-    bottom: 5rem;
-    transform: translateY(calc(100% + 6rem));
-    transition: transform 0.22s ease-out;
-    max-width: min(320px, calc(100vw - 2rem));
+    bottom: calc(0.25rem + 2.6rem);
+    transform: translateY(0.5rem);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+    max-width: min(320px, calc(100vw - 1rem));
     max-height: 70vh;
     overflow-y: auto;
-    will-change: transform;
   }
   .nav-toggle-checkbox:checked ~ .sidenav {
+    opacity: 1;
+    pointer-events: auto;
     transform: translateY(0);
   }
   /* Bigger touch targets inside sidebar on mobile */
