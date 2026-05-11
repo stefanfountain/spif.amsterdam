@@ -3,7 +3,8 @@
  * Portfolio PDF generator for spif.amsterdam
  *
  * Renders /slides/ via headless Chrome → PDF at exact 1920×1080 per page.
- * Pipes through ghostscript /printer preset to shrink while keeping 300dpi images.
+ * No post-compression — Chrome's output (~40-50MB for 15 slides) is well
+ * under the Nxt form's 100MB cap and preserves full image fidelity.
  *
  * Usage:
  *   npm run portfolio          # captures https://spif.amsterdam/slides/
@@ -11,11 +12,10 @@
  *
  * Output:
  *   ../../../2026-vox-arboris-show/docs/applications/nxt-night-academy/portfolio/
- *     spif-amsterdam-slides.pdf            (compressed, upload-ready)
- *     spif-amsterdam-slides.raw.pdf        (uncompressed, kept for inspection)
+ *     spif-amsterdam-slides.pdf
  */
 
-import { spawn, spawnSync } from "node:child_process";
+import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { existsSync, statSync } from "node:fs";
@@ -27,7 +27,6 @@ const OUT_DIR = resolve(
   __dirname,
   "../../2026-vox-arboris-show/docs/applications/nxt-night-academy/portfolio"
 );
-const RAW_PDF = resolve(OUT_DIR, "spif-amsterdam-slides.raw.pdf");
 const FINAL_PDF = resolve(OUT_DIR, "spif-amsterdam-slides.pdf");
 
 const CHROME_PATH =
@@ -52,28 +51,6 @@ async function startLocalServer() {
   // Wait briefly for the server to bind
   await new Promise((r) => setTimeout(r, 1500));
   return proc;
-}
-
-function compressWithGhostscript(input, output) {
-  console.log(`→ Compressing via ghostscript /printer preset`);
-  const r = spawnSync(
-    "gs",
-    [
-      "-sDEVICE=pdfwrite",
-      "-dCompatibilityLevel=1.5",
-      "-dPDFSETTINGS=/printer",
-      "-dNOPAUSE",
-      "-dQUIET",
-      "-dBATCH",
-      "-dDetectDuplicateImages=true",
-      `-sOutputFile=${output}`,
-      input,
-    ],
-    { stdio: "inherit" }
-  );
-  if (r.status !== 0) {
-    throw new Error(`ghostscript exited with code ${r.status}`);
-  }
 }
 
 async function main() {
@@ -139,7 +116,7 @@ async function main() {
 
     console.log(`→ Generating PDF (1920×1080 per page)`);
     await page.pdf({
-      path: RAW_PDF,
+      path: FINAL_PDF,
       width: "1920px",
       height: "1080px",
       printBackground: true,
@@ -154,15 +131,9 @@ async function main() {
     }
   }
 
-  const rawSize = statSync(RAW_PDF).size;
-  console.log(`→ Raw PDF: ${RAW_PDF}  (${fmtMB(rawSize)})`);
-
-  compressWithGhostscript(RAW_PDF, FINAL_PDF);
-
-  const finalSize = statSync(FINAL_PDF).size;
-  console.log(`→ Final PDF: ${FINAL_PDF}  (${fmtMB(finalSize)})`);
+  const size = statSync(FINAL_PDF).size;
   console.log(``);
-  console.log(`Done. Upload candidate: ${FINAL_PDF}`);
+  console.log(`Done. Upload candidate: ${FINAL_PDF}  (${fmtMB(size)})`);
 }
 
 main().catch((err) => {

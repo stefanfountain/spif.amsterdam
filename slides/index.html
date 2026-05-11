@@ -8,12 +8,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* =========================================================
-       Tokens — sampled from styles.css
-       ========================================================= */
     :root {
       --ink:        oklch(0.17 0.035 255);
       --ink-deep:   oklch(0.12 0.030 255);
@@ -35,9 +32,6 @@
       --pad: 96px;
     }
 
-    /* =========================================================
-       Reset / base
-       ========================================================= */
     *, *::before, *::after { box-sizing: border-box; }
     html, body {
       margin: 0; padding: 0;
@@ -51,9 +45,6 @@
     }
     img { display: block; max-width: 100%; }
 
-    /* =========================================================
-       Stage — scales 1920×1080 slides to fit viewport
-       ========================================================= */
     .stage {
       width: 100vw;
       height: 100vh;
@@ -71,9 +62,6 @@
       flex-shrink: 0;
     }
 
-    /* =========================================================
-       Slide — 1920×1080 stage
-       ========================================================= */
     .slide {
       position: absolute;
       inset: 0;
@@ -88,7 +76,7 @@
     }
     .slide.is-active { visibility: visible; opacity: 1; }
 
-    /* Crop marks — subtle plate-style frame */
+    /* Crop-mark inset border */
     .slide::before {
       content: "";
       position: absolute;
@@ -98,11 +86,10 @@
       z-index: 5;
     }
 
-    /* Common chrome on slides */
     .slide-head {
       position: absolute;
       top: 60px; left: 64px; right: 64px;
-      z-index: 4;
+      z-index: 6;
       display: flex;
       align-items: baseline;
       justify-content: space-between;
@@ -119,7 +106,7 @@
     .slide-foot {
       position: absolute;
       bottom: 60px; left: 64px; right: 64px;
-      z-index: 4;
+      z-index: 6;
       display: flex;
       align-items: baseline;
       justify-content: space-between;
@@ -133,20 +120,31 @@
     .slide-foot .url { color: var(--brass); }
 
     /* =========================================================
-       Layout: COVER
+       Shared: all layouts fill the slide (explicit dims for print reliability)
+       ========================================================= */
+    .layout-cover,
+    .layout-split,
+    .layout-plate,
+    .layout-text {
+      position: relative;
+      width: var(--slide-w);
+      height: var(--slide-h);
+    }
+
+    /* =========================================================
+       Layout: COVER (full-bleed image + scrim + centered text)
+       Using a CSS background-image instead of an <img> for cover —
+       the <img> approach silently fails in Chrome print rendering for
+       this particular nesting, but background-image always renders.
        ========================================================= */
     .layout-cover {
-      position: relative;
-    }
-    .layout-cover .bg {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-    }
-    .layout-cover .bg img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
+      background-image: url('/img/hero-poster.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: var(--ink);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
     .layout-cover .scrim {
       position: absolute;
@@ -177,22 +175,24 @@
       margin-bottom: 32px;
     }
     .layout-cover h1 {
-      font-family: var(--mono);
-      font-weight: 500;
-      font-size: 160px;
-      letter-spacing: 0.04em;
-      line-height: 0.95;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 240px;
+      letter-spacing: -0.02em;
+      line-height: 0.9;
       color: var(--paper);
       margin: 0;
     }
     .layout-cover .tagline {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 42px;
-      line-height: 1.25;
+      font-weight: 300;
+      font-size: 44px;
+      line-height: 1.2;
       color: var(--paper-dim);
       margin-top: 40px;
-      max-width: 900px;
+      max-width: 1100px;
     }
     .layout-cover .credo {
       font-family: var(--mono);
@@ -203,11 +203,10 @@
     }
 
     /* =========================================================
-       Layout: SPLIT (image one side, text the other)
+       Layout: SPLIT — image one side, text the other
        ========================================================= */
     .layout-split {
       display: grid;
-      height: 100%;
       grid-template-columns: 1.05fr 0.95fr;
       gap: 0;
     }
@@ -216,6 +215,7 @@
       position: relative;
       overflow: hidden;
       background: var(--ink);
+      min-height: 100%;
     }
     .layout-split .img-side img {
       width: 100%; height: 100%;
@@ -229,6 +229,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      min-height: 100%;
     }
     .layout-split .label {
       font-family: var(--mono);
@@ -239,11 +240,12 @@
       margin-bottom: 22px;
     }
     .layout-split h2 {
-      font-family: var(--mono);
-      font-weight: 500;
-      font-size: 88px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 110px;
       line-height: 1;
-      letter-spacing: -0.005em;
+      letter-spacing: -0.015em;
       color: var(--paper);
       margin: 0 0 28px 0;
     }
@@ -262,6 +264,7 @@
     .layout-split .lede {
       font-family: var(--serif);
       font-style: italic;
+      font-weight: 300;
       font-size: 36px;
       line-height: 1.3;
       color: var(--paper-dim);
@@ -288,9 +291,8 @@
     .layout-split .meta dd { color: var(--paper); margin: 0; }
 
     /* =========================================================
-       Layout: PLATE (image dominant, caption overlay)
+       Layout: PLATE — image dominant, caption overlay bottom
        ========================================================= */
-    .layout-plate { position: relative; }
     .layout-plate .img-side {
       position: absolute;
       inset: 0;
@@ -307,7 +309,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 56px var(--pad) calc(var(--pad));
+      padding: 56px var(--pad) var(--pad);
       background: linear-gradient(180deg,
         oklch(0.10 0.04 255 / 0) 0%,
         oklch(0.08 0.04 255 / 0.85) 60%,
@@ -323,16 +325,19 @@
       margin-bottom: 18px;
     }
     .layout-plate h2 {
-      font-family: var(--mono);
-      font-weight: 500;
-      font-size: 64px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 80px;
       line-height: 1;
+      letter-spacing: -0.01em;
       color: var(--paper);
-      margin: 0 0 14px 0;
+      margin: 0 0 18px 0;
     }
     .layout-plate .caption-text {
       font-family: var(--serif);
       font-style: italic;
+      font-weight: 300;
       font-size: 28px;
       line-height: 1.35;
       color: var(--paper-dim);
@@ -341,7 +346,7 @@
     }
 
     /* =========================================================
-       Layout: TEXT (text-only divider / contact)
+       Layout: TEXT (text-only — contact / divider)
        ========================================================= */
     .layout-text {
       display: flex;
@@ -360,17 +365,19 @@
       margin-bottom: 32px;
     }
     .layout-text h2 {
-      font-family: var(--mono);
-      font-weight: 500;
-      font-size: 140px;
-      line-height: 0.95;
-      letter-spacing: -0.01em;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 200px;
+      line-height: 0.9;
+      letter-spacing: -0.025em;
       color: var(--paper);
       margin: 0 0 48px 0;
     }
     .layout-text .lede {
       font-family: var(--serif);
       font-style: italic;
+      font-weight: 300;
       font-size: 44px;
       line-height: 1.3;
       color: var(--paper-dim);
@@ -388,7 +395,7 @@
     }
 
     /* =========================================================
-       Nav controls — on-screen + counter
+       Nav controls
        ========================================================= */
     .nav {
       position: fixed;
@@ -443,7 +450,6 @@
     }
     .nav .counter .sep { color: var(--paper-faint); margin: 0 6px; }
 
-    /* Subtle click hint zones at edges */
     .click-zone {
       position: fixed;
       top: 0; bottom: 0;
@@ -456,7 +462,7 @@
     .click-zone.right { right: 0; cursor: e-resize; }
 
     /* =========================================================
-       Print / PDF — capture target
+       Print / PDF capture
        ========================================================= */
     @media print {
       :root { color-scheme: dark; }
@@ -504,18 +510,19 @@
     <div class="deck" id="deck">
 
       <!-- 01 — COVER ============================================ -->
-      <section class="slide layout-cover is-active" data-slide="01">
-        <div class="bg"><img src="/img/hero-poster.jpg" alt="Spif hero poster" /></div>
-        <div class="scrim"></div>
+      <section class="slide is-active" data-slide="01">
         <div class="slide-head">
-          <span class="num">№ 01 / 14</span>
+          <span class="num">№ 01 / 15</span>
           <span class="reg">Plate I</span>
         </div>
-        <div class="cover-content">
-          <div class="eyebrow">Installation artist · Amsterdam</div>
-          <h1>SPIF</h1>
-          <p class="tagline">Live electronic rituals.<br/>Immersive performance installations.</p>
-          <div class="credo">Installations that resonate, moving people to grow.</div>
+        <div class="layout-cover">
+          <div class="scrim"></div>
+          <div class="cover-content">
+            <div class="eyebrow">Installation artist · Amsterdam</div>
+            <h1>Spif</h1>
+            <p class="tagline">Live electronic rituals.<br/>Immersive performance installations.</p>
+            <div class="credo">Installations that resonate, moving people to grow.</div>
+          </div>
         </div>
         <div class="slide-foot">
           <span class="colophon">spif.amsterdam · MMXXVI</span>
@@ -523,10 +530,10 @@
         </div>
       </section>
 
-      <!-- 02 — ABOUT (split, portrait left) ===================== -->
+      <!-- 02 — ABOUT ============================================ -->
       <section class="slide" data-slide="02">
         <div class="slide-head">
-          <span class="num">№ 02 / 14</span>
+          <span class="num">№ 02 / 15</span>
           <span class="reg">Plate II · On the work</span>
         </div>
         <div class="layout-split">
@@ -546,10 +553,10 @@
         </div>
       </section>
 
-      <!-- 03 — WORKSHOP (full plate) ============================ -->
+      <!-- 03 — WORKSHOP ========================================= -->
       <section class="slide" data-slide="03">
-        <div class="slide-head" style="z-index:6;">
-          <span class="num">№ 03 / 14</span>
+        <div class="slide-head">
+          <span class="num">№ 03 / 15</span>
           <span class="reg">Plate II · Workshop</span>
         </div>
         <div class="layout-plate">
@@ -562,14 +569,14 @@
         </div>
       </section>
 
-      <!-- 04 — VOX FUTURI (split, image left, text right) ======= -->
+      <!-- 04 — VOX FUTURI ======================================= -->
       <section class="slide" data-slide="04">
         <div class="slide-head">
-          <span class="num">№ 04 / 14</span>
+          <span class="num">№ 04 / 15</span>
           <span class="reg">Plate III · Vox Futuri</span>
         </div>
         <div class="layout-split">
-          <div class="img-side"><img src="/img/vox-futuri-tv.jpg" alt="Vox Futuri — vintage brass-trimmed cockpit television, lit blue" /></div>
+          <div class="img-side"><img src="/img/vox-futuri-tv.jpg" alt="Vox Futuri — brass-trimmed cockpit television" /></div>
           <div class="text-side">
             <div class="label">№ 02 — Work in development</div>
             <h2>Vox Futuri</h2>
@@ -585,14 +592,14 @@
         </div>
       </section>
 
-      <!-- 05 — VOX IGNIS (split reverse, text left, broadside right) -->
+      <!-- 05 — VOX IGNIS ======================================== -->
       <section class="slide" data-slide="05">
         <div class="slide-head">
-          <span class="num">№ 05 / 14</span>
+          <span class="num">№ 05 / 15</span>
           <span class="reg">Plate IV · Vox Ignis</span>
         </div>
         <div class="layout-split reverse">
-          <div class="img-side"><img src="/img/spark-broadside.png" alt="Vox Ignis broadside — linocut figure carrying a bouquet" /></div>
+          <div class="img-side"><img src="/img/spark-broadside.png" alt="Vox Ignis broadside" /></div>
           <div class="text-side">
             <div class="label">№ 03 — Premiering this month</div>
             <h2>Vox Ignis</h2>
@@ -608,26 +615,48 @@
         </div>
       </section>
 
-      <!-- 06 — VOX ARBORIS · A'dam Tower live (plate) =========== -->
+      <!-- 06 — VOX ARBORIS · explanation (NEW) ================== -->
       <section class="slide" data-slide="06">
-        <div class="slide-head" style="z-index:6;">
-          <span class="num">№ 06 / 14</span>
+        <div class="slide-head">
+          <span class="num">№ 06 / 15</span>
+          <span class="reg">Plate V · Vox Arboris</span>
+        </div>
+        <div class="layout-split">
+          <div class="img-side"><img src="/img/vox-arboris-stage.jpg" alt="Vox Arboris stage — modular rig, white tree sculpture, sunset over the IJ" /></div>
+          <div class="text-side">
+            <div class="label">№ 04 — Work · 2022 → ongoing</div>
+            <h2>Vox Arboris</h2>
+            <p class="lede">A modular performance + gallery installation. The rig treats the patch like a tree: signals enter the roots, take their time, and only certain frequencies make it to the canopy.</p>
+            <p>Began as a month-long residency at Ten Club's Mayor Manor (November 2022). Returned as a one-month installation at WIHH Gallery (Summer 2023) — a slow, branching modular score the room learned by heart. Has since travelled: a live set at Odonien in Cologne, and high above the IJ at A'dam Tower in April 2026.</p>
+            <dl class="meta">
+              <dt>Form</dt><dd>Modular performance + gallery installation</dd>
+              <dt>First staged</dt><dd>Ten Club · November 2022</dd>
+              <dt>Recent</dt><dd>A'dam Tower · April 2026</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 — VOX ARBORIS · A'dam Tower (plate) ================ -->
+      <section class="slide" data-slide="07">
+        <div class="slide-head">
+          <span class="num">№ 07 / 15</span>
           <span class="reg">Plate V·a · Vox Arboris</span>
         </div>
         <div class="layout-plate">
           <div class="img-side"><img src="/img/vox-arboris-adam-tower.jpg" alt="Vox Arboris live at A'dam Tower" /></div>
           <div class="caption-bar">
-            <div class="label">№ 04 — Vox Arboris · 2022 → ongoing</div>
+            <div class="label">№ 04 — Vox Arboris · Live</div>
             <h2>A'dam Tower · April 2026</h2>
             <p class="caption-text">Live modular set, IJ skyline going dark behind the rig. The instruments do not change; the room does. The audience has shifted from observing to consenting.</p>
           </div>
         </div>
       </section>
 
-      <!-- 07 — VOX ARBORIS · WIHH gallery (plate) =============== -->
-      <section class="slide" data-slide="07">
-        <div class="slide-head" style="z-index:6;">
-          <span class="num">№ 07 / 14</span>
+      <!-- 08 — VOX ARBORIS · WIHH gallery (plate) =============== -->
+      <section class="slide" data-slide="08">
+        <div class="slide-head">
+          <span class="num">№ 08 / 15</span>
           <span class="reg">Plate V·b · Vox Arboris</span>
         </div>
         <div class="layout-plate">
@@ -635,15 +664,15 @@
           <div class="caption-bar">
             <div class="label">№ 04 — Vox Arboris · Installation</div>
             <h2>WIHH Gallery · Summer 2023</h2>
-            <p class="caption-text">One-month residency. A slow, branching modular score the room learned by heart. Signals enter the roots, take their time, and only certain frequencies make it to the canopy.</p>
+            <p class="caption-text">One-month residency. A slow, branching modular score the room learned by heart.</p>
           </div>
         </div>
       </section>
 
-      <!-- 08 — VOX ARBORIS · Mayor Manor (plate) ================ -->
-      <section class="slide" data-slide="08">
-        <div class="slide-head" style="z-index:6;">
-          <span class="num">№ 08 / 14</span>
+      <!-- 09 — VOX ARBORIS · Mayor Manor (plate) ================ -->
+      <section class="slide" data-slide="09">
+        <div class="slide-head">
+          <span class="num">№ 09 / 15</span>
           <span class="reg">Plate V·c · Vox Arboris</span>
         </div>
         <div class="layout-plate">
@@ -656,10 +685,10 @@
         </div>
       </section>
 
-      <!-- 09 — MEDITATION STATION (split, image right) ========== -->
-      <section class="slide" data-slide="09">
+      <!-- 10 — MEDITATION STATION =============================== -->
+      <section class="slide" data-slide="10">
         <div class="slide-head">
-          <span class="num">№ 09 / 14</span>
+          <span class="num">№ 10 / 15</span>
           <span class="reg">Plate VI · Meditation Station</span>
         </div>
         <div class="layout-split reverse">
@@ -678,10 +707,10 @@
         </div>
       </section>
 
-      <!-- 10 — TARDIS · the chamber (plate) ===================== -->
-      <section class="slide" data-slide="10">
-        <div class="slide-head" style="z-index:6;">
-          <span class="num">№ 10 / 14</span>
+      <!-- 11 — TARDIS · chamber (plate) ========================= -->
+      <section class="slide" data-slide="11">
+        <div class="slide-head">
+          <span class="num">№ 11 / 15</span>
           <span class="reg">Plate VIII·b · Tardis</span>
         </div>
         <div class="layout-plate">
@@ -694,10 +723,10 @@
         </div>
       </section>
 
-      <!-- 11 — TARDIS · Spif as Time Lord (split, portrait left) -->
-      <section class="slide" data-slide="11">
+      <!-- 12 — TARDIS · host (split) ============================ -->
+      <section class="slide" data-slide="12">
         <div class="slide-head">
-          <span class="num">№ 11 / 14</span>
+          <span class="num">№ 12 / 15</span>
           <span class="reg">Plate VIII·a · Tardis</span>
         </div>
         <div class="layout-split">
@@ -716,10 +745,10 @@
         </div>
       </section>
 
-      <!-- 12 — CUBIC RESET · day exterior (plate) =============== -->
-      <section class="slide" data-slide="12">
-        <div class="slide-head" style="z-index:6;">
-          <span class="num">№ 12 / 14</span>
+      <!-- 13 — CUBIC RESET · day (plate) ======================== -->
+      <section class="slide" data-slide="13">
+        <div class="slide-head">
+          <span class="num">№ 13 / 15</span>
           <span class="reg">Plate IX·a · Cubic Reset</span>
         </div>
         <div class="layout-plate">
@@ -732,10 +761,10 @@
         </div>
       </section>
 
-      <!-- 13 — CUBIC RESET · LIFE RESET interior (plate) ======== -->
-      <section class="slide" data-slide="13">
-        <div class="slide-head" style="z-index:6;">
-          <span class="num">№ 13 / 14</span>
+      <!-- 14 — CUBIC RESET · interior LIFE RESET (plate) ======== -->
+      <section class="slide" data-slide="14">
+        <div class="slide-head">
+          <span class="num">№ 14 / 15</span>
           <span class="reg">Plate IX·c · Cubic Reset</span>
         </div>
         <div class="layout-plate">
@@ -748,10 +777,10 @@
         </div>
       </section>
 
-      <!-- 14 — CONTACT (text) =================================== -->
-      <section class="slide" data-slide="14">
+      <!-- 15 — CONTACT (text) =================================== -->
+      <section class="slide" data-slide="15">
         <div class="slide-head">
-          <span class="num">№ 14 / 14</span>
+          <span class="num">№ 15 / 15</span>
           <span class="reg">Colophon</span>
         </div>
         <div class="layout-text">
@@ -769,15 +798,13 @@
     </div>
   </div>
 
-  <!-- Edge click zones (silent prev/next) -->
   <div class="click-zone left" data-action="prev" aria-label="Previous slide"></div>
   <div class="click-zone right" data-action="next" aria-label="Next slide"></div>
 
-  <!-- Visible nav controls -->
   <nav class="nav" aria-label="Slide navigation">
     <button data-action="first" title="First (Home)" aria-label="First slide">⇤</button>
     <button data-action="prev" title="Previous (←)" aria-label="Previous slide">←</button>
-    <div class="counter"><span id="counter-current">1</span><span class="sep">/</span><span id="counter-total">14</span></div>
+    <div class="counter"><span id="counter-current">1</span><span class="sep">/</span><span id="counter-total">15</span></div>
     <button data-action="next" title="Next (→)" aria-label="Next slide">→</button>
     <button data-action="last" title="Last (End)" aria-label="Last slide">⇥</button>
   </nav>
@@ -789,20 +816,15 @@
       const counterCurrent = document.getElementById('counter-current');
       const counterTotal = document.getElementById('counter-total');
       const deck = document.getElementById('deck');
-      const stage = document.getElementById('stage');
       counterTotal.textContent = total;
-
       let index = 0;
 
       function show(i) {
         i = Math.max(0, Math.min(total - 1, i));
-        if (i === index && slides[i].classList.contains('is-active')) return;
         slides.forEach((s, n) => s.classList.toggle('is-active', n === i));
         index = i;
         counterCurrent.textContent = i + 1;
-        // Update URL hash for shareable deep links
         history.replaceState(null, '', '#' + (i + 1));
-        // Buttons enable/disable
         document.querySelectorAll('.nav button').forEach(b => {
           const a = b.dataset.action;
           if (a === 'prev' || a === 'first') b.disabled = (i === 0);
@@ -817,12 +839,10 @@
         if (action === 'last')  show(total - 1);
       }
 
-      // Click handlers
       document.querySelectorAll('[data-action]').forEach(el => {
         el.addEventListener('click', () => actions(el.dataset.action));
       });
 
-      // Keyboard
       document.addEventListener('keydown', e => {
         if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
           actions('next'); e.preventDefault();
@@ -838,7 +858,6 @@
         }
       });
 
-      // Responsive scale to fit viewport while preserving 16:9 1920×1080
       function fit() {
         const W = window.innerWidth;
         const H = window.innerHeight;
@@ -848,7 +867,6 @@
       window.addEventListener('resize', fit);
       fit();
 
-      // Initial slide from URL hash
       const hash = parseInt((location.hash || '').replace('#', ''), 10);
       if (!isNaN(hash) && hash >= 1 && hash <= total) show(hash - 1);
       else show(0);
