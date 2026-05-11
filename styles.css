@@ -1214,3 +1214,32 @@ a.callout:hover {
   .work-head .num, .work-head .year { padding-top: 0; }
   .status-pill { margin-left: 0; margin-top: 0.5rem; }
 }
+
+/* =========================================================
+   Print / PDF — for portfolio export via headless Chrome
+   ========================================================= */
+@media print {
+  /* Hide UI chrome that has no business in a printed portfolio */
+  .sidenav,
+  .sidenav-toggle,
+  .sidenav-sheet,
+  .sidenav-backdrop { display: none !important; }
+
+  /* Drop the right rail so content uses the full page width */
+  body { padding-right: 0 !important; background: var(--ink) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Never cut an image across pages */
+  figure,
+  figure.plate,
+  .plate img { break-inside: avoid; page-break-inside: avoid; }
+
+  /* Each major work starts on its own page */
+  section.work { break-before: page; page-break-before: always; }
+
+  /* Keep section heads with their content */
+  h2, h3, .work-head,
+  .work-head + * { break-after: avoid; page-break-after: avoid; }
+
+  /* Avoid orphaned paragraph fragments */
+  p, dl, .meta-block, .featured-text { break-inside: avoid; page-break-inside: avoid; }
+}

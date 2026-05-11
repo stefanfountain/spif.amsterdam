@@ -1,0 +1,14 @@
+{
+  "name": "spif-amsterdam-scripts",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Local scripts for spif.amsterdam — portfolio PDF generation",
+  "scripts": {
+    "portfolio": "node portfolio.mjs",
+    "portfolio:local": "node portfolio.mjs --local"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.0.0"
+  }
+}
