@@ -399,6 +399,12 @@
       max-width: 1400px;
       margin: 0 0 56px 0;
     }
+    .layout-text .contacts {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+    }
     .layout-text .contact-link {
       font-family: var(--mono);
       font-size: 48px;
@@ -802,7 +808,10 @@
           <div class="label">№ 11 — Contact · Amsterdam · MMXXVI</div>
           <h2>Find me.</h2>
           <p class="lede">For residencies, commissions, exhibitions, and Diepgang — slide into the DMs.</p>
-          <a class="contact-link" href="https://instagram.com/elspif" target="_blank" rel="noopener">@elspif</a>
+          <div class="contacts">
+            <a class="contact-link" href="https://instagram.com/elspif" target="_blank" rel="noopener">@elspif</a>
+            <a class="contact-link" href="tel:+31641116397">+31 6 4111 6397</a>
+          </div>
         </div>
         <div class="slide-foot">
           <span class="colophon">spif.amsterdam · MMXXVI · All rights reserved</span>
