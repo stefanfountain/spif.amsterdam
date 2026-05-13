@@ -25,8 +25,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2026-05-11o" />
+  <!-- Non-render-blocking font load: preload as style, apply once loaded.
+       Cormorant Garamond italic 300/400/500 + roman 300/400; IBM Plex Mono 400/500;
+       IBM Plex Sans 300/400/500. font-display: swap so fallback shows immediately. -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles.css?v=2026-05-13a" />
 </head>
 <body data-mood="dusk" data-pace="monograph" data-plate="engraving">
 
@@ -100,7 +105,7 @@
             </div>
           </div>
           <figure class="plate hero-image-banner has-image">
-            <img src="/img/hero-poster.jpg" alt="Spif — illustrated poster: lone figure in long coat and top hat under branching white arcs, vintage television in the dirt, dusk sky" />
+            <img src="/img/hero-poster.jpg" width="1612" height="2400" loading="eager" fetchpriority="high" alt="Spif — illustrated poster: lone figure in long coat and top hat under branching white arcs, vintage television in the dirt, dusk sky" />
             <span class="reg">PLATE I</span>
             <figcaption class="caption">
               <b>Spif</b>
@@ -117,7 +122,7 @@
           <div class="section-label" style="position: static;">№ 01 — On the work</div>
           <h2>An artist of<br />resonant systems.</h2>
           <figure class="plate has-image about-portrait" style="aspect-ratio: 923/1518;">
-            <img src="/img/about-portrait.jpg" alt="Spif portrait — silver chrome jacket, futurist goggles with prismatic lenses, spiked hair, telephone-rotary necklace, smoky studio backdrop" />
+            <img src="/img/about-portrait.jpg" width="923" height="1518" loading="lazy" alt="Spif portrait — silver chrome jacket, futurist goggles with prismatic lenses, spiked hair, telephone-rotary necklace, smoky studio backdrop" />
             <span class="reg">PLATE II</span>
             <figcaption class="caption">
               <b>Spif</b>
@@ -161,7 +166,7 @@
     <!-- Workshop image (unsectioned interstitial — not in the Index) ====== -->
     <section id="studio" class="studio-image-only" data-screen-label="Workshop">
       <figure class="plate has-image" style="aspect-ratio: 1874/418;">
-        <img src="/img/studio-pano.jpg" alt="Spif at a shared Amsterdam workshop, panoramic — wearing a top hat, working at a CNC machine, doubled by the panorama stitch artifact" />
+        <img src="/img/studio-pano.jpg" width="1874" height="418" loading="lazy" alt="Spif at a shared Amsterdam workshop, panoramic — wearing a top hat, working at a CNC machine, doubled by the panorama stitch artifact" />
         <span class="reg">PLATE II</span>
         <figcaption class="caption">
           <b>Workshop</b>
@@ -183,7 +188,7 @@
       <div class="work-body">
         <div class="content">
           <figure class="plate feature has-image" style="aspect-ratio: 1182/665;">
-            <img src="/img/vox-futuri-tv.jpg" alt="Vox Futuri — vintage brass-trimmed cockpit television" />
+            <img src="/img/vox-futuri-tv.jpg" width="1182" height="665" loading="lazy" alt="Vox Futuri — vintage brass-trimmed cockpit television" />
             <span class="reg">PLATE III</span>
             <figcaption class="caption">
               <b>Vox Futuri — apparatus</b>
@@ -227,7 +232,7 @@
       <div class="work-body">
         <div class="content">
           <figure class="plate feature has-image" style="aspect-ratio: 1/1;">
-            <img src="/img/spark-broadside.png" alt="Vox Ignis broadside — linocut figure in profile carrying a bouquet, swirling foliage, decorative botanical border panel" />
+            <img src="/img/spark-broadside.webp" width="2048" height="2048" loading="lazy" alt="Vox Ignis broadside — linocut figure in profile carrying a bouquet, swirling foliage, decorative botanical border panel" />
             <span class="reg">PLATE IV</span>
             <figcaption class="caption">
               <b>Vox Ignis</b>
@@ -289,7 +294,7 @@
           </p>
           <div class="imgrow">
             <figure class="plate a has-image" style="aspect-ratio: 665/1182;">
-              <img src="/img/vox-arboris-adam-tower.jpg" alt="Vox Arboris live performance at A'dam Tower, April 2026" />
+              <img src="/img/vox-arboris-adam-tower.jpg" width="665" height="1182" loading="lazy" alt="Vox Arboris live performance at A'dam Tower, April 2026" />
               <span class="reg">PLATE V·a</span>
               <figcaption class="caption">
                 <b>Vox Arboris — A'dam Tower, 2026</b>
@@ -297,7 +302,7 @@
               </figcaption>
             </figure>
             <figure class="plate b has-image" style="aspect-ratio: 900/1600;">
-              <img src="/img/vox-arboris-stage.jpg" alt="Vox Arboris stage at A'dam Tower — modular rig and white branching tree sculpture, sunset behind" />
+              <img src="/img/vox-arboris-stage.jpg" width="900" height="1600" loading="lazy" alt="Vox Arboris stage at A'dam Tower — modular rig and white branching tree sculpture, sunset behind" />
               <span class="reg">PLATE V·b</span>
               <figcaption class="caption">
                 <b>Vox Arboris — stage, A'dam Tower, 2026</b>
@@ -306,7 +311,7 @@
             </figure>
           </div>
           <figure class="plate has-image has-video" style="aspect-ratio: 16/9; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <video controls preload="metadata" playsinline poster="/img/vox-arboris-clip-poster.jpg">
+            <video controls preload="metadata" playsinline width="1280" height="720" poster="/img/vox-arboris-clip-poster.jpg">
               <source src="/img/vox-arboris-clip.mp4" type="video/mp4" />
               <track kind="captions" src="/img/vox-arboris-clip.vtt" srclang="en" label="English" default />
             </video>
@@ -317,7 +322,7 @@
             </figcaption>
           </figure>
           <figure class="plate has-image" style="aspect-ratio: 1182/665; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <img src="/img/vox-arboris-wihh.jpg" alt="Vox Arboris installation at WIHH gallery, Summer 2023" />
+            <img src="/img/vox-arboris-wihh.jpg" width="1182" height="665" loading="lazy" alt="Vox Arboris installation at WIHH gallery, Summer 2023" />
             <span class="reg">PLATE V·d</span>
             <figcaption class="caption">
               <b>Vox Arboris — WIHH, 2023</b>
@@ -325,7 +330,7 @@
             </figcaption>
           </figure>
           <figure class="plate has-image" style="aspect-ratio: 4032/3024; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <img src="/img/mayor-manor.jpg" alt="Mayor Manor stage at Ten Club — green and blue lights, white branching sculpture, modular rig, video screen with projection, mirrorball" />
+            <img src="/img/mayor-manor.jpg" width="1600" height="1200" loading="lazy" alt="Mayor Manor stage at Ten Club — green and blue lights, white branching sculpture, modular rig, video screen with projection, mirrorball" />
             <span class="reg">PLATE V·e</span>
             <figcaption class="caption">
               <b>Vox Arboris — Mayor Manor, Ten Club, 2022</b>
@@ -358,7 +363,7 @@
             <span class="pull">Pull the cord, find your resonance.</span>
           </p>
           <figure class="plate tall has-image">
-            <img src="/img/meditation-station.jpg" alt="Meditation Station — bakelite television on top of patched modular synthesizer" />
+            <img src="/img/meditation-station.jpg" width="768" height="1024" loading="lazy" alt="Meditation Station — bakelite television on top of patched modular synthesizer" />
             <span class="reg">PLATE VI</span>
             <figcaption class="caption">
               <b>Meditation Station</b>
@@ -391,7 +396,7 @@
             <span class="pull">The conceptual prototype for Vox Futuri.</span>
           </p>
           <figure class="plate has-image" style="aspect-ratio: 768/1024; max-width: 600px;">
-            <img src="/img/tardis-portrait.jpg" alt="Spif at the Tardis — top hat with monocle, long grey wool coat, beaded necklaces, holding a wooden tool, Tardis police box behind" />
+            <img src="/img/tardis-portrait.jpg" width="768" height="1024" loading="lazy" alt="Spif at the Tardis — top hat with monocle, long grey wool coat, beaded necklaces, holding a wooden tool, Tardis police box behind" />
             <span class="reg">PLATE VIII·a</span>
             <figcaption class="caption">
               <b>Tardis — TNW, 2017</b>
@@ -399,7 +404,7 @@
             </figcaption>
           </figure>
           <figure class="plate has-image" style="aspect-ratio: 4032/3024; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <img src="/img/tardis-closeup.jpg" alt="The TARDIS — life-sized blue police box recreation in a brick-vaulted hall, red lighting overhead, signage reading 'PR.CO PUBLIC BOX' and 'POLICE TELEPHONE FREE FOR USE OF PUBLIC'" />
+            <img src="/img/tardis-closeup.jpg" width="1600" height="1200" loading="lazy" alt="The TARDIS — life-sized blue police box recreation in a brick-vaulted hall, red lighting overhead, signage reading 'PR.CO PUBLIC BOX' and 'POLICE TELEPHONE FREE FOR USE OF PUBLIC'" />
             <span class="reg">PLATE VIII·b</span>
             <figcaption class="caption">
               <b>Tardis — TNW, 2017</b>
@@ -434,7 +439,7 @@
           </p>
           <div class="imgrow">
             <figure class="plate has-image" style="aspect-ratio: 1024/1024;">
-              <img src="/img/cubic-reset-day.jpg" alt="Cubic Reset cube installation, Brave Festival 2015, daytime" />
+              <img src="/img/cubic-reset-day.jpg" width="1024" height="1024" loading="lazy" alt="Cubic Reset cube installation, Brave Festival 2015, daytime" />
               <span class="reg">PLATE IX·a</span>
               <figcaption class="caption">
                 <b>Cubic Reset — Brave Festival, 2015</b>
@@ -442,7 +447,7 @@
               </figcaption>
             </figure>
             <figure class="plate has-image" style="aspect-ratio: 4/3;">
-              <img src="/img/cubic-reset-night.jpg" alt="Cubic Reset cube installation, Brave Festival 2015, nighttime" />
+              <img src="/img/cubic-reset-night.jpg" width="1600" height="1200" loading="lazy" alt="Cubic Reset cube installation, Brave Festival 2015, nighttime" />
               <span class="reg">PLATE IX·b</span>
               <figcaption class="caption">
                 <b>Cubic Reset — Brave Festival, 2015</b>
@@ -452,7 +457,7 @@
           </div>
           <div class="imgrow" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
             <figure class="plate has-image" style="aspect-ratio: 4/3;">
-              <img src="/img/cubic-reset-life-reset.jpg" alt="LIFE RESET — interior projection text from the Cubic Reset cube" />
+              <img src="/img/cubic-reset-life-reset.jpg" width="1024" height="768" loading="lazy" alt="LIFE RESET — interior projection text from the Cubic Reset cube" />
               <span class="reg">PLATE IX·c</span>
               <figcaption class="caption">
                 <b>Cubic Reset — interior projection</b>
@@ -460,7 +465,7 @@
               </figcaption>
             </figure>
             <figure class="plate has-image" style="aspect-ratio: 4/3;">
-              <img src="/img/cubic-reset-interior.jpg" alt="Inside the Cubic Reset cube — confetti and torn papers on the floor under blacklight" />
+              <img src="/img/cubic-reset-interior.jpg" width="1600" height="1200" loading="lazy" alt="Inside the Cubic Reset cube — confetti and torn papers on the floor under blacklight" />
               <span class="reg">PLATE IX·d</span>
               <figcaption class="caption">
                 <b>Cubic Reset — interior</b>
@@ -493,7 +498,7 @@
             of the practice that would become Spif.
           </p>
           <figure class="plate has-image" style="aspect-ratio: 686/1146; max-width: 500px;">
-            <img src="/img/find-your-inner-unicorn.jpg" alt="Find Your Inner Unicorn caravan installation, Brave Festival 2014 — caravan with painted aztec pattern and unicorn banner on top" />
+            <img src="/img/find-your-inner-unicorn.jpg" width="686" height="1146" loading="lazy" alt="Find Your Inner Unicorn caravan installation, Brave Festival 2014 — caravan with painted aztec pattern and unicorn banner on top" />
             <span class="reg">PLATE X</span>
             <figcaption class="caption">
               <b>Find Your Inner Unicorn — Brave Festival, 2014</b>
