@@ -618,6 +618,25 @@ section:first-of-type { border-top: 0; }
     font-size: 0.55rem;
     right: 14px; top: 12px;
   }
+
+  /* Extreme-ratio plates (.pano — wide-and-short banner shapes): on phones
+     the dark caption band eats half the already-short image. Drop the
+     plate's fixed aspect-ratio and let the image keep its natural ratio;
+     caption sits below as a separate band. */
+  .plate.pano {
+    aspect-ratio: auto !important;                       /* override inline aspect-ratio */
+  }
+  .plate.pano img {
+    position: relative;                                  /* break out of inset:0 */
+    width: 100%;
+    height: auto;
+    inset: auto;
+  }
+  .plate.pano .caption {
+    position: relative;
+    left: auto; right: auto; bottom: auto;
+    /* background + padding inherited from .plate .caption */
+  }
 }
 
 /* ---------- Placeholder image plate ---------- */
