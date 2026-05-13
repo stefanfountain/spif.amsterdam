@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Spif — Installation artist</title>
   <meta name="description" content="Live electronic rituals + immersive performance installations. Amsterdam-based. Will travel." />
+  <!-- Mark .js on <html> so motion CSS can gate its initial-hidden state.
+       Without JS, sections render normally (no opacity dance, no stuck-invisible). -->
+  <script>document.documentElement.classList.add('js');</script>
 
   <!-- Social previews (Open Graph + Twitter).
        Brand intentionally omitted from title/site_name — domain carries it.
@@ -31,7 +34,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" /></noscript>
-  <link rel="stylesheet" href="styles.css?v=2026-05-13b" />
+  <link rel="stylesheet" href="styles.css?v=2026-05-13c" />
 </head>
 <body data-mood="dusk" data-pace="monograph" data-plate="engraving">
 
@@ -548,6 +551,23 @@
     document.querySelectorAll('.sidenav-list a').forEach(a => {
       a.addEventListener('click', () => setNavOpen(false));
     });
+
+    // Scroll-triggered entrance for sections below the hero.
+    // Hero gets its own page-load animation (SPIF imprint, CSS only).
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            sectionObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('main > section:not(#hero)').forEach(s => sectionObserver.observe(s));
+    } else {
+      // No IO — show everything so we don't leave sections invisible.
+      document.querySelectorAll('main > section').forEach(s => s.classList.add('in-view'));
+    }
   </script>
 
   <footer class="colophon">
