@@ -30,37 +30,50 @@
 </head>
 <body data-mood="dusk" data-pace="monograph" data-plate="engraving">
 
+  <!-- Skip link for keyboard users — visible only on focus -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
   <!-- Mobile-only toggle for the index sidebar -->
-  <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox" aria-hidden="true" />
-  <label for="nav-toggle" class="nav-toggle-button" aria-label="Open index of works">
+  <button type="button" class="nav-toggle-button"
+          aria-expanded="false" aria-controls="sidenav"
+          aria-label="Toggle index of works">
     <span class="nav-toggle-open">Index</span>
     <span class="nav-toggle-close">Close</span>
-  </label>
+  </button>
 
   <!-- Sticky right-edge sidebar — index of works -->
-  <nav class="sidenav" aria-label="Index of works">
+  <nav class="sidenav" id="sidenav" aria-label="Index of works">
     <div class="sidenav-head">Index</div>
+
     <ul class="sidenav-list">
       <li><a href="#about"><span class="ttl">About</span></a></li>
+    </ul>
 
-      <li class="sidenav-group" aria-hidden="true">Upcoming</li>
+    <h3 class="sidenav-group">Upcoming</h3>
+    <ul class="sidenav-list">
       <li><a href="#vox-futuri"><span class="ttl">Vox Futuri</span></a></li>
       <li><a href="#ignis"><span class="ttl">Vox Ignis</span></a></li>
+    </ul>
 
-      <li class="sidenav-group" aria-hidden="true">Current</li>
+    <h3 class="sidenav-group">Current</h3>
+    <ul class="sidenav-list">
       <li><a href="#vox-arboris"><span class="ttl">Vox Arboris</span></a></li>
       <li><a href="#meditation-station"><span class="ttl">Meditation Station</span></a></li>
+    </ul>
 
-      <li class="sidenav-group" aria-hidden="true">Retired</li>
+    <h3 class="sidenav-group">Retired</h3>
+    <ul class="sidenav-list">
       <li><a href="#tardis"><span class="ttl">Tardis</span></a></li>
       <li><a href="#cubic-reset"><span class="ttl">Cubic Reset</span></a></li>
       <li><a href="#unicorn"><span class="ttl">Find Your Inner Unicorn</span></a></li>
+    </ul>
 
+    <ul class="sidenav-list">
       <li><a href="#contact"><span class="ttl">Contact</span></a></li>
     </ul>
   </nav>
 
-  <main>
+  <main id="main">
 
     <!-- 01 — Hero ============================================ -->
     <section id="hero" data-screen-label="Hero" class="hero-brutalist">
@@ -295,6 +308,7 @@
           <figure class="plate has-image has-video" style="aspect-ratio: 16/9; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
             <video controls preload="metadata" playsinline poster="/img/vox-arboris-clip-poster.jpg">
               <source src="/img/vox-arboris-clip.mp4" type="video/mp4" />
+              <track kind="captions" src="/img/vox-arboris-clip.vtt" srclang="en" label="English" default />
             </video>
             <span class="reg">PLATE V·c</span>
             <figcaption class="caption">
@@ -508,12 +522,26 @@
   </main>
 
   <script>
-    // Close mobile nav sheet when a section link is tapped
-    document.querySelectorAll('.sidenav-list a').forEach(a => {
-      a.addEventListener('click', () => {
-        const t = document.getElementById('nav-toggle');
-        if (t) t.checked = false;
+    // Mobile nav toggle — real button + aria-expanded state.
+    const navBtn = document.querySelector('.nav-toggle-button');
+    const setNavOpen = (open) => {
+      if (navBtn) navBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    if (navBtn) {
+      navBtn.addEventListener('click', () => {
+        setNavOpen(navBtn.getAttribute('aria-expanded') !== 'true');
       });
+      // Escape closes the open sheet and returns focus to the toggle.
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navBtn.getAttribute('aria-expanded') === 'true') {
+          setNavOpen(false);
+          navBtn.focus();
+        }
+      });
+    }
+    // Close the sheet when a section link is tapped.
+    document.querySelectorAll('.sidenav-list a').forEach(a => {
+      a.addEventListener('click', () => setNavOpen(false));
     });
   </script>
 
