@@ -563,6 +563,12 @@ section:first-of-type { border-top: 0; }
   object-fit: cover; /* no crop because aspect-ratio matches image */
 }
 .hero-image-banner .caption {
+  /* Hero opts out of the dark caption band — the amber banner already
+     carries the brutalist color statement; no need to darken over the
+     hero image. */
+  background: transparent;
+  padding: 0;
+  left: 22px; right: auto; bottom: 18px;
   color: var(--paper);
 }
 .hero-image-banner .caption b {
@@ -589,11 +595,16 @@ section:first-of-type { border-top: 0; }
   .hero-banner h1 { font-size: clamp(4.5rem, 18vw, 8rem); letter-spacing: -0.05em; }
   .hero-banner-inner { padding-top: clamp(2rem, 5vw, 3rem); padding-bottom: clamp(2rem, 5vw, 3rem); }
 
-  /* Caption overlay: scale down so the dark wash doesn't swallow the image
-     when plates shrink to a single column on mobile. */
-  .plate.has-image::before { height: 6.5rem; }
-  .studio-image-only .plate.has-image::before,
-  #vox-futuri .plate.has-image::before { height: 4rem; }
+  /* Plate caption: smaller text + tighter padding on phones so the band
+     reveals more of the image. Reg mark also shrinks for proportion. */
+  .plate .caption {
+    font-size: 0.58rem;
+    padding: 0.65rem 14px 0.7rem;
+  }
+  .plate .reg {
+    font-size: 0.55rem;
+    right: 14px; top: 12px;
+  }
 }
 
 /* ---------- Placeholder image plate ---------- */
@@ -631,37 +642,14 @@ section:first-of-type { border-top: 0; }
 .plate.has-video {
   border: 0;
 }
-/* Caption readability — brutalist hard-edge solid bar at the bottom.
-   Note: must explicitly set top: auto to override inset: 0 from .plate::before;
-   when top + bottom + height are all set, browsers keep top and discard bottom. */
-.plate.has-image::before {
-  display: block;
-  content: "";
-  position: absolute;
-  top: auto;
-  left: 0; right: 0; bottom: 0;
-  height: 13rem;
-  background: oklch(0.08 0.025 255 / 0.92);               /* darker overlay so paper-faint caption clears WCAG AA */
-  z-index: 1;
-  pointer-events: none;
-}
-/* Plates with horizontal/short proportions get a halved overlay so it doesn't
-   swallow the image. Tall portrait plates keep the full 13rem dramatic wash. */
-.studio-image-only .plate.has-image::before,
-#vox-futuri .plate.has-image::before {
-  height: 6.5rem;
-}
-/* Hero image: no overlay at all — the orange banner around it already
-   carries the brutalist color statement. */
-.hero-image-banner.has-image::before,
-.hero-image-banner.has-image:hover::before {
-  display: none;
-}
+/* Caption readability — dark band lives ON the caption itself so it auto-
+   sizes to whatever text is inside. No more fixed-height ::before band
+   that covered a huge slice of the image regardless of caption length. */
 @media (hover: hover) {
-  .plate.has-image:hover::before {
+  .plate.has-image:hover .caption {
     background: oklch(0.68 0.15 50 / 0.92);
+    color: var(--ink-deep);
   }
-  .plate.has-image:hover .caption,
   .plate.has-image:hover .caption b {
     color: var(--ink-deep);
   }
@@ -693,16 +681,20 @@ section:first-of-type { border-top: 0; }
   z-index: 1;
   pointer-events: none;
 }
+/* Caption sits as a full-width band at the bottom; padding determines
+   the band's vertical size so it auto-fits content with healthy breathing
+   room. No fixed height — short captions get a thin band, long ones grow. */
 .plate .caption {
   position: absolute;
-  left: 22px; bottom: 18px;
+  left: 0; right: 0; bottom: 0;
+  padding: 0.95rem 22px 1.05rem;
+  background: oklch(0.08 0.025 255 / 0.92);
   font-family: var(--mono);
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--paper-faint);
   z-index: 2;
-  max-width: 80%;
 }
 .plate .caption b {
   display: block;
