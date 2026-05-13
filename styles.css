@@ -627,12 +627,8 @@ section:first-of-type { border-top: 0; }
   z-index: 0;
   display: block;
 }
-/* Video plates: drop caption / reg / overlay bar / crop marks
-   so they don't fight the native video controls. Triple-class selector to
-   win over .plate.has-image::before { height: 13rem } which has the same
-   specificity (2 classes + 1 pseudo) and appears later in the file. */
-.plate.has-image.has-video::before,
-.plate.has-image.has-video::after,
+/* Video plates: drop caption / reg / crop marks so they don't fight the
+   native video controls. */
 .plate.has-video::before,
 .plate.has-video::after,
 .plate.has-video .caption,
