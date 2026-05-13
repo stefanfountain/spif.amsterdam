@@ -551,6 +551,12 @@ section:first-of-type { border-top: 0; }
 @media (max-width: 540px) {
   .hero-banner h1 { font-size: clamp(4.5rem, 18vw, 8rem); letter-spacing: -0.05em; }
   .hero-banner-inner { padding-top: clamp(2rem, 5vw, 3rem); padding-bottom: clamp(2rem, 5vw, 3rem); }
+
+  /* Caption overlay: scale down so the dark wash doesn't swallow the image
+     when plates shrink to a single column on mobile. */
+  .plate.has-image::before { height: 6.5rem; }
+  .studio-image-only .plate.has-image::before,
+  #vox-futuri .plate.has-image::before { height: 4rem; }
 }
 
 /* ---------- Placeholder image plate ---------- */
