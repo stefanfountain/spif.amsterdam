@@ -222,6 +222,7 @@ html {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;                       /* index clicks + back-to-top */
 }
 
 body {
@@ -1125,6 +1126,9 @@ a.callout:hover {
   padding: 1rem 1.1rem 1.1rem;
 }
 .sidenav-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-family: var(--mono);
   font-size: 0.62rem;
   font-weight: 700;
@@ -1134,6 +1138,22 @@ a.callout:hover {
   margin: 0 0 0.85rem;
   padding-bottom: 0.6rem;
   border-bottom: 2px solid var(--sidebar-ink);
+}
+/* Back-to-top arrow inside the sidenav-head, brutalist invert on hover. */
+.sidenav-top {
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;                             /* don't inherit the wide head tracking */
+  padding: 0.15rem 0.35rem;
+  color: var(--sidebar-ink);
+  text-decoration: none;
+  transition: none;                              /* brutalist: no transitions */
+}
+.sidenav-top:hover {
+  background: var(--sidebar-ink);
+  color: var(--sidebar-bg);
 }
 .sidenav-list {
   list-style: none;
