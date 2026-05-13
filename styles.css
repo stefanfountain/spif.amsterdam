@@ -38,6 +38,13 @@
   --sans:  "IBM Plex Sans", system-ui, -apple-system, sans-serif;
   --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
 
+  /* Sidebar palette — brutalist juxtaposition (yellow over the amber hero).
+     Hardcoded as tokens so the sidebar stays consistent across mood swaps
+     (or can be themed per-mood if ever desired). */
+  --sidebar-bg:       oklch(0.91 0.19 95);              /* saturated yellow */
+  --sidebar-ink:      oklch(0.32 0.16 145);             /* dark green */
+  --sidebar-ink-deep: oklch(0.30 0.18 145);             /* slightly deeper, used for headings */
+
   /* Rhythm */
   --maxw: 1440px;
 
@@ -112,7 +119,13 @@ html[data-mood="foundry"] {
   --rule:       oklch(0.30 0.02 60);
 }
 
-/* Mood-specific body atmosphere (vignette + grain blend) */
+/* Mood-specific body atmosphere (vignette + grain blend). All four moods
+   declare their body background explicitly so the system is symmetric — no
+   "default falls through from base" surprise. */
+html[data-mood="dusk"] body {
+  background:
+    radial-gradient(120% 80% at 50% 0%, oklch(0.21 0.04 255) 0%, var(--ink) 55%, var(--ink-deep) 100%);
+}
 html[data-mood="velvet"] body {
   background:
     radial-gradient(110% 70% at 50% 0%, oklch(0.22 0.07 305) 0%, var(--ink) 55%, var(--ink-deep) 100%);
@@ -212,9 +225,9 @@ html {
 }
 
 body {
-  /* Faint vignette + grain feel via layered radial gradient */
-  background:
-    radial-gradient(120% 80% at 50% 0%, oklch(0.21 0.04 255) 0%, var(--ink) 55%, var(--ink-deep) 100%);
+  /* Body background is set per-mood (see html[data-mood="..."] body rules
+     in the MOOD section). Faint vignette + grain feel via layered radial
+     gradient, color and reach varied per palette. */
   min-height: 100vh;
   overflow-x: hidden;
   /* Make space for the persistent sidenav on the right.
@@ -239,8 +252,8 @@ body::before {
 ::selection { background: oklch(0.72 0.20 45); color: var(--ink-deep); }
 #hero ::selection,
 #contact ::selection {
-  background: oklch(0.91 0.19 95);              /* menu yellow */
-  color: oklch(0.32 0.16 145);                  /* dark green (matches sidenav) */
+  background: var(--sidebar-bg);                /* menu yellow */
+  color: var(--sidebar-ink);                    /* dark green (matches sidenav) */
 }
 
 a { color: inherit; text-decoration: none; }
@@ -260,7 +273,7 @@ img { display: block; max-width: 100%; }
   outline-color: var(--ink-deep);
 }
 .sidenav :focus-visible {
-  outline-color: oklch(0.30 0.18 145);                   /* deeper green */
+  outline-color: var(--sidebar-ink-deep);
   outline-offset: 2px;
 }
 
@@ -812,7 +825,7 @@ section:first-of-type { border-top: 0; }
   white-space: nowrap;
 }
 
-.status-pill {
+.status-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -823,17 +836,16 @@ section:first-of-type { border-top: 0; }
   color: var(--amber);
   border: 1px solid var(--amber);
   padding: 0.35rem 0.7rem;
-  border-radius: 999px;
   margin-left: 0.75rem;
   vertical-align: middle;
 }
-.status-pill::before {
+.status-badge::before {
   content: "";
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--amber);
 }
-.status-pill.calm { color: var(--brass); border-color: var(--brass); }
-.status-pill.calm::before { background: var(--brass); box-shadow: none; animation: none; }
+.status-badge.calm { color: var(--brass); border-color: var(--brass); }
+.status-badge.calm::before { background: var(--brass); box-shadow: none; animation: none; }
 
 .work-body {
   display: grid;
@@ -1088,8 +1100,8 @@ a.callout:hover {
   transform: translateY(-50%);
   z-index: 50;
   max-width: 240px;
-  background: oklch(0.91 0.19 95);              /* saturated yellow */
-  color: oklch(0.32 0.16 145);                  /* dark green */
+  background: var(--sidebar-bg);
+  color: var(--sidebar-ink);
   border: 4px solid var(--ink-deep);            /* heavy black-navy border */
   padding: 1rem 1.1rem 1.1rem;
 }
@@ -1099,10 +1111,10 @@ a.callout:hover {
   font-weight: 700;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: oklch(0.30 0.18 145);                  /* deeper green */
+  color: var(--sidebar-ink-deep);
   margin: 0 0 0.85rem;
   padding-bottom: 0.6rem;
-  border-bottom: 2px solid oklch(0.32 0.16 145);
+  border-bottom: 2px solid var(--sidebar-ink);
 }
 .sidenav-list {
   list-style: none;
@@ -1120,7 +1132,7 @@ a.callout:hover {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: oklch(0.32 0.16 145);                  /* green */
+  color: var(--sidebar-ink);
   padding: 0.18rem 0;
   transition: none;                              /* brutalist: no transitions */
 }
@@ -1141,7 +1153,7 @@ a.callout:hover {
   font-weight: 500;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: oklch(0.32 0.16 145 / 0.5);             /* green @ 50% alpha */
+  color: color-mix(in oklch, var(--sidebar-ink) 50%, transparent);
   padding: 0.8rem 0 0.3rem;
   margin: 0.25rem 0 0;
 }
@@ -1149,12 +1161,12 @@ a.callout:hover {
   content: "";
   flex: 1;
   height: 1px;
-  background: oklch(0.32 0.16 145 / 0.5);
+  background: color-mix(in oklch, var(--sidebar-ink) 50%, transparent);
 }
 /* Hover: invert — green block, yellow text. Brutalist. */
 .sidenav-list a:hover {
-  background: oklch(0.32 0.16 145);             /* green bg */
-  color: oklch(0.91 0.19 95);                   /* yellow text */
+  background: var(--sidebar-ink);
+  color: var(--sidebar-bg);
   margin: 0 -1.1rem;                             /* full-bleed inside the padding */
   padding-left: 1.1rem;
   padding-right: 1.1rem;
@@ -1192,8 +1204,8 @@ a.callout:hover {
     bottom: 0.25rem;
     right: 0.5rem;
     z-index: 60;
-    background: oklch(0.91 0.19 95);
-    color: oklch(0.32 0.16 145);
+    background: var(--sidebar-bg);
+    color: var(--sidebar-ink);
     border: 4px solid var(--ink-deep);
     padding: 0.85rem 1.2rem;
     font-family: var(--mono);
@@ -1241,7 +1253,7 @@ a.callout:hover {
 @media (max-width: 540px) {
   .work-head { grid-template-columns: 1fr; }
   .work-head .num, .work-head .year { padding-top: 0; }
-  .status-pill { margin-left: 0; margin-top: 0.5rem; }
+  .status-badge { margin-left: 0; margin-top: 0.5rem; }
 }
 
 /* =========================================================
