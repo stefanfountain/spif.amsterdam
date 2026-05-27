@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Script v2 · Vox Scintillae</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  .script-sidebar {
+    position: fixed;
+    top: calc(56px + 1.2rem);
+    left: 1.2rem;
+    width: 200px;
+    max-height: calc(100vh - 56px - 2.4rem);
+    overflow-y: auto;
+  }
+  .script-main {
+    max-width: 720px;
+    margin-left: 240px;
+    padding: 2rem 1.5rem 4rem;
+  }
+  .script-sidebar h3 {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 0 0 0.6rem 0.2rem;
+    font-weight: 700;
+  }
+  .script-toc {
+    display: grid;
+    gap: 0;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.74rem;
+  }
+  .script-toc a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.3rem 0.4rem;
+    color: var(--text-muted);
+    border: none;
+    border-radius: 3px;
+    line-height: 1.35;
+  }
+  .script-toc a:hover { color: var(--accent); background: var(--bg-card); }
+  .script-toc a .num { color: var(--text-dim); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .script-toc a .title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .script-toc a:hover .num { color: var(--accent); }
+  .script-main h1 { margin-top: 0; }
+  .script-main .lead { color: var(--text-muted); margin-bottom: 2rem; }
+  .script {
+    font-family: 'Courier Prime', Courier, monospace;
+    font-size: 15px;
+    line-height: 1.65;
+    counter-reset: line;
+    padding: 0 0 4rem;
+  }
+  .script .line {
+    counter-increment: line;
+    display: flex;
+    align-items: flex-start;
+    padding: 0;
+    min-height: 1.65em;
+    scroll-margin-top: 4rem;
+  }
+  .script .line::before {
+    content: counter(line);
+    width: 3.4rem;
+    text-align: right;
+    padding-right: 1.4rem;
+    color: var(--text-dim);
+    font-size: 0.72rem;
+    flex-shrink: 0;
+    user-select: none;
+    padding-top: 0.4em;
+    border-right: 1px solid var(--rule);
+    margin-right: 1.2rem;
+  }
+  .script .line .text {
+    flex: 1;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: var(--text);
+  }
+  .script .line.stage .text {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .script .line.stage .text::before {
+    content: '// ';
+    color: var(--text-dim);
+    font-style: normal;
+  }
+  .script .line.head .text {
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-top: 1.5em;
+    padding-bottom: 0.8em;
+    border-top: 1px solid var(--rule);
+    margin-top: 0.5em;
+  }
+  .script .line.head:first-child .text {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .script .line.tesla .text {
+    color: var(--accent-bright);
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    text-shadow: 0 0 22px rgba(167, 139, 250, 0.55);
+    text-align: center;
+    padding: 0.8em 0;
+  }
+  .script em { color: var(--text); font-style: italic; }
+  @media (max-width: 900px) {
+    .script-sidebar {
+      position: static;
+      width: auto;
+      max-height: none;
+      overflow: visible;
+      margin: 1.5rem 1.5rem 0;
+    }
+    .script-main { margin-left: 0; max-width: 100%; padding: 1rem 1.2rem 4rem; }
+    .script-toc { font-size: 0.86rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site">
+  <div class="inner">
+    <a href="index.html" class="brand">Vox Scintillae <span class="sub">/ Diepgang</span></a>
+    <ul>
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="outline.html">Outline</a></li>
+      <li><a href="script.html" class="active">Script</a></li>
+      <li><a href="sources.html">Sources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<aside class="script-sidebar">
+  <h3>Phases</h3>
+  <nav class="script-toc">
+    <a href="#p1"><span class="num">01</span><span class="title">Intro &amp; Welcome</span></a>
+    <a href="#p2"><span class="num">02</span><span class="title">Models, reality, Narcissus</span></a>
+    <a href="#p4"><span class="num">04</span><span class="title">Breathing &amp; falling into meditation</span></a>
+    <a href="#p5"><span class="num">05</span><span class="title">Descent</span></a>
+    <a href="#p6"><span class="num">06</span><span class="title">Three questions</span></a>
+    <a href="#p7"><span class="num">07</span><span class="title">The wheel</span></a>
+    <a href="#p8"><span class="num">08</span><span class="title">Ending</span></a>
+  </nav>
+</aside>
+
+<main class="script-main">
+  <h1>Script v2</h1>
+  <p class="lead">Prose pass — for the live recording reference. One thought per line. Phases 1–4 are new for v2; phases 5–12 carry over from v1.</p>
+
+  <div class="script">
+<div class="line head" id="p1"><span class="text">Phase 01 — Intro &amp; Welcome</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Welcome to this musical dream ritual. Let&#x27;s start standing up for a little bit. Keep your eyes open for now, and we&#x27;ll close them later. Today, we&#x27;re gonna explore some ideas together. Some of it will be a guided meditation, and the goal is to learn a new skill. Let&#x27;s call it a mental superpower I&#x27;m calling the suppleness of perspective.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Some of it will be a more rational explanation of ideas, which means it will be speaking more to your ratio, your brain. Let&#x27;s call it a more heady approach. And some of it will be more experiential, more feeling. That&#x27;s where the exercises and breathing, and later, music comes in. But of course, all of this is connected, and our subconscious will be processing it all, so I&#x27;m not trying to convince you of anything.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">I&#x27;m just trying to expose what&#x27;s already there. Sometimes your head might disagree with what you&#x27;re hearing, and all of that, of course, is fine, and I invite you to just let it happen. Your subconscious is wise enough to filter anything out that&#x27;s not for you at this particular time. But hopefully, some of it will resonate with you in your mind and in your heart, and I invite you to let those moments guide this experience.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">So to start off, we&#x27;re gonna do a little exercise to help us get into this moment. We&#x27;re going to try and find out and feel what we mean by the word <em>now</em>. Not the idea of now, but the actual sensation. So while we&#x27;re standing, look around you for a second and take three steps forward on my count. One. Two. Three. And stop.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Where at this moment is the first step you took?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Without moving yet, think about where&#x27;s the next movement you might make. You see, the next movement hasn&#x27;t happened, and the past movements aren&#x27;t here. Where are you? When are you? What is the position of the universe? When is it? Where is it? Now, take another step.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Is this a new <em>now</em> or the same old <em>now</em> where you always were? Now the next step is not with your feet, but with your imagination. Recall the first step you just made. Now when are you? Are you back then or are you still here?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Now, please find a moment to sit down and be comfortable. You can lie down, sit cross-legged, whatever you feel is the best. And you can stay here or shift around — let your body decide. And as you settle in.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Just take a deep breath. Relax your tongue. Let it just float in your lower jaw. And close your eyes if you haven&#x27;t already.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And if you&#x27;re still thinking in words or calculating about this, that, the other, about all the things you&#x27;re supposed to be doing, that&#x27;s fine. Don&#x27;t try to stop it. Just let your mind do whatever it likes. And then just hear its chatter as if you were listening to rippling water. And as you do that, you might notice that you&#x27;re already in the <em>now</em>.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">You see, the division of time into the past, present, and future is a trick of words and numbers. All memories and expectations exist now and now only, because now is what there is and all that there is. The past flows back from now like condensation trails, vapor trails from the back of a plane, and then just like those contrails, it vanishes.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Yet the contrails don&#x27;t push the plane, and a wake doesn&#x27;t push a boat. The past doesn&#x27;t move the present. The past flows back from now. So what is <em>now</em>?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Get it? Is it like that?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Or is it like this?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Are these two different kinds of <em>now</em>?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">One a short, sharp pop and the other a long continuous boom. Is <em>now</em> a split, split second or is it a drawn out expanse of sensation? There is no time like <em>now</em>. There is no <em>now</em> like <em>now</em> and <em>now</em> only, because <em>now</em> is what there is and all that there is. Always.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">I&#x27;m going to say some words. And don&#x27;t think about them — just notice what comes up in you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Rain.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Maybe you saw warm rain on a beach. Maybe cold rain making you wet on the way to work. Same word. Different worlds.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">So what about this next word? Portugal.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">What did you see?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Sun, wine, white walls, slow afternoons. Hmm. Still, the word is not the place. That&#x27;s your Portugal. It&#x27;s like a postcard you created in your head, yet isn&#x27;t the country itself. Here&#x27;s another word. Fire.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Television.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Connection.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Mom.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Dad.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">School.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Every one of those words lit up something different in you. None of them contain what came up. The image is something you imagined based on your knowledge, experience, or habits you formed, but it&#x27;s not the actual thing. The words triggered it out of you, and we do this all day, every day. The world arrives wrapped in models.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And today, we&#x27;re going to play with that.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line head" id="p2"><span class="text">Phase 02 — Models, reality, Narcissus</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">(Originally Phases 2 &amp; 3 in the design — delivered as one continuous section.)</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">What you just did, noticing that the word isn&#x27;t the thing, is the beginning of meditation. The art of meditation is a way of getting into touch with reality. And the reason for this is that most civilized people are out of touch with reality because we confuse the world as it is with the world as they think about it and talk about it and describe it.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">For on the one hand, there&#x27;s the real world, and the other, a whole system of symbols about that world which we have in our minds. Now, these are very useful symbols. We depend on them. Our whole civilization does. But like all good things, they have their disadvantages, and the principal disadvantage of symbols is that we confuse them with reality.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Take a map, for example. A map is one of the most useful symbols we have. You can navigate by it, plan with it, point to it, but the map is not the country. The map is a picture of the country. It&#x27;s a model drawn from one particular point of view. These days we have several maps of the same place at once.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">You can open Google Maps and flip between the normal view and satellite view, two completely different images of the same street. Both useful, both true, but neither one of these is the street.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">We choose a way to view reality. We do it constantly without noticing. Just as we confuse money with actual wealth, our names about ourselves, our ideas of ourselves, our images of ourselves with ourselves. Even our words are symbols. They are not reality itself. All words are made up if you think about it.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">They are just sounds that we agree to use to represent things. Reality, however, reality is not a concept. Reality itself is not a symbol. Reality is —</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">And we won&#x27;t give it a name.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Now it&#x27;s amazing what doesn&#x27;t exist in the real world. Reality is such a marvelous system of wiggles in which we describe things and events in the same way as we would project images on a Rorschach plot or pick out particular groups of stars in the sky and call them constellations as if they were separate groups of stars. Well, they are groups of stars in our mind&#x27;s eye, in our system of concept, but they&#x27;re not out there as constellations already grouped in the sky.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Tree isn&#x27;t a tree. Free isn&#x27;t freedom. Yet we need these models. Imagine figuring out what a chair is every time we see one. Imagine identifying each blade of grass. Without models, we&#x27;d get stuck and be paralyzed. Models compress particularity into something we can act on. They&#x27;re necessary, but some are wrong.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Many are incomplete. Remember the words at the start: rain, Portugal, fire, connection, mom, dad, school. Each one of these lit up a model, and each model was different from the actual thing.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">You see, of all the models you carry, one of the most important ones is the model of yourself.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Now, you probably know the story of Narcissus. He saw his reflection in the water and he fell in love with it. At first he didn&#x27;t know it was him. He reaches in, the figure reaches back. He speaks to it, but he can&#x27;t touch or hold it. Eventually he realizes, <em>&quot;Iste ego sum.&quot;</em> This is me. Which then deepens the tragedy because he thinks he is the reflection.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Because the image is still flat, still unreachable, still not the living thing. And he stays there until he wastes away. The usual reading is he loved himself too much, but that&#x27;s wrong. You see, the myth isn&#x27;t about self-love at all. It&#x27;s about the failure to recognize the soul in its own reflection. He longed for something he could never become.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">He loved the picture of himself till he forgot there was someone behind it.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">We are all a little Narcissist. We have an image of ourselves — polished, ideal, the version that holds together — and we stare at it, and we forget it&#x27;s a reflection. Yet the living, breathing, contradictory you, the one actually doing the staring, might get quieter and quieter. And that&#x27;s the trap. It&#x27;s not about loving yourself too much.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">It&#x27;s about loving the picture of yourself until you forget there was someone else behind it. And while we stare at the surface, we miss what&#x27;s underneath. We don&#x27;t wanna spend our whole life thinking, <em>&quot;I&#x27;m the picture instead of the painter.&quot;</em> You&#x27;re the one with the brush. And underneath the painted, polished version, there&#x27;s something the model can&#x27;t show you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">When you remember a moment, you don&#x27;t play it back, you rebuild it every time from inside you. When you imagine a moment that hasn&#x27;t happened, your mind builds it in the same way from the same place. Memory and imagination come from the same part of you. And when you picture yourself braver or kinder or more alive, you couldn&#x27;t picture it vividly if the capacity weren&#x27;t already inside you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">The image is a self-portrait of potential drawn by the part of you that already knows the shape, and that&#x27;s the one we will go and investigate.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line head" id="p4"><span class="text">Phase 04 — Breathing &amp; falling into meditation</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Well, the easiest way to get into the meditative state is to begin by listening. And I want you to listen to the sound of my voice just as if it were noise. Don&#x27;t try to make any sense out of what I&#x27;m saying because your brain will take care of that automatically. You don&#x27;t have to try to understand anything, just listen to the sound.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And as you pursue that experiment, you&#x27;ll very naturally find that you can&#x27;t help naming sounds, identifying them — that you will go on thinking. That is to say, talking to yourself inside your head automatically. But it&#x27;s important you don&#x27;t try to repress those thoughts by forcing them out of your mind because that will have precisely the same effect as trying to smooth rough water with your hand.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">You&#x27;ll just disturb it all. The more you do this, as you hear sounds coming into your head, these thoughts, you simply listen to them as part of the general noise going on, just as you would be listening to the sound of my voice, just as you would be listening to cars going by or the birds chattering outside the window.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">So look at your own thoughts just as noises, and soon you will find that the so-called outside world and the so-called inside world come together. They are a happening. Your thoughts are a happening, just like the sounds going on outside, and everything is simply a happening, and all you are doing is watching it.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">It&#x27;s all just sound.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">It&#x27;s all just sound.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Let&#x27;s begin with a very deep breath in.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Slow exhale.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And a deep breath in through the nose.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And slow exhale through the mouth.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And another deep breath in through the nose.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And a slow exhale.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Now bring your attention to where the air enters your body.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Feel it enter. Let it fill you up.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Now feel how the air leaves your body.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Let&#x27;s breathe in again — two, three, four — and hold it for one, two, three — and release it and exhale and hold the exhale. And one more time in slowly. One, two, three, four. And hold. Two, three, four.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Now just let the breath return to its natural rhythm. Just let your body breathe the way it wants to.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And let your body settle. Let&#x27;s try to hold the focus of our mind on our breath.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">I&#x27;m going to slow down our count. And as you breathe in, you count one.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">As you exhale you count two.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And on the next in, we count three.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And on the next exhale, four. And just continue. Follow the way your body breathes and let your body settle.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line head" id="p5"><span class="text">Phase 05 — Descent</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And as you breathe — just letting it happen — you discover something.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Without any effort, you breathe more and more deeply.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And when you breathe out, get the sensation that your breath is falling out, dropping. Dropping. Dropping.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">It&#x27;s the same feeling as settling down into an extremely comfortable bed, as heavy as possible. Let yourself go.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Let the breath fall out in just that way.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">When it&#x27;s comfortably out, you don&#x27;t pull it back in, you let it fall back in, and your lungs expand till they feel comfortably full. And you wait a moment. And let it fall out again.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">That&#x27;s the rhythm — the rhythm we&#x27;re going to descend with.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Now imagine you&#x27;re in a room — a room that feels safe, warm, familiar. One you&#x27;d want to be in. Soft light, the kind of light you don&#x27;t have to react to. You&#x27;re not anywhere you need to be. Nothing&#x27;s asked of you here. Just take a moment to feel the room, the space.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And somewhere in this room, there&#x27;s a stairway. It goes down. Not into anything dark, just down into something quieter. Ten steps going down. And we&#x27;re going to descend together slowly, and on each step we&#x27;ll set something down. Not throw it away — just set it down like our coats at the door. And it&#x27;ll be there when you come back up if you still want it. By the time we reach the bottom — zero — we&#x27;ll be standing in the part of you that&#x27;s been there all along, the part underneath everything that you&#x27;ve added.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Are you ready? Let&#x27;s take the first step down the stairs.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">We&#x27;re now at ten. And on this step, we set down the names, the categories, the labels you&#x27;ve been running on, the words for things, the boxes you&#x27;ve been sorting today into. They&#x27;ve served you. They&#x27;ll be at the top of the stairs when you come back. Here on this step, we set them down.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">We take another step. We&#x27;re now on step nine.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And now the voice that&#x27;s been hardest on you — the one that says you&#x27;re not enough, that you can&#x27;t, that you&#x27;re not ready. That version of you you&#x27;ve been carrying, the one you tell stories about, the doubts, the fears — the version of yourself you&#x27;ve been afraid that you are. Same voice, different volumes. We set it down here. Let it keep talking if it wants. It just stays on this step.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And we take another step down. We&#x27;re now on step eight.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Here we see the part of you that&#x27;s been trying to figure things out. The how do I fix this? The tabs open in your head, the problems waiting their turn to be solved. Let the problems stay problems. They&#x27;ll be here when you get back. Let&#x27;s set the solving down and take another step.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">We&#x27;re now on step seven. You think about everything you should be doing right now, what&#x27;s expected of you, what you&#x27;re behind on, what you said you&#x27;d finish, the unfinished things. You can&#x27;t reach any of it from here anyway. Let&#x27;s put the shoulds down. And we take another step.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">We&#x27;re now at step six.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Here we see the image — the picture that you&#x27;ve been showing, the polished version, the curated one, the one you hold up, the one you&#x27;ve been staring at. It&#x27;s beautiful. It&#x27;s you. It&#x27;s yours. But it&#x27;s not all of you. Not even close.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And so we put down the image you&#x27;ve been holding. We set it down here at step six. We&#x27;ll come back for it if we still want it. We&#x27;re ready to take one more step. And as we step to step five, we think about yesterday — the conversation that didn&#x27;t go right, the thing you wish you&#x27;d said. A version of the day you might keep re-running.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Now we let yesterday stay in yesterday. As we take another step to step four.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Here we let go of everything we&#x27;ve been planning for tomorrow. Whatever you&#x27;ve been worrying about, tomorrow will still be there. It always is. Let tomorrow stay in tomorrow.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">As we take another step to step three.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Here, your body softens. You notice your shoulders, you notice your jaw. Wherever you&#x27;ve been holding — let it soften. You don&#x27;t have to be braced for anything here. Take another step to step two. Just notice your breath.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Slowly in. And out.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Nothing to do with it. Nothing to count. Just realize your body&#x27;s been breathing you this whole time.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Take one more step. We&#x27;re now on step one.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">You notice the temperature. The room around you. There&#x27;s only the now, right here, this body, this moment. As we take one more step. We&#x27;re at step zero.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And you&#x27;re here. Stripped of the names, stripped of the voices. The solving, the shoulds, the image. So only the <em>now</em>. And what&#x27;s amazing — there is something here. There&#x27;s you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Every person who&#x27;s ever lived has been some version of this. And every single one of you carries something the world has never seen before. Something only you can give. Not the polished version, not the performance. <em>This.</em></span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">Between the all and the void is only a difference of name.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And all words are made up if you think about it. And every one of them can be rewritten. And now — now we&#x27;re gonna find out who this is. That&#x27;s where the work begins. Just dwell on the you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line head" id="p6"><span class="text">Phase 06 — Three questions</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">I&#x27;m now gonna ask you three questions. Don&#x27;t try to answer with your mind. Just let the answer find you. What you remember and what you can vividly imagine come from the same part of you. Both count.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Here&#x27;s the first question. <strong>When was the last time you positively surprised yourself?</strong></span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Doesn&#x27;t have to be a big moment. Small one is enough. A flash. A second. When did someone else look surprised at you?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Or when did you do something and think, <em>&quot;I didn&#x27;t know I had that in me.&quot;</em></span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Or picture the next moment, the next time you&#x27;ll surprise yourself, and be in it. Bring back the room, the light, who was around, what you did. And let your body answer too. Where does anything stir as I ask?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Try and stay in this moment as I ask the next question.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text"><strong>When were you braver than you thought you could be?</strong> What was that moment? The bravery. When did you say something you&#x27;d be afraid to say? When did you stay when it would have been easier to leave? Bring back the room, the light, what you were wearing, the sound of your own voice. Or picture the next time, the next moment you&#x27;ll be braver than you thought.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Just follow your thoughts as they come naturally to you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Stay with what came up as I ask you one more question.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text"><strong>When were you more alive — more here, more in the now than your usual self?</strong> The moment when something else came through, when you knew you are more than the version of you that you keep showing up as. Time slowed down. You forgot yourself. It can be a small thing — a song, sun on your face, a laugh.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Be in it now. What do you see? Feel. Who is this one?</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Whatever answers came and found you — let&#x27;s assume that was you. Real moments, ones you remembered, ones you imagined, coming from the same place. The feeling is real.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">These aren&#x27;t anomalies. Not exceptions.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Whatever answer found you — that was you. Moments are real. Ones you remembered, ones you imagined, coming from the same place inside of you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">So much to find. The you who surprised you is real. The you who was braver is real. The you that&#x27;s alive is real.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Some models of yourself might not include them yet.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">The reflection doesn&#x27;t move. The real you does.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line head" id="p7"><span class="text">Phase 07 — The wheel</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">You&#x27;re here at zero. The real you, the model-less you — without the layers, without the labels, the brave one, the alive one, the one underneath everything.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">This is the one we want to keep in contact with — anytime, anywhere, every moment. So we&#x27;re going to install something — a trigger. A word paired with a sound. Both together.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">When you hear that word, you&#x27;re going to feel something in your body. Not in your head, not in your mind — in your body. An excitement, an electricity starting in your gut, moving outward through your chest, down your arms, into your fingers. From your gut, down your legs, into your toes. It&#x27;s like a small wave. A current.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And when you feel that current, that&#x27;s the you — the model-less you, the lightning one. And the word is <em>spark</em>.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">Spark.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text"><em><strong>SPARK FIRES — FIRST TIME IN THE PIECE — synchronized with the word &quot;spark&quot;</strong></em></span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And feel it — the electricity, the current going through your stomach, to your limbs, your fingers, your toes. <em>Spark.</em> That word with that sound — that&#x27;s the trigger. Every time you hear it and every time you say <em>spark</em>, that&#x27;s the current, that&#x27;s the lightning. That&#x27;s back to this one.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">Spark.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And now — we&#x27;re going to walk back up the stairs.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Your eyes still closed. We went down the steps and we found something. And now we go back up. Within your hands, the trigger.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Let&#x27;s feel it one more time before we go back up. <em>Spark.</em> Feel the electricity move through your body as you feel the real you coming up. We go back up to step one — you feel your body present in the room. Step two, your breath fuller. Step three, your shoulders find their weight again. Step four, your thought about tomorrow comes back — it can wait its turn. Up to step five — yesterday, you&#x27;ve already seen it, stays where it is. Step six, that image still on the step where you left it, and you walk past. Step seven, the shoulds come back, and you&#x27;ll pick up the ones you choose. Step eight, the solving mind, available when you need it. Step nine, the diminishing voice still on the step, and you walk past it.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Step ten — the names, the roles, the words, yours again. You&#x27;re back at the top of the stairs, back in the room, in your body. Yet the image still down there. So are those voices. They&#x27;re on the steps where you left them. But you brought something back — the real you, and the trigger to find it again.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Now I want you to imagine a large mechanical wheel in front of you. This wheel is still, it&#x27;s not turning, and it has spokes radiating out from its center. And between every other spoke, there&#x27;s a mirror. Half the wheel is open and half is reflecting glass. And as you stand there, you see a reflection of yourself in one of the spokes.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">It&#x27;s the polished one — the same one Narcissus stared at — the one you&#x27;ve been showing up as. And look closely. That reflection is carrying things — the labels, the names, the words you&#x27;ve been calling yourself. Maybe the diminishing voice that says you&#x27;re not enough, the doubts, the <em>&quot;I can&#x27;ts,&quot;</em> the version of you you&#x27;ve been afraid of, all of it stuck to the reflection.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And as the wheel starts to slowly turn, in one of the open spokes, you see a figure standing behind the wheel.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">It&#x27;s another person — the real you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">The one you just brought back up. The brave one. The alive one. Without the labels, without the doubt, without the diminishing voice.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">The wheel turns a bit more, and once again, you see the reflection — the polished one with labels and doubts riding along with it. And the wheel turns. <em>Spark!</em> Labels are gone. The doubts gone. The current you feel through your gut and your limbs. You&#x27;re behind the wheel, standing in the version that doesn&#x27;t need them.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And the wheel turns again, and once again, you see the reflection — the curated one, the one that needs to hold it together, the one in your head when you walk into a room. The diminished voice attached. The <em>&quot;I can&#x27;t&quot;</em> attached.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And the wheel turns. <em>Spark!</em> Back to the real you, the brave one. The alive one. And none of those voices reach this version.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">The wheel turns again and switches back to the reflection. The one that edits out the fights, the failures, the awkward moments, the shoulds, the fears, the negative self-image clinging to it. <em>Spark.</em> Back to the real you — the one who surprises you, the one who said the thing, the one who showed up when you didn&#x27;t think you would.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">The wheel turns. You see once again the reflection, and it keeps turning. <em>Spark.</em> The real you. And you feel that suppleness of switching perspective. And what you just did — that switch from the model back to you — that&#x27;s a skill. And that skill, let&#x27;s give it a name: <em>suppleness of perspective.</em> <em>Spark.</em></span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">One more practice. Pick something specific — something heavy you&#x27;ve been carrying. A doubt, a limit, an <em>&quot;I can&#x27;t.&quot;</em> The version of you you&#x27;ve been afraid that you are. See it. Hold it. And now — <em>spark.</em> And what was holding you back comes back as light, as lightning — the current through your gut, your limbs, to your fingers and your toes.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">The version of you that lights up the room — generous, open, giving, not protecting, not withholding, curious, outward.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And now I&#x27;m going to invite you to open your eyes.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And here it comes. <em>Spark.</em></span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text"><em><strong>TESLA COIL FIRES — REVEAL</strong></em></span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Any sufficiently advanced technology is indistinguishable from magic, and what you see here is both. In Dutch, the word for voltage and the word for tension are the same word — <em>spanning</em> — the pull between possibilities just before something happens. That&#x27;s what&#x27;s in this room right now, and that&#x27;s what&#x27;s in you all along.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And watch what this thing does. It pulls negativity out of the air, ionizes it, pulls it apart, and lights it on fire as lightning. And that&#x27;s the same thing you just did internally. The labels, the diminishing voice, the <em>&quot;I can&#x27;ts,&quot;</em> the negative self-image — all of that air at a higher abstraction level.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text"><em>Negativity is just air at a higher abstraction level.</em> And you can pull it out. <em>Spark!</em> And what was negativity comes back as light, as lightning — as the version of you that lights up the room. That is suppleness of perspective. That is the switch. That is the spark.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And listen. The words we use to call ourselves, the names we&#x27;ll be giving the model — <em>&quot;I&#x27;m not enough, I&#x27;m tired, I can&#x27;t&quot;</em> — those are just words. Just air. <em>Spark!</em> Take any one of them — pull it out, flip the switch. <em>Spark!</em> What was <em>&quot;I can&#x27;t&quot;</em> becomes <em>&quot;I am.&quot;</em> What was the diminishing voice — gone. Same move. Same skill.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And every time you say <em>spark</em>, every time you hear this sound, that&#x27;s the reminder. Drop the model. Back to the real you. Back to the lightning.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line head" id="p8"><span class="text">Phase 08 — Ending</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">Bed shifts — rhythmic, building.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Spark. That is the skill — suppleness of perspective. And from now on, you will easily switch the models. You&#x27;ll be aware of the models.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Please put your hands on your heart. Close your eyes just for a moment, and thank yourself for showing up.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Together with me, let&#x27;s say the word. Three. Two. One. <em>Spark!</em></span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text"><em><strong>SPARK FIRES — collective, with the audience saying the word</strong></em></span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Thank you for being here.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">This was our musical dream journey. I hope it resonated with you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">And remember — every spark is the same as the one already in you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">You are the lightning.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">Voice drops. Music rises. Tesla fires in time with the music. Audience moves or doesn&#x27;t. Room becomes a constellation.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text"><strong>Late-set plasma reveal</strong> — voice returns briefly when the music drops to ambient or just before a final coil firing:</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">What you&#x27;ve been seeing tonight — what&#x27;s been firing in this room — is plasma. Air, ionised. Energy moving through the space without a wire.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">Nikola Tesla spent his life trying to send power through the air to everyone. He thought it was possible. The world wasn&#x27;t ready then.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">But here, in this room, you&#x27;re seeing it work. Small. Local. Real.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">(beat)</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line"><span class="text">The same as you.</span></div>
+<div class="line"><span class="text"></span></div>
+<div class="line stage"><span class="text">Set continues. Closes.</span></div>
+<div class="line"><span class="text"></span></div>
+  </div>
+</main>
+
+</body>
+</html>
