@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Georgia — Juta · Kazbek hut nights · the green west | the plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  :root{
+    --paper: oklch(96.5% 0.012 85);
+    --paper-deep: oklch(93.5% 0.02 80);
+    --ink: oklch(24% 0.02 250);
+    --ink-soft: oklch(40% 0.02 250);
+    --green: oklch(42% 0.09 155);
+    --green-soft: oklch(90% 0.04 155);
+    --rust: oklch(52% 0.13 45);
+    --rust-soft: oklch(92% 0.045 55);
+    --sky: oklch(48% 0.07 240);
+    --sky-soft: oklch(91% 0.035 240);
+    --hairline: oklch(80% 0.02 85);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader", Georgia, serif;
+    font-size:clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+    line-height:1.55;
+  }
+  .page{max-width:62rem;margin:0 auto;padding:clamp(1.25rem,4vw,4rem) clamp(1rem,4vw,3rem) 5rem}
+
+  header{border-bottom:3px solid var(--ink);padding-bottom:1.75rem;margin-bottom:2.5rem}
+  .kicker{
+    font-family:"Fraunces",serif;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--rust);font-weight:600;margin-bottom:1rem;
+  }
+  h1{
+    font-family:"Fraunces",serif;font-optical-sizing:auto;
+    font-size:clamp(2.1rem, 1.4rem + 3.4vw, 4rem);
+    font-weight:640;line-height:1.02;letter-spacing:-0.015em;max-width:20ch;
+  }
+  h1 em{font-style:italic;font-weight:420;color:var(--green)}
+  .standfirst{
+    margin-top:1.25rem;max-width:48ch;font-size:1.1em;color:var(--ink-soft);
+    font-style:italic;
+  }
+  .trick{
+    margin-top:1.5rem;display:inline-block;background:var(--ink);color:var(--paper);
+    padding:.55rem .9rem;font-family:"Fraunces",serif;font-size:.92rem;font-weight:500;max-width:44rem;
+  }
+  .trick b{color:oklch(85% 0.07 85)}
+
+  .scorecard{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:0;border:1.5px solid var(--ink);margin:0 0 3rem}
+  .score{padding:1rem 1.1rem;border-right:1px solid var(--hairline)}
+  .score:last-child{border-right:none}
+  .score .ask{font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-family:"Fraunces",serif}
+  .score .verdict{font-family:"Fraunces",serif;font-weight:640;font-size:1.28rem;margin-top:.2rem;color:var(--green)}
+  .score .how{font-size:.88rem;color:var(--ink-soft);margin-top:.15rem}
+  @media (max-width:640px){ .score{border-right:none;border-bottom:1px solid var(--hairline)} .score:last-child{border-bottom:none} }
+
+  h2{
+    font-family:"Fraunces",serif;font-size:clamp(1.5rem,1.2rem+1.4vw,2.1rem);font-weight:600;
+    margin:3.2rem 0 .4rem;letter-spacing:-.01em;
+  }
+  h2 .no{color:var(--rust);font-weight:340;font-style:italic;margin-right:.35rem}
+  .sub{color:var(--ink-soft);max-width:60ch;margin-bottom:1.4rem}
+
+  .map{
+    height:26rem;border:1.5px solid var(--ink);margin:1.4rem 0 .5rem;
+    background:var(--paper-deep);
+  }
+  .map-caption{font-size:.85rem;color:var(--ink-soft);font-style:italic;margin-bottom:1rem}
+  .maplegend{display:flex;flex-wrap:wrap;gap:.9rem;font-family:"Fraunces",serif;font-size:.78rem;font-weight:600;letter-spacing:.03em;margin-top:.5rem}
+  .maplegend span{display:inline-flex;align-items:center;gap:.35rem}
+  .swatch{display:inline-block;width:1.6rem;height:0;border-top-width:3px;border-top-color:currentColor}
+  .lg-car{color:var(--rust)} .lg-car .swatch{border-top-style:solid}
+  .lg-hike{color:var(--green)} .lg-hike .swatch{border-top-style:solid}
+  .lg-jeep{color:var(--ink-soft)} .lg-jeep .swatch{border-top-style:dotted}
+  .leaflet-container{font-family:"Newsreader",Georgia,serif;font-size:.8rem}
+  .nightlabel{
+    background:var(--ink);color:var(--paper);border:none;border-radius:2px;
+    font-family:"Fraunces",serif;font-weight:600;font-size:.72rem;padding:.1rem .4rem;
+    box-shadow:none;white-space:nowrap;
+  }
+  .nightlabel::before{display:none}
+  .poilabel{
+    background:oklch(97.5% 0.01 85 / .85);color:var(--ink);border:none;
+    border-radius:2px;font-family:"Fraunces",serif;font-weight:600;font-size:.56rem;
+    padding:0 .22rem;box-shadow:none;white-space:nowrap;line-height:1.3;
+  }
+  .poilabel::before{display:none}
+
+  .lanes{border:1.5px solid var(--ink);background:oklch(98% 0.008 85);padding:1.1rem 1rem 1rem;margin:1.8rem 0 .4rem;overflow-x:auto}
+  .lanes-title{font-family:"Fraunces",serif;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:640;color:var(--rust);margin-bottom:.7rem}
+  .lanerow{display:grid;grid-template-columns:6.6rem repeat(11,minmax(4.1rem,1fr));gap:.32rem;align-items:center;margin-top:.35rem;min-width:57rem}
+  .lanerow.lhead{margin-top:0;padding-bottom:.25rem;border-bottom:1px solid var(--hairline);margin-bottom:.35rem}
+  .lhead .ld{font-family:"Fraunces",serif;text-align:center;font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;line-height:1.25}
+  .lhead .ld b{display:block;font-size:.85rem;color:var(--ink);letter-spacing:0}
+  .lane-label{font-family:"Fraunces",serif;font-size:.74rem;font-weight:640;line-height:1.2;padding-right:.3rem}
+  .lane-label span{display:block;font-weight:400;font-style:italic;color:var(--ink-soft);font-size:.88em}
+  .slot{height:1.2rem;border-radius:999px;background:var(--paper-deep)}
+  .lp{border-radius:999px;padding:.3rem .5rem;font-family:"Fraunces",serif;font-size:.66rem;font-weight:620;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.15}
+  .lp.s2{grid-column:span 2}.lp.s3{grid-column:span 3}
+  .lp.sl-tb{background:oklch(90% 0.012 260);color:var(--ink-soft)}
+  .lp.sl-tr{background:oklch(97% 0.02 155);color:var(--green);border:1.5px dashed var(--green);padding:.2rem .5rem}
+  .lp.sl-ku{background:var(--rust-soft);color:var(--rust)}
+  .lp.sl-kz{background:var(--sky-soft);color:var(--sky)}
+  .lp.sl-pl{background:transparent;border:1.5px dashed var(--hairline);color:var(--ink-soft);font-style:italic;font-weight:400;padding:.2rem .5rem}
+  .lp.mv-car{background:var(--rust);color:oklch(97% 0.012 85)}
+  .lp.mv-air{background:var(--sky);color:oklch(97% 0.012 85)}
+  .lp.mv-jp{background:oklch(56% 0.02 250);color:oklch(97% 0.012 85)}
+  .lp.ft{background:var(--green);color:oklch(97% 0.012 85)}
+  .lp.sg{background:oklch(87% 0.07 85);color:oklch(38% 0.08 70)}
+  .lanes-key{display:flex;flex-wrap:wrap;gap:.4rem 1rem;margin-top:.8rem;font-family:"Fraunces",serif;font-size:.72rem;font-weight:600;color:var(--ink-soft)}
+  .lanes-key i{display:inline-block;width:.85rem;height:.85rem;border-radius:999px;vertical-align:-2px;margin-right:.3rem;font-style:normal}
+
+  .postcards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2.2rem 0 .4rem}
+  @media (max-width:820px){.postcards{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:520px){.postcards{grid-template-columns:1fr}}
+  .postcards figure{margin:0}
+  .postcards img{
+    width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+    border:1.5px solid var(--ink);filter:saturate(.92);
+  }
+  .postcards figcaption{
+    font-family:"Fraunces",serif;font-size:.8rem;margin-top:.4rem;line-height:1.35;
+  }
+  .postcards figcaption .pc-day{font-weight:640;letter-spacing:.06em;text-transform:uppercase;font-size:.68rem;color:var(--rust);display:block}
+  .postcards figcaption em{color:var(--ink-soft);font-weight:400}
+  .postcards a.cc{color:var(--hairline);text-decoration:none;font-size:.7em;vertical-align:super}
+  .postcards a.cc:hover{color:var(--ink-soft)}
+
+  table.ledger{width:100%;border-collapse:collapse;border-top:2.5px solid var(--ink)}
+  .ledger th{
+    text-align:left;font-family:"Fraunces",serif;font-size:.75rem;letter-spacing:.18em;
+    text-transform:uppercase;font-weight:600;padding:.6rem .6rem .5rem;border-bottom:1.5px solid var(--ink);
+    color:var(--ink-soft);
+  }
+  .ledger td{padding:.85rem .6rem;border-bottom:1px solid var(--hairline);vertical-align:top}
+  .ledger .date{white-space:nowrap;width:6.2rem}
+  .ledger .date b{font-family:"Fraunces",serif;font-size:1.15rem;font-weight:640;display:block;line-height:1.1}
+  .ledger .date span{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .ledger td.mode{width:3.6rem;text-align:center;padding-left:.2rem;padding-right:.2rem;white-space:nowrap}
+  .mode .mi{display:block;font-size:1.3rem;line-height:1.25;filter:saturate(.8)}
+  .mode .ml{display:block;font-size:.56rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);font-family:"Fraunces",serif;font-weight:600;margin:-.1rem 0 .25rem}
+  .iconkey{display:flex;flex-wrap:wrap;gap:.4rem .95rem;font-family:"Fraunces",serif;font-size:.78rem;font-weight:600;letter-spacing:.03em;color:var(--ink-soft);margin:0 0 1rem}
+  .iconkey span{white-space:nowrap}
+  @media (max-width:720px){ .ledger td.mode{width:2.3rem} .mode .ml{display:none} .iconkey{gap:.3rem .7rem} }
+  .ledger .plan{max-width:34rem}
+  .ledger .plan .headline{font-weight:600;font-family:"Fraunces",serif;font-size:1.02rem}
+  .ledger .plan .detail{color:var(--ink-soft);font-size:.94em;margin-top:.15rem}
+  .chip{
+    display:inline-block;font-family:"Fraunces",serif;font-size:.74rem;font-weight:600;
+    letter-spacing:.04em;padding:.14rem .5rem;border-radius:2px;margin:.3rem .3rem 0 0;white-space:nowrap;
+  }
+  .chip.hike{background:var(--green-soft);color:var(--green)}
+  .chip.drive{background:var(--rust-soft);color:var(--rust)}
+  .chip.fly{background:var(--sky-soft);color:var(--sky)}
+  .ledger td.sleep{width:11.5rem;padding:0;border-bottom:none}
+  .bed{
+    height:100%;margin:.3rem 0 .3rem .5rem;padding:.6rem .75rem;
+    font-family:"Fraunces",serif;font-size:.9rem;font-weight:560;line-height:1.25;
+  }
+  .bed .nights{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;opacity:.65;margin-top:.15rem}
+  .bed.tbilisi{background:var(--paper-deep);border-left:3px solid var(--ink-soft)}
+  .bed.trail{background:oklch(96% 0.03 155);border-left:3px dashed var(--green)}
+  .bed.kutaisi{background:var(--rust-soft);border-left:3px solid var(--rust)}
+  .bed.kazbegi{background:var(--sky-soft);border-left:3px solid var(--sky)}
+  .bed.plane{background:transparent;border-left:3px solid var(--hairline);color:var(--ink-soft);font-style:italic;font-weight:400}
+  @media (max-width:720px){
+    .ledger .date{width:4.5rem}
+    .ledger td.sleep{width:7.5rem}
+    .bed{margin-left:.25rem;padding:.5rem .55rem;font-size:.8rem}
+  }
+
+  .optionb{border:1.5px solid var(--sky);margin-top:1.5rem}
+  .optionb-head{background:var(--sky);color:var(--paper);padding:.8rem 1.1rem;font-family:"Fraunces",serif;font-weight:600;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.4rem}
+  .optionb-head .meta{font-weight:400;font-style:italic;font-size:.92em;opacity:.9}
+  .optionb-body{padding:1.1rem 1.2rem 1.3rem}
+  .optionb-body p{font-size:.95em;color:var(--ink-soft);margin-top:.8rem}
+  .proscons{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+  @media (max-width:720px){.proscons{grid-template-columns:1fr}}
+  .proscons div{font-size:.92em;padding:.7rem .9rem}
+  .proscons .pro{background:var(--sky-soft)}
+  .proscons .con{background:var(--paper-deep)}
+  .proscons b{font-family:"Fraunces",serif;display:block;margin-bottom:.25rem}
+
+  .risk{border-left:4px solid var(--rust);background:var(--rust-soft);padding:1.1rem 1.3rem;margin:1.4rem 0}
+  .risk h3{font-family:"Fraunces",serif;font-size:1.05rem;color:var(--rust);margin-bottom:.4rem}
+  .risk ul{margin-left:1.1rem}
+  .risk li{margin:.35rem 0;font-size:.96em}
+
+  table.budget{width:100%;border-collapse:collapse;margin-top:.5rem;max-width:38rem}
+  .budget td{padding:.5rem .4rem;border-bottom:1px solid var(--hairline)}
+  .budget td:last-child{text-align:right;font-family:"Fraunces",serif;font-weight:560;white-space:nowrap}
+  .budget tr.total td{border-top:2px solid var(--ink);border-bottom:none;font-weight:700;font-family:"Fraunces",serif;font-size:1.1em}
+  .budget .note{font-size:.85em;color:var(--ink-soft);display:block}
+
+  ol.checklist{counter-reset:c;list-style:none;max-width:44rem}
+  ol.checklist li{
+    counter-increment:c;padding:.75rem 0 .75rem 3rem;position:relative;border-bottom:1px solid var(--hairline);
+  }
+  ol.checklist li::before{
+    content:counter(c);position:absolute;left:0;top:.65rem;
+    font-family:"Fraunces",serif;font-style:italic;font-weight:300;font-size:1.7rem;color:var(--rust);
+  }
+  ol.checklist li b{font-family:"Fraunces",serif}
+  ol.checklist .why{color:var(--ink-soft);font-size:.93em}
+  .urgent{background:var(--ink);color:var(--paper);font-size:.7rem;font-family:"Fraunces",serif;letter-spacing:.12em;text-transform:uppercase;padding:.15rem .5rem;margin-left:.4rem;vertical-align:middle}
+
+  .library{columns:2;column-gap:2.5rem;max-width:56rem}
+  @media (max-width:720px){.library{columns:1}}
+  .lib-group{break-inside:avoid;margin-bottom:1.6rem}
+  .lib-group h3{font-family:"Fraunces",serif;font-size:1rem;font-weight:640;margin-bottom:.4rem;color:var(--green)}
+  .lib-group ul{list-style:none}
+  .lib-group li{padding:.28rem 0;border-bottom:1px solid var(--hairline);font-size:.93em}
+  .lib-group li b{font-family:"Fraunces",serif;font-weight:600}
+  .lib-group li span{color:var(--ink-soft)}
+
+  a{color:var(--sky);text-decoration-thickness:1px;text-underline-offset:2px}
+  footer{margin-top:4rem;padding-top:1rem;border-top:2.5px solid var(--ink);font-size:.82rem;color:var(--ink-soft)}
+  footer a{color:var(--ink-soft)}
+
+  @media print{
+    body{background:white;font-size:10.5pt}
+    .page{padding:0;max-width:none}
+    .risk,.bed,.chip,.optionb-head{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h2{break-after:avoid}
+    .ledger tr,.optionb,.lib-group{break-inside:avoid}
+    .map{height:18rem}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="kicker">Stefan &amp; Marieke · 9 nights · dates flexible (grey = 8–18 Jul mapping) · rev. 15 — Option A is the pick</div>
+  <h1>Georgia — Juta, two nights <em>on Kazbek</em>, and the green west</h1>
+  <p class="standfirst">The decision is made. Mountains first on fresh legs — Juta, two Stepantsminda days (Chaukhi, then full Truso), then <b>two nights at Altihut, 3,014 m on Kazbek's flank</b>, with a whole unloaded glacier day between them. Down, west, and the trip decompresses: an air-conditioned Kutaisi base for the spas, caves, canyons and swims. <b>Option B</b> below keeps the same bones but trades the hut for a third Stepantsminda night and a Martvili village base — kept for comparison.</p>
+  <div class="trick">The shape in one line: <b>1 Tbilisi → 1 Juta → 2 Stepantsminda → 2 Altihut → 2 Kutaisi → 1 Tbilisi.</b> The car exists only while it's driven (Day 3 morning → Day 10 evening), nothing starts before ~09:30, and the one monster day sits mid-trip where a problem costs a nap — not the 06:00 flight home.</div>
+</header>
+
+<div class="scorecard">
+  <div class="score"><div class="ask">Big mountain days</div><div class="verdict">✓ 5</div><div class="how">Chaukhi pass (3,338 m) · Truso · up to the hut · the glacier day · the walk down</div></div>
+  <div class="score"><div class="ask">Walked in &amp; stayed</div><div class="verdict">✓ 2 nights</div><div class="how">Altihut at 3,014 m — beds, duvets, hot dinner. No tent, ever</div></div>
+  <div class="score"><div class="ask">Max one long day</div><div class="verdict">✓ One</div><div class="how">Day 8: ~3 h downhill + ~6½ h drive west. Everything else ≤ 4 h</div></div>
+  <div class="score"><div class="ask">Heat plan</div><div class="verdict">✓ AC + pool</div><div class="how">Kutaisi base for the 30–34°C lowland days; swims + 14°C caves midday</div></div>
+</div>
+
+<h2><span class="no">I.</span>The plan — Option A <span style="font-weight:340;font-style:italic;font-size:.65em;color:var(--ink-soft)">two hut nights + the Kutaisi base</span></h2>
+<p class="sub">Two consecutive Stepantsminda days come first — Chaukhi on arrival day, full Truso as the recovery day — <em>then</em> the hut, so legs are banked before the 1,300 m climb. <b>No tent at any point:</b> Altihut is a proper staffed hut (~€45 pp half board, <a href="https://altihut.ge">altihut.ge</a>). Big bags wait at the Stepantsminda hotel and get collected on the Day-8 pass-through.</p>
+
+<div class="iconkey"><span>✈️ plane</span><span>🚗 your car</span><span>🚙 local jeep</span><span>🥾 on foot</span></div>
+
+<table class="ledger">
+  <thead><tr><th>Date</th><th style="text-align:center">How</th><th>The day</th><th>Sleep</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="date"><b>Day 1–2</b><span>wed–thu*</span></td>
+      <td class="mode"><span class="mi">✈️</span><span class="ml">plane</span></td>
+      <td class="plan"><span class="headline">Evening flight (18:30 → 04:35) · Bolt in · recover in Tbilisi</span>
+        <div class="detail">Book the room from the night before (or guaranteed early check-in) so you can crash at 5 am. No car today — it gets <b>delivered to the hotel ~09:00 on Day 3</b>. Afternoon: old town, sulphur baths, GEL cash, offline maps. <em>*grey dates = if you keep the 8–18 July flights.</em></div></td>
+      <td class="sleep"><div class="bed tbilisi">Tbilisi<span class="nights">1 night · no car yet</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 3</b><span>fri 10*</span></td>
+      <td class="mode"><span class="mi">🚗</span><span class="ml">car</span><span class="mi">🥾</span><span class="ml">foot</span></td>
+      <td class="plan"><span class="headline">Military Highway → Sno valley → Juta (2,030 m)</span>
+        <div class="detail">Out ~10:00, Ananuri fortress stop, Sno's stone heads, last ~8 km gravel to the lodge (slow and fine when dry — why the compact SUV). Afternoon warm-up amble into the Chaukhi meadows; dinner under the towers.</div>
+        <span class="chip drive">🚗 ~3½–4 h</span><span class="chip hike">🥾 2–3 h easy</span></td>
+      <td class="sleep"><div class="bed kazbegi">Juta · Fifth Season<span class="nights">1 night</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 4</b><span>sat 11*</span></td>
+      <td class="mode"><span class="mi">🥾</span><span class="ml">foot</span><span class="mi">🚗</span><span class="ml">car</span></td>
+      <td class="plan"><span class="headline">The Chaukhi hike — then 45 min to Stepantsminda for dinner</span>
+        <div class="detail">Up toward the pass (3,338 m) straight from the lodge door — meadows, lakes, switchbacks, turn around whenever. Back by ~16:00, drive down, check in for <b>2 nights</b>. Local 4×4 up to Gergeti Trinity for sunset if legs allow.</div>
+        <span class="chip hike">🥾 ~6–7 h · +1,100 m</span><span class="chip drive">🚗 45 min</span></td>
+      <td class="sleep" rowspan="2"><div class="bed kazbegi">Stepantsminda<span class="nights">2 nights · one hotel<br>(your booking.com pick)</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 5</b><span>sun 12*</span></td>
+      <td class="mode"><span class="mi">🚙</span><span class="ml">jeep</span><span class="mi">🥾</span><span class="ml">foot</span></td>
+      <td class="plan"><span class="headline">Truso valley, the full version · Darial gorge</span>
+        <div class="detail">The recovery day between the two big climbs. Local jeep to the trailhead, walk deep — travertines, abandoned villages, Zakagori fortress; Darial + monastery on the way back. Early night; the hut climb is tomorrow.</div>
+        <span class="chip hike">🥾 easy–moderate, long</span></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 6</b><span>mon 13*</span></td>
+      <td class="mode"><span class="mi">🥾</span><span class="ml">foot</span></td>
+      <td class="plan"><span class="headline">Up Kazbek's flank to Altihut (3,014 m)</span>
+        <div class="detail">~1,300 m of climbing past Gergeti Trinity, 5–6 h, <b>daypacks only</b> — check out and leave the big bags at the Stepantsminda hotel (collected Day 8). Real beds, duvets, hot dinner, a bar facing the Gergeti glacier. Sunset from the terrace.</div>
+        <span class="chip hike">🥾 5–6 h · +1,300 m</span></td>
+      <td class="sleep" rowspan="2"><div class="bed trail">Altihut · 3,014 m<span class="nights">2 nights · half board<br>no tent needed</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 7</b><span>tue 14*</span></td>
+      <td class="mode"><span class="mi">🥾</span><span class="ml">foot</span></td>
+      <td class="plan"><span class="headline">The glacier day, from altitude</span>
+        <div class="detail">Sunrise at 3,000 m, then an unloaded push toward the <b>Gergeti glacier edge or Betlemi hut (3,653 m)</b> — turn around whenever. This day is why the two-night version wins: no descent deadline, real high-mountain time no village day-hike can reach. Second hut sunset.</div>
+        <span class="chip hike">🥾 4–6 h · your call</span></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 8</b><span>wed 15*</span></td>
+      <td class="mode"><span class="mi">🥾</span><span class="ml">down</span><span class="mi">🚗</span><span class="ml">car</span></td>
+      <td class="plan"><span class="headline">The double: walk down · collect bags · drive west to Kutaisi</span>
+        <div class="detail">Down in ~2½–3 h (by ~11:30), coffee + bags in Stepantsminda, then the long drive — lunch in Pasanauri or a late one at Mtskheta, into <b>Kutaisi ~19:00–19:30</b>. Biggest combined day of the trip, but it's downhill legs in the morning and a car seat after. Check into an <b>air-conditioned hotel with a pool</b>. Check <a href="https://www.georoad.ge/?lang=eng">georoad.ge</a> before descending — Larsi truck queues occasionally clog the highway.</div>
+        <span class="chip hike">🥾 ~3 h down</span><span class="chip drive">🚗 ~6–6½ h</span></td>
+      <td class="sleep" rowspan="2"><div class="bed kutaisi">Kutaisi<span class="nights">2 nights · AC + pool<br>the heat insurance</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 9</b><span>thu 16*</span></td>
+      <td class="mode"><span class="mi">🚗</span><span class="ml">local</span><span class="mi">🥾</span><span class="ml">wander</span></td>
+      <td class="plan"><span class="headline">The western day: Tskaltubo · a real soak · Prometheus caves · canyon at dusk</span>
+        <div class="detail">Tskaltubo is 15 min away: ghost sanatoriums in the morning light (Sanatorium Medea, Bathhouse No. 8), the <b>Bathhouse No. 6 radon bath</b> (daily 10:00–17:00, ~25 GEL a private cabin), <b>Prometheus caves</b> ~14:00 (a steady 14°C — the coolest place in west Georgia), then <b>Martvili canyon boat + swim</b> (45 min) when the tour buses are gone. Full, but everything is close.</div>
+        <span class="chip drive">🚗 ~2 h total, local</span></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 10</b><span>fri 17*</span></td>
+      <td class="mode"><span class="mi">🚗</span><span class="ml">car</span></td>
+      <td class="plan"><span class="headline">Kaghu swim or Gelati monastery → Uplistsikhe → Tbilisi</span>
+        <div class="detail">Optional early <b>Kaghu waterfall swim</b> (1 h out) or <b>Gelati monastery</b> (UNESCO, 20 min), then east — <b>Uplistsikhe</b>, the Iron-Age cave city, splits the drive; Tbilisi ~16:30. <b>Return the car on arrival</b> (office or hotel collection), then baths + a <b>qvevri wine bar</b> for the one Georgian headline this route skips.</div>
+        <span class="chip drive">🚗 ~4–4½ h</span></td>
+      <td class="sleep"><div class="bed tbilisi">Tbilisi<span class="nights">short night · car gone</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 11</b><span>sat 18*</span></td>
+      <td class="mode"><span class="mi">✈️</span><span class="ml">plane</span></td>
+      <td class="plan"><span class="headline">Bolt to the airport ~03:30 · fly ~06:00</span>
+        <div class="detail">No car to drop, no after-hours desk to find — a taxi at 03:30 costs ~30 GEL. Home with slack to spare.</div>
+        <span class="chip fly">✈ home</span></td>
+      <td class="sleep"><div class="bed plane">your own bed</div></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="lanes">
+  <div class="lanes-title">Option A at a glance</div>
+  <div class="lanerow lhead"><div></div><div class="ld"><b>Day 1</b>wed*</div><div class="ld"><b>Day 2</b>thu*</div><div class="ld"><b>Day 3</b>fri*</div><div class="ld"><b>Day 4</b>sat*</div><div class="ld"><b>Day 5</b>sun*</div><div class="ld"><b>Day 6</b>mon*</div><div class="ld"><b>Day 7</b>tue*</div><div class="ld"><b>Day 8</b>wed*</div><div class="ld"><b>Day 9</b>thu*</div><div class="ld"><b>Day 10</b>fri*</div><div class="ld"><b>Day 11</b>sat*</div></div>
+  <div class="lanerow"><div class="lane-label">Sleep<span>where the night lands</span></div><div class="lp sl-pl">✈ flight</div><div class="lp sl-tb">Tbilisi</div><div class="lp sl-kz">Juta</div><div class="lp sl-kz s2">Stepantsminda ×2</div><div class="lp sl-tr s2">Altihut 3,014 m ×2</div><div class="lp sl-ku s2">Kutaisi ×2 (AC)</div><div class="lp sl-tb">Tbilisi</div><div class="lp sl-pl">home</div></div>
+  <div class="lanerow"><div class="lane-label">Moving<span>car · jeep · plane</span></div><div class="lp mv-air">✈ AMS→TBS</div><div class="slot"></div><div class="lp mv-car">🚗 3½–4 h</div><div class="lp mv-car">🚗 45 m</div><div class="lp mv-jp">🚙 Truso</div><div class="slot"></div><div class="slot"></div><div class="lp mv-car">🚗 6–6½ h</div><div class="lp mv-car">🚗 local</div><div class="lp mv-car">🚗 ~4–4½ h</div><div class="lp mv-air">✈ 06:00</div></div>
+  <div class="lanerow"><div class="lane-label">On foot<span>hikes + swims</span></div><div class="slot"></div><div class="slot"></div><div class="lp ft">🥾 meadows</div><div class="lp ft">🥾 Chaukhi pass</div><div class="lp ft">🥾 Truso</div><div class="lp ft">🥾 +1,300 m up</div><div class="lp ft">🥾 glacier day</div><div class="lp ft">🥾 down 3 h</div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
+  <div class="lanerow"><div class="lane-label">Sights</div><div class="slot"></div><div class="lp sg">baths</div><div class="lp sg">Ananuri·Sno</div><div class="slot"></div><div class="lp sg">Darial</div><div class="slot"></div><div class="slot"></div><div class="lp sg">Mtskheta</div><div class="lp sg">spas·caves·canyon</div><div class="lp sg">Kaghu·Uplists.</div><div class="slot"></div></div>
+  <div class="lanes-key">
+    <span><i style="background:var(--sky-soft)"></i>sleep blocks (dashed = hut/plane)</span>
+    <span><i style="background:var(--rust)"></i>your car</span>
+    <span><i style="background:var(--sky)"></i>plane</span>
+    <span><i style="background:oklch(56% 0.02 250)"></i>local jeep</span>
+    <span><i style="background:var(--green)"></i>on foot</span>
+    <span><i style="background:oklch(87% 0.07 85)"></i>sights</span>
+  </div>
+</div>
+
+<div class="postcards">
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Below_the_Chaukhi_Mountain.jpg/960px-Below_the_Chaukhi_Mountain.jpg" alt="Meadows below the Chaukhi massif" loading="lazy">
+    <figcaption><span class="pc-day">Day 3–4 · juta</span>Below Chaukhi — <em>the "Georgian Dolomites", straight from the lodge door</em> <a class="cc" href="https://commons.wikimedia.org/wiki/File:Below_the_Chaukhi_Mountain.jpg">©</a></figcaption>
+  </figure>
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/2024-08-03_Truso_Valley_1.jpg/960px-2024-08-03_Truso_Valley_1.jpg" alt="The wide green Truso valley" loading="lazy">
+    <figcaption><span class="pc-day">Day 5 · recovery</span>Truso valley — <em>travertines and abandoned villages between the two climbs</em> <a class="cc" href="https://commons.wikimedia.org/wiki/File:2024-08-03_Truso_Valley_1.jpg">©</a></figcaption>
+  </figure>
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Kazbegi%2C_Gergeti_Trinity_Church_and_Mt_Kazbek_%2835959311351%29.jpg/960px-Kazbegi%2C_Gergeti_Trinity_Church_and_Mt_Kazbek_%2835959311351%29.jpg" alt="Gergeti Trinity Church below Mount Kazbek" loading="lazy">
+    <figcaption><span class="pc-day">Day 6–8 · the hut days</span>Gergeti Trinity under Kazbek (5,047 m) — <em>you climb past it to sleep at 3,014 m</em> <a class="cc" href="https://commons.wikimedia.org/wiki/File:Kazbegi,_Gergeti_Trinity_Church_and_Mt_Kazbek_(35959311351).jpg">©</a></figcaption>
+  </figure>
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Jvari_Monastery_01.jpg/960px-Jvari_Monastery_01.jpg" alt="Jvari monastery above the Mtskheta river confluence" loading="lazy">
+    <figcaption><span class="pc-day">Day 8 · en route</span>Jvari above Mtskheta — <em>the 6th-century stop on the drive west</em> <a class="cc" href="https://commons.wikimedia.org/wiki/File:Jvari_Monastery_01.jpg">©</a></figcaption>
+  </figure>
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Georgia%2C_Imereti_-_Meshakhte_Sanatorium_Building_%28Tskaltubo%29_WMID7140708.jpg/960px-Georgia%2C_Imereti_-_Meshakhte_Sanatorium_Building_%28Tskaltubo%29_WMID7140708.jpg" alt="Abandoned Meshakhte sanatorium, Tskaltubo" loading="lazy">
+    <figcaption><span class="pc-day">Day 9 · tskaltubo</span>The ghost sanatoriums — <em>plus a real radon soak at working Bathhouse No. 6</em> <a class="cc" href="https://commons.wikimedia.org/wiki/File:Georgia,_Imereti_-_Meshakhte_Sanatorium_Building_(Tskaltubo)_WMID7140708.jpg">©</a></figcaption>
+  </figure>
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Prometheus_Cave_reflection%2C_Georgia.jpg/960px-Prometheus_Cave_reflection%2C_Georgia.jpg" alt="Reflections inside Prometheus cave" loading="lazy">
+    <figcaption><span class="pc-day">Day 9 · 14:00</span>Prometheus caves — <em>1.4 km of lit galleries at a steady 14°C</em> <a class="cc" href="https://commons.wikimedia.org/wiki/File:Prometheus_Cave_reflection,_Georgia.jpg">©</a></figcaption>
+  </figure>
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Martvili_Canyon%2C_visitantes.jpg/960px-Martvili_Canyon%2C_visitantes.jpg" alt="Boats in the green water of Martvili canyon" loading="lazy">
+    <figcaption><span class="pc-day">Day 9 · dusk</span>Martvili canyon — <em>boat + swim after the tour buses leave</em> <a class="cc" href="https://commons.wikimedia.org/wiki/File:Martvili_Canyon,_visitantes.jpg">©</a></figcaption>
+  </figure>
+  <figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Uplistsikhe_cave_town.jpg/960px-Uplistsikhe_cave_town.jpg" alt="The rock-carved cave town of Uplistsikhe" loading="lazy">
+    <figcaption><span class="pc-day">Day 10 · homeward</span>Uplistsikhe — <em>an Iron-Age city carved from the rock, splitting the drive home</em> <a class="cc" href="https://commons.wikimedia.org/wiki/File:Uplistsikhe_cave_town.jpg">©</a></figcaption>
+  </figure>
+</div>
+
+<div class="map" id="mapA"></div>
+<div class="maplegend">
+  <span class="lg-car"><span class="swatch"></span>your car</span>
+  <span class="lg-hike"><span class="swatch"></span>on foot</span>
+  <span class="lg-jeep"><span class="swatch"></span>local jeep</span>
+</div>
+<p class="map-caption">Option A — Juta and two Stepantsminda days, the climb to Altihut, then the western spokes from Kutaisi. One combined long day (Day 8), ~1,100 km driven.</p>
+
+<h2><span class="no">II.</span>Option B — the comparison <span style="font-weight:340;font-style:italic;font-size:.65em;color:var(--ink-soft)">no hut · third Stepantsminda night · Martvili village base</span></h2>
+<p class="sub">Same bones, no climb to 3,014 m: Gergeti becomes a day hike from the village, Stepantsminda keeps a third night, and the west gets its full three nights in <b>Martvili itself</b> — village evenings, and the whole original-doc western day (Kaghu, Balda) at strolling pace. The cost: no hut nights, and the monster drive (Day 7) runs 30 min longer to reach Martvili.</p>
+
+<table class="ledger">
+  <thead><tr><th>Date</th><th style="text-align:center">How</th><th>The day</th><th>Sleep</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="date"><b>Day 1–2</b><span>wed–thu*</span></td>
+      <td class="mode"><span class="mi">✈️</span><span class="ml">plane</span></td>
+      <td class="plan"><span class="headline">Evening flight · land 04:35 · Bolt in · recover in Tbilisi</span>
+        <div class="detail">Identical to A — car delivered to the hotel ~09:00 on Day 3.</div></td>
+      <td class="sleep"><div class="bed tbilisi">Tbilisi<span class="nights">1 night · no car yet</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 3</b><span>fri 10*</span></td>
+      <td class="mode"><span class="mi">🚗</span><span class="ml">car</span><span class="mi">🥾</span><span class="ml">foot</span></td>
+      <td class="plan"><span class="headline">Military Highway → Sno valley → Juta (2,030 m)</span>
+        <div class="detail">Identical to A: Ananuri stop, gravel to the lodge, Chaukhi-meadow warm-up.</div>
+        <span class="chip drive">🚗 ~3½–4 h</span><span class="chip hike">🥾 2–3 h easy</span></td>
+      <td class="sleep"><div class="bed kazbegi">Juta · Fifth Season<span class="nights">1 night</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 4</b><span>sat 11*</span></td>
+      <td class="mode"><span class="mi">🥾</span><span class="ml">foot</span><span class="mi">🚗</span><span class="ml">car</span></td>
+      <td class="plan"><span class="headline">The Chaukhi hike — then 45 min to Stepantsminda</span>
+        <div class="detail">Identical to A, but check in for <b>3 nights</b>.</div>
+        <span class="chip hike">🥾 ~6–7 h · +1,100 m</span><span class="chip drive">🚗 45 min</span></td>
+      <td class="sleep" rowspan="3"><div class="bed kazbegi">Stepantsminda<span class="nights">3 nights · one hotel<br>(your booking.com pick)</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 5</b><span>sun 12*</span></td>
+      <td class="mode"><span class="mi">🥾</span><span class="ml">foot</span></td>
+      <td class="plan"><span class="headline">Gergeti Trinity Church + Gergeti glacier</span>
+        <div class="detail">The signature day hike from the hotel door — or local 4×4 to the church and walk on toward the glacier viewpoint. What A does from the hut, B does as a (shorter) day.</div>
+        <span class="chip hike">🥾 up to ~1,100 m gain · flex</span></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 6</b><span>mon 13*</span></td>
+      <td class="mode"><span class="mi">🚙</span><span class="ml">jeep</span><span class="mi">🥾</span><span class="ml">foot</span></td>
+      <td class="plan"><span class="headline">Truso valley, the full version · Darial gorge</span>
+        <div class="detail">Local jeep to the trailhead, walk deep; Darial + monastery on the way back.</div>
+        <span class="chip hike">🥾 easy–moderate, long</span></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 7</b><span>tue 14*</span></td>
+      <td class="mode"><span class="mi">🚗</span><span class="ml">car</span></td>
+      <td class="plan"><span class="headline">The one long day: down the highway → Mtskheta lunch → west to Martvili</span>
+        <div class="detail">Out ~09:45. <b>Jvari + Svetitskhoveli</b> + lunch in Mtskheta as the midpoint, then the highway west, into Martvili ~19:00 — check in for <b>3 nights</b> (<a href="https://www.booking.com/Share-WMWVxJN">the doc's original pick</a> — <b>verify real air-conditioning</b>; lowland July runs 30–34°C).</div>
+        <span class="chip drive">🚗 ~6½–7 h driving</span></td>
+      <td class="sleep" rowspan="3"><div class="bed kutaisi">Martvili<span class="nights">3 nights · the doc's booking</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 8</b><span>wed 15*</span></td>
+      <td class="mode"><span class="mi">🚗</span><span class="ml">local</span><span class="mi">🥾</span><span class="ml">wander</span></td>
+      <td class="plan"><span class="headline">Tskaltubo day-trip: sanatoriums · Bathhouse No. 6 soak · Prometheus caves · canyon at dusk</span>
+        <div class="detail">Same content as A's Day 9, from the other base: 45 min over, the loop, and back for the <b>Martvili canyon boat + swim</b> at dusk.</div>
+        <span class="chip drive">🚗 ~1½ h total, local</span></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 9</b><span>thu 16*</span></td>
+      <td class="mode"><span class="mi">🥾</span><span class="ml">easy</span></td>
+      <td class="plan"><span class="headline">The original doc's western day, intact: Kaghu waterfall · Balda canyon · Martvili monastery</span>
+        <div class="detail">Waterfall swim in the morning, Balda's jungle pools after, the hilltop monastery for the view. Zero repacking, zero real driving — the recovery day A doesn't have. Heat plan: sights before 11:00 and after 16:00.</div>
+        <span class="chip hike">🥾 easy walks + swims</span></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 10</b><span>fri 17*</span></td>
+      <td class="mode"><span class="mi">🚗</span><span class="ml">car</span></td>
+      <td class="plan"><span class="headline">Martvili → Uplistsikhe cave town → Tbilisi</span>
+        <div class="detail">Out ~10:00; <b>Uplistsikhe</b> ~13:00 as the drive-splitter, Tbilisi ~16:00. <b>Return the car on arrival</b>, then baths + the qvevri wine bar.</div>
+        <span class="chip drive">🚗 ~4½–5 h, split by the caves</span></td>
+      <td class="sleep"><div class="bed tbilisi">Tbilisi<span class="nights">short night · car gone</span></div></td>
+    </tr>
+    <tr>
+      <td class="date"><b>Day 11</b><span>sat 18*</span></td>
+      <td class="mode"><span class="mi">✈️</span><span class="ml">plane</span></td>
+      <td class="plan"><span class="headline">Bolt to the airport ~03:30 · fly ~06:00</span></td>
+      <td class="sleep"><div class="bed plane">your own bed</div></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="lanes">
+  <div class="lanes-title">Option B at a glance — no hut, Martvili base</div>
+  <div class="lanerow lhead"><div></div><div class="ld"><b>Day 1</b>wed*</div><div class="ld"><b>Day 2</b>thu*</div><div class="ld"><b>Day 3</b>fri*</div><div class="ld"><b>Day 4</b>sat*</div><div class="ld"><b>Day 5</b>sun*</div><div class="ld"><b>Day 6</b>mon*</div><div class="ld"><b>Day 7</b>tue*</div><div class="ld"><b>Day 8</b>wed*</div><div class="ld"><b>Day 9</b>thu*</div><div class="ld"><b>Day 10</b>fri*</div><div class="ld"><b>Day 11</b>sat*</div></div>
+  <div class="lanerow"><div class="lane-label">Sleep</div><div class="lp sl-pl">✈ flight</div><div class="lp sl-tb">Tbilisi</div><div class="lp sl-kz">Juta</div><div class="lp sl-kz s3">Stepantsminda ×3</div><div class="lp sl-ku s3">Martvili ×3</div><div class="lp sl-tb">Tbilisi</div><div class="lp sl-pl">home</div></div>
+  <div class="lanerow"><div class="lane-label">Moving</div><div class="lp mv-air">✈ AMS→TBS</div><div class="slot"></div><div class="lp mv-car">🚗 3½–4 h</div><div class="lp mv-car">🚗 45 m</div><div class="slot"></div><div class="lp mv-jp">🚙 Truso</div><div class="lp mv-car">🚗 6½–7 h</div><div class="lp mv-car">🚗 local</div><div class="slot"></div><div class="lp mv-car">🚗 ~5 h</div><div class="lp mv-air">✈ 06:00</div></div>
+  <div class="lanerow"><div class="lane-label">On foot</div><div class="slot"></div><div class="slot"></div><div class="lp ft">🥾 meadows</div><div class="lp ft">🥾 Chaukhi pass</div><div class="lp ft">🥾 Gergeti</div><div class="lp ft">🥾 Truso</div><div class="slot"></div><div class="slot"></div><div class="lp ft">🥾 swims</div><div class="slot"></div><div class="slot"></div></div>
+  <div class="lanerow"><div class="lane-label">Sights</div><div class="slot"></div><div class="lp sg">baths</div><div class="lp sg">Ananuri·Sno</div><div class="slot"></div><div class="slot"></div><div class="lp sg">Darial</div><div class="lp sg">Mtskheta</div><div class="lp sg">spas·soak·caves</div><div class="lp sg">Kaghu·Balda</div><div class="lp sg">Uplistsikhe</div><div class="slot"></div></div>
+</div>
+
+<div class="map" id="mapB"></div>
+<div class="maplegend">
+  <span class="lg-car"><span class="swatch"></span>your car</span>
+  <span class="lg-hike"><span class="swatch"></span>on foot</span>
+  <span class="lg-jeep"><span class="swatch"></span>local jeep</span>
+</div>
+<p class="map-caption">Option B — the same loop with no hut climb and the western base 45 min deeper into the countryside at Martvili. One drive-only long day (Day 7), ~1,150 km.</p>
+
+<div class="optionb" style="margin-top:1.6rem">
+  <div class="optionb-head"><span>The A-vs-B trade</span><span class="meta">why A won</span></div>
+  <div class="optionb-body">
+    <div class="proscons" style="margin-top:.2rem">
+      <div class="pro"><b>Option A (the pick)</b>Three real mountain days on Kazbek with two nights at 3,014 m — the "walked in and stayed" feeling the original Svaneti plan was about, upgraded · a full unloaded glacier day no village day-hike can match · Truso stays as the recovery day · air-conditioned, pool-equipped sleep for the hot lowland half · Gelati as a bonus.</div>
+      <div class="con"><b>Option B (kept for comparison)</b>No 1,300 m climbing day and no double Day 8 (its monster is drive-only) · the west keeps three full nights with Kaghu <em>and</em> Balda at strolling pace · village evenings in Martvili · one fewer bed. Pick B if, closer to the date, the legs or the forecast argue against the hut.</div>
+    </div>
+    <p><b>The practical difference at booking time:</b> A needs Altihut ×2 (Days 6–7 — the fastest-selling bed in this plan) + Stepantsminda ×2 + Kutaisi ×2 · B needs Stepantsminda ×3 + Martvili ×3. Everything else is identical, so switching between them later only touches two bookings.</p>
+  </div>
+</div>
+
+<h2><span class="no">III.</span>Renting the car, without surprises</h2>
+<div class="risk">
+  <h3>Five things to get right at booking</h3>
+  <ul>
+    <li><b>Book through Localrent (local agencies) or a vetted local firm</b> — better prices (~€40–55/day incl. proper insurance), relaxed about mountain roads, and flexible on <b>hotel delivery and collection</b> at both ends.</li>
+    <li><b>Car exists only while you drive it — Day 3 morning to Day 10 evening (8 days):</b> delivered to the Tbilisi hotel ~09:00 on Day 3 (€10–20), <b>returned on arrival back in Tbilisi on Day 10</b> — office drop or hotel collection. No 5 am pickup on landing, no 03:45 airport drop, no city parking ever; Bolts cover both airport runs for ~30 GEL each.</li>
+    <li><b>A compact SUV is the sweet spot</b> — the Juta gravel and village streets want clearance; real 4×4 is not required anywhere on this route. Truso's rough track stays a local-jeep job.</li>
+    <li><b>Insurance:</b> full-coverage tier; windscreen/underbody claims are the classic Georgia gotchas. Photograph the car thoroughly at pickup. Dutch licence is fine; an IDP is cheap peace of mind.</li>
+    <li><b>The Military Highway is the Russia–Armenia freight artery:</b> truck convoys at the Larsi border occasionally clog it. Cars usually thread through, but pad Days 3 and 7/8 and check <a href="https://www.georoad.ge/?lang=eng">georoad.ge</a> each mountain morning.</li>
+  </ul>
+</div>
+
+<h2><span class="no">IV.</span>Budget <span style="font-weight:340;font-style:italic;font-size:.7em;color:var(--ink-soft)">per person, Option A</span></h2>
+<table class="budget">
+  <tr><td>Flights AMS ↔ Tbilisi <span class="note">per the doc</span></td><td>€ 450</td></tr>
+  <tr><td>Car, 8 days full coverage <span class="note">~€45/day compact SUV via Localrent + hotel delivery, split</span></td><td>€ 190</td></tr>
+  <tr><td>Fuel, ~1,100 km <span class="note">split</span></td><td>€ 50</td></tr>
+  <tr><td>Hotels × 7 nights <span class="note">Tbilisi 2 · Juta 1 · Stepantsminda 2 · Kutaisi 2, ~€50–60/night</span></td><td>€ 380</td></tr>
+  <tr><td>Altihut × 2 nights <span class="note">half board — dinner + breakfast included</span></td><td>€ 90</td></tr>
+  <tr><td>Local jeeps <span class="note">Truso trailhead + optional Gergeti 4×4</span></td><td>€ 20</td></tr>
+  <tr><td>Entries &amp; boats <span class="note">canyon, caves, Uplistsikhe, Bathhouse No. 6 soak</span></td><td>€ 45</td></tr>
+  <tr><td>Food &amp; fun, ~€50 × 8 days <span class="note">two dinners already in the hut price</span></td><td>€ 380</td></tr>
+  <tr class="total"><td>Total</td><td>≈ € 1,605</td></tr>
+</table>
+<p class="sub" style="margin-top:.6rem">Option B lands within ~€20 — the hut half-boards and the extra hotel nights roughly cancel out. Both under the doc's €1,700. <b>Cash:</b> jeeps, the bathhouse, the hut bar and village restaurants prefer GEL; draw cash in Tbilisi.</p>
+
+<h2><span class="no">V.</span>Booking list, in firing order</h2>
+<ol class="checklist">
+  <li><b>Lock the date window against the forecast</b> <span class="urgent">first</span><div class="why">Dates are flexible — that's the plan's superpower. Book refundable tiers now, watch the 10-day Kazbegi forecast, and commit when Days 4–8 look clear: Chaukhi (Day 4) and the hut days (6–8) are the trip's heart.</div></li>
+  <li><b>Altihut ×2 (Days 6–7), half board</b><div class="why">The fastest-selling bed in this plan — book at <a href="https://altihut.ge">altihut.ge</a> in the same breath as the flights. (Falling back to Option B later only means cancelling this and adding a Stepantsminda + Martvili night.)</div></li>
+  <li><b>Car: 8 days, hotel delivery ~09:00 Day 3 → return in Tbilisi on Day 10 evening</b><div class="why">Via <a href="https://localrent.com/en/georgia/">Localrent</a>. Confirm in writing: full coverage, hotel delivery, and evening return (office or hotel collection). July is peak.</div></li>
+  <li><b>Fifth Season, Juta ×1 (Day 3)</b><div class="why">Re-date the doc's old 11→12 July hold — it's wrong for every version of this trip; cancel it while it's free.</div></li>
+  <li><b>Stepantsminda ×2 (Days 4–6)</b><div class="why">Re-date <a href="https://www.booking.com/Share-sRFKqtT">your booking.com pick</a>, and confirm the hotel stores your bags between checkout (Day 6 morning) and the Day-8 pass-through. (Option B: ×3, Days 4–7.)</div></li>
+  <li><b>Kutaisi ×2 (Days 8–10): hotel with pool + AC</b><div class="why">The heat insurance — lowland July runs 30–34°C. (Option B instead: Martvili ×3, <a href="https://www.booking.com/Share-WMWVxJN">the doc's link</a>, verify real AC.)</div></li>
+  <li><b>Tbilisi bookends:</b> arrival night with early check-in (no car — Bolt in) · final night anywhere central (no car either — it went back on Day 10)<div class="why">The first must let you in at 5 am; the second just needs a working doorbell at 03:15 for the Bolt to the airport.</div></li>
+</ol>
+
+<h2><span class="no">VI.</span>Library — everything scouted, for this trip or the next</h2>
+<p class="sub">The research from all the earlier drafts, kept as a menu. Nothing here is in the plan; all of it is proven doable from earlier revisions of this document.</p>
+
+<div class="library">
+  <div class="lib-group">
+    <h3>Svaneti — the road not taken</h3>
+    <ul>
+      <li><b>Mestia</b> <span>— tower-village hub; ~6½–7 h drive or the Vanilla Sky hop from Tbilisi</span></li>
+      <li><b>Mestia → Ushguli trek</b> <span>— the 3-day cut: Zhabeshi · Adishi · over the 2,720 m pass, jeep home (<a href="https://www.caucasus-trekking.com/treks/trek-mestia-to-ushguli">guide</a>)</span></li>
+      <li><b>Ushguli</b> <span>— UNESCO towers under Shkhara, Europe's highest year-round village</span></li>
+      <li><b>Koruldi Lakes · Chalaadi glacier</b> <span>— Mestia's two big day hikes</span></li>
+      <li><b>Vanilla Sky</b> <span>— 30-min Tbilisi↔Mestia flights, 15 kg cap, no Saturdays (<a href="https://ticket.vanillasky.ge/en/tickets">tickets</a>)</span></li>
+      <li><b>Tbilisi–Zugdidi day train</b> <span>— 08:36→12:55, Mon–Fri, ~13 GEL (<a href="https://gr.com.ge/en/schedule">GR</a>); sleeper suspended until ~2027</span></li>
+    </ul>
+  </div>
+  <div class="lib-group">
+    <h3>Kazbegi &amp; Khevsureti extras</h3>
+    <ul>
+      <li><b>Betlemi hut (3,653 m)</b> <span>— the step above Altihut; Day 7's turn-around point if legs sing</span></li>
+      <li><b>Juta → Roshka through-hike</b> <span>— over the Chaukhi pass to the Abudelauri coloured lakes; needs a driver shuttle, not your own car</span></li>
+      <li><b>Khada valley</b> <span>— tower-dotted side valley off the Military Highway, quick stop</span></li>
+      <li><b>Gudauri + Friendship Monument</b> <span>— viewpoint on the highway, free</span></li>
+      <li><b>Shatili–Mutso (Khevsureti)</b> <span>— medieval fortress towns; rough road, rentals mostly banned — hired 4×4 trip</span></li>
+    </ul>
+  </div>
+  <div class="lib-group">
+    <h3>East — wine country</h3>
+    <ul>
+      <li><b>Sighnaghi</b> <span>— walled hilltop wine town over the Alazani valley, 1½–2 h from Tbilisi</span></li>
+      <li><b>Bodbe monastery</b> <span>— St Nino's resting place, 10 min from Sighnaghi</span></li>
+      <li><b>Qvevri wineries</b> <span>— the Georgia headline this route only tastes in a Tbilisi wine bar; Kakheti deserves 2 nights another time</span></li>
+      <li><b>Tusheti (Omalo–Dartlo)</b> <span>— the true Svaneti rival; Abano Pass bans rentals, hired 4×4 + 2 travel days — a trip of its own</span></li>
+      <li><b>Lagodekhi — Black Rock Lake</b> <span>— genuine 3-day wilderness loop, ranger shelters</span></li>
+    </ul>
+  </div>
+  <div class="lib-group">
+    <h3>West — spares near the base</h3>
+    <ul>
+      <li><b>Okatse canyon + Kinchkha waterfall</b> <span>— the backup canyon day, ~1 h from Kutaisi</span></li>
+      <li><b>Gelati monastery</b> <span>— UNESCO, 20 min from Kutaisi (Option A's Day-10 morning option)</span></li>
+      <li><b>Bagrati cathedral</b> <span>— Kutaisi's hilltop landmark, evening stroll</span></li>
+      <li><b>Kaghu waterfall + Balda canyon</b> <span>— the Martvili swims; a full lazy day in Option B, a Day-10 morning option in A</span></li>
+      <li><b>Legends Tskaltubo Spa Resort</b> <span>— the renovated sanatorium hotel, if a spa-town sleep ever tempts</span></li>
+      <li><b>Bathhouse No. 6</b> <span>— the working radon baths, daily 10:00–17:00, ~25 GEL/cabin</span></li>
+    </ul>
+  </div>
+  <div class="lib-group">
+    <h3>Services &amp; checks</h3>
+    <ul>
+      <li><b>GoTrip.ge</b> <span>— fixed-price car + driver, unlimited stops (<a href="https://gotrip.ge/en/transfer">site</a>) — the no-driving fallback for any leg</span></li>
+      <li><b>Localrent</b> <span>— local-agency rentals, hotel delivery + collection (<a href="https://localrent.com/en/georgia/">site</a>)</span></li>
+      <li><b>georoad.ge</b> <span>— live road status; check before each mountain drive (<a href="https://www.georoad.ge/?lang=eng">site</a>)</span></li>
+      <li><b>Altihut</b> <span>— staffed hut at 3,014 m, beds + half board, no tent needed (<a href="https://altihut.ge">site</a>)</span></li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  Rev. 15 · built 2 Jul 2026 from the shared planning doc + <a href="https://altihut.ge">Altihut</a> · <a href="https://wander-lush.org/visit-tskaltubo-travel-guide-tips/">wander-lush Tskaltubo guide</a> · <a href="https://tskaltuboresort.ge/eng">Bathhouse No. 6</a> · <a href="https://www.caucasus-trekking.com/treks/trek-mestia-to-ushguli">caucasus-trekking.com</a> · <a href="https://gr.com.ge/en/schedule">Georgian Railways</a>. Maps © OpenStreetMap contributors, rendered with Leaflet; photos via Wikimedia Commons (© links per image). Companion to <em>georgia-marieke-booking.md</em> and <em>summer-2026-holiday-plan.md</em>.
+</footer>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  var CAR  = '#a2543a';
+  var HIKE = '#3d7a55';
+  var JEEP = '#5c6068';
+  var INK  = '#2b2e38';
+
+  var P = {
+    tbilisi:   [41.7151, 44.8271],
+    mtskheta:  [41.8450, 44.7190],
+    jvari:     [41.8380, 44.7330],
+    uplistsikhe:[41.9670, 44.2090],
+    gori:      [41.9840, 44.1130],
+    khashuri:  [41.9940, 43.5990],
+    zestafoni: [42.1100, 43.0400],
+    kutaisi:   [42.2679, 42.6946],
+    gelati:    [42.2950, 42.7680],
+    tskaltubo: [42.3406, 42.5964],
+    prometheus:[42.3766, 42.6009],
+    martvili:  [42.4566, 42.3771],
+    zhinvali:  [42.1290, 44.7710],
+    ananuri:   [42.1636, 44.7031],
+    pasanauri: [42.3500, 44.6900],
+    gudauri:   [42.4797, 44.4757],
+    kobi:      [42.5500, 44.4900],
+    stepantsminda:[42.6577, 44.6431],
+    gergeti:   [42.6626, 44.6205],
+    altihut:   [42.6720, 44.5520],
+    glacier:   [42.6600, 44.5700],
+    sno:       [42.6266, 44.6683],
+    juta:      [42.5978, 44.7605],
+    chaukhi:   [42.5720, 44.8000],
+    truso:     [42.5800, 44.4500],
+    trusoTrail:[42.6200, 44.5300],
+    darial:    [42.7427, 44.6280]
+  };
+
+  var northLeg = [P.tbilisi, P.mtskheta, P.zhinvali, P.ananuri, P.pasanauri, P.gudauri, P.kobi, [42.6100,44.6300], P.sno, P.juta];
+  var jutaToStep = [P.juta, P.sno, P.stepantsminda];
+  var darialSpur = [P.stepantsminda, P.darial];
+  var gergetiHike = [P.stepantsminda, P.gergeti, P.glacier];
+  var altihutHike = [P.stepantsminda, P.gergeti, P.altihut, P.glacier];
+  var chaukhiHike = [P.juta, P.chaukhi];
+  var trusoJeep = [P.stepantsminda, P.trusoTrail];
+  var trusoWalk = [P.trusoTrail, P.truso];
+  var westLegCommon = [P.stepantsminda, P.kobi, P.gudauri, P.pasanauri, P.ananuri, P.zhinvali, P.mtskheta, P.khashuri, P.zestafoni, P.kutaisi];
+
+  function makeMap(id){
+    var m = L.map(id, {scrollWheelZoom:false, attributionControl:true});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 15,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(m);
+    return m;
+  }
+  function line(m, pts, color, opts){
+    opts = opts || {};
+    return L.polyline(pts, {
+      color: color, weight: opts.weight || 3.5,
+      dashArray: opts.dash || null, opacity: .9,
+      lineJoin:'round'
+    }).addTo(m);
+  }
+  function bed(m, pos, label){
+    L.circleMarker(pos, {radius:6, color:INK, weight:2, fillColor:'#f4f1e8', fillOpacity:1}).addTo(m);
+    L.marker(pos, {opacity:0}).addTo(m)
+      .bindTooltip(label, {permanent:true, direction:'right', offset:[3,0], className:'nightlabel'});
+  }
+  function poi(m, pos, html){
+    L.circleMarker(pos, {radius:4, color:INK, weight:1.5, fillColor:'#fff', fillOpacity:.9}).addTo(m).bindPopup(html);
+    var name = (html.match(/<b>(.*?)<\/b>/) || [])[1];
+    if (name){
+      L.marker(pos, {opacity:0}).addTo(m)
+        .bindTooltip(name, {permanent:true, direction:'right', offset:[0,0], className:'poilabel'});
+    }
+  }
+
+  // ═══ MAP A — hut nights + Kutaisi base ═══
+  var a = makeMap('mapA');
+  line(a, northLeg, CAR);
+  line(a, jutaToStep, CAR);
+  line(a, darialSpur, CAR, {weight:2.5});
+  line(a, westLegCommon, CAR);
+  line(a, [P.kutaisi, P.tskaltubo, P.prometheus], CAR, {weight:2.5});
+  line(a, [P.kutaisi, [42.4000,42.4500], P.martvili], CAR, {weight:2.5});
+  line(a, [P.kutaisi, P.gelati], CAR, {weight:2.5});
+  line(a, [P.kutaisi, P.zestafoni, P.khashuri, P.uplistsikhe, P.mtskheta, P.tbilisi], CAR);
+  line(a, chaukhiHike, HIKE, {weight:4});
+  line(a, altihutHike, HIKE, {weight:4});
+  line(a, trusoJeep, JEEP, {dash:'2 7'});
+  line(a, trusoWalk, HIKE, {weight:4});
+  bed(a, P.tbilisi, 'Tbilisi · nights 2 & 10');
+  bed(a, P.juta, 'Juta · 3 (Fifth Season)');
+  bed(a, P.stepantsminda, 'Stepantsminda · 4–5');
+  bed(a, P.altihut, 'Altihut 3,014 m · 6–7 (2 nights)');
+  bed(a, P.kutaisi, 'Kutaisi · 8–9 (AC base)');
+  poi(a, P.ananuri, '<b>Ananuri fortress</b><br>Day 3 — en route north');
+  poi(a, P.chaukhi, '<b>Chaukhi pass (3,338 m)</b><br>Day 4 — hike, then drive down');
+  poi(a, P.truso, '<b>Truso valley</b><br>Day 5 — the recovery day, in full');
+  poi(a, P.darial, '<b>Darial gorge</b><br>Day 5 afternoon');
+  poi(a, P.glacier, '<b>Gergeti glacier / Betlemi direction</b><br>Day 7 — full unloaded day from the hut');
+  poi(a, P.jvari, '<b>Jvari + Mtskheta</b><br>Day 8 — late-lunch stop on the double');
+  poi(a, P.tskaltubo, '<b>Tskaltubo</b><br>Day 9 — ghost spas + Bathhouse No. 6 soak');
+  poi(a, P.prometheus, '<b>Prometheus caves</b><br>Day 9 ~14:00');
+  poi(a, P.martvili, '<b>Martvili canyon</b><br>Day 9 — boat + swim at dusk');
+  poi(a, P.gelati, '<b>Gelati monastery</b><br>Day 10 morning option');
+  poi(a, P.uplistsikhe, '<b>Uplistsikhe cave town</b><br>Day 10 — splits the drive home');
+  a.fitBounds(L.latLngBounds(northLeg.concat([P.chaukhi, P.martvili, P.tskaltubo, P.uplistsikhe])).pad(0.06));
+
+  // ═══ MAP B — no hut, Martvili base ═══
+  var b = makeMap('mapB');
+  line(b, northLeg, CAR);
+  line(b, jutaToStep, CAR);
+  line(b, darialSpur, CAR, {weight:2.5});
+  line(b, westLegCommon.concat([[42.4000,42.4500], P.martvili]), CAR);
+  line(b, [P.martvili, [42.3900,42.5000], P.tskaltubo, P.prometheus], CAR, {weight:2.5});
+  line(b, [P.martvili, [42.4000,42.4500], P.kutaisi, P.zestafoni, P.khashuri, P.uplistsikhe, P.mtskheta, P.tbilisi], CAR);
+  line(b, chaukhiHike, HIKE, {weight:4});
+  line(b, gergetiHike, HIKE, {weight:4});
+  line(b, trusoJeep, JEEP, {dash:'2 7'});
+  line(b, trusoWalk, HIKE, {weight:4});
+  bed(b, P.tbilisi, 'Tbilisi · nights 2 & 10');
+  bed(b, P.juta, 'Juta · 3 (Fifth Season)');
+  bed(b, P.stepantsminda, 'Stepantsminda · 4–6');
+  bed(b, P.martvili, 'Martvili · 7–9');
+  poi(b, P.ananuri, '<b>Ananuri fortress</b><br>Day 3 — en route north');
+  poi(b, P.chaukhi, '<b>Chaukhi pass (3,338 m)</b><br>Day 4 — hike, then drive down');
+  poi(b, P.glacier, '<b>Gergeti glacier walk</b><br>Day 5 — day hike from the village');
+  poi(b, P.truso, '<b>Truso valley</b><br>Day 6 — the full version');
+  poi(b, P.darial, '<b>Darial gorge</b><br>Day 6 afternoon');
+  poi(b, P.jvari, '<b>Jvari + Mtskheta</b><br>Day 7 — the lunch midpoint');
+  poi(b, P.tskaltubo, '<b>Tskaltubo</b><br>Day 8 — ghost spas + Bathhouse No. 6 soak');
+  poi(b, P.prometheus, '<b>Prometheus caves</b><br>Day 8 ~14:00');
+  poi(b, P.uplistsikhe, '<b>Uplistsikhe cave town</b><br>Day 10 — splits the drive home');
+  b.fitBounds(L.latLngBounds(northLeg.concat([P.chaukhi, P.martvili, P.tskaltubo, P.uplistsikhe])).pad(0.06));
+})();
+</script>
+</body>
+</html>
