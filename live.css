@@ -340,6 +340,16 @@ body.live .hl-cool {
   text-shadow: 0 2px 40px oklch(0.08 0.05 300 / 0.9);
   padding: 0 1rem;
 }
+/* Divider carries the "what it is" section header — same serif/size as
+   .live-section-head h2, orange highlight (.hl), layered over the video. */
+.live-divider-head {
+  position: relative; z-index: 1;
+  margin: 0; max-width: 18ch; text-align: center;
+  font-family: var(--serif); font-style: italic; font-weight: 300;
+  font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.98;
+  color: var(--paper);
+  padding: 0 1rem;
+}
 
 /* ---------- What it is ---------- */
 .live-about-grid {
