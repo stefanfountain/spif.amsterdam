@@ -166,6 +166,24 @@ html[data-mood="velvet"] body.live {
 .live-cta .arw { transition: transform 0.18s ease; }
 .live-cta:hover .arw { transform: translateY(2px); }
 
+/* ---------- Highlighter: text on the selection swatch, always on ----------
+   Same warm orange + dark ink as ::selection. box-decoration-break clone so
+   multi-line phrases each get their own hugging band. */
+body.live .hl {
+  background: oklch(0.72 0.20 45);
+  color: var(--ink-deep);
+  padding: 0.04em 0.28em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  border-radius: 1px;
+}
+body.live .hl .sep { color: var(--ink-deep); opacity: 0.55; }
+/* Hero eyebrow chip becomes a solid highlighted stamp instead of an outline. */
+.live-hero .eyebrow-chip.hl {
+  border-color: transparent;
+  backdrop-filter: none;
+}
+
 /* ---------- Shared section kicker ---------- */
 .live-kicker {
   font-family: var(--mono);
