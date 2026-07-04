@@ -1,591 +1,249 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-mood="velvet" data-pace="broadside" data-plate="cyanotype">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spif — Installation artist</title>
-  <meta name="description" content="Live electronic rituals + immersive performance installations. Amsterdam-based. Will travel." />
-  <!-- Mark .js on <html> so motion CSS can gate its initial-hidden state.
-       Without JS, sections render normally (no opacity dance, no stuck-invisible). -->
+  <title>Spif — Live electronic set + Tesla coil</title>
+  <meta name="description" content="A live modular electronic set built around a Tesla coil — the audience holds fluorescent tubes to the arc and becomes part of the instrument. Amsterdam-based. Will travel." />
   <script>document.documentElement.classList.add('js');</script>
+  <!-- Legacy deep-links: the portfolio used to live at the root with #anchors.
+       It now lives at /works — bounce any known old hash there before paint. -->
+  <script>
+    (function () {
+      var h = (location.hash || '').replace('#', '');
+      var works = ['about','studio','vox-arboris','meditation-station','vox-futuri','ignis','tardis','cubic-reset','unicorn','contact'];
+      if (works.indexOf(h) !== -1) { location.replace('/works#' + h); }
+    })();
+  </script>
 
-  <!-- Social previews (Open Graph + Twitter).
-       Brand intentionally omitted from title/site_name — domain carries it.
-       Title = the credo (distinctive). Description = the practice (concrete). -->
+  <!-- Social previews -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://spif.amsterdam" />
-  <meta property="og:title" content="Installations that resonate, moving people to grow." />
-  <meta property="og:description" content="Live electronic rituals + immersive performance installations. Amsterdam-based. Will travel." />
-  <meta property="og:image" content="https://spif.amsterdam/img/vox-arboris-stage.jpg" />
-  <meta property="og:image:width" content="900" />
-  <meta property="og:image:height" content="1600" />
-  <meta property="og:image:alt" content="Modular rig and white branching tree sculpture under sunset — Vox Arboris stage, A'dam Tower" />
-
+  <meta property="og:title" content="Spif — live electronic set + Tesla coil" />
+  <meta property="og:description" content="A live modular set built around a Tesla coil. The crowd holds fluorescent tubes to the arc and becomes part of the instrument." />
+  <meta property="og:image" content="https://spif.amsterdam/img/live/crowd-tubes.jpg" />
+  <meta property="og:image:alt" content="A crowd in festival dress holds glowing fluorescent tubes up to an arcing Tesla coil inside a draped tent" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Installations that resonate, moving people to grow." />
-  <meta name="twitter:description" content="Live electronic rituals + immersive performance installations. Amsterdam-based. Will travel." />
-  <meta name="twitter:image" content="https://spif.amsterdam/img/vox-arboris-stage.jpg" />
+  <meta name="twitter:title" content="Spif — live electronic set + Tesla coil" />
+  <meta name="twitter:description" content="A live modular set built around a Tesla coil. The crowd holds fluorescent tubes to the arc and becomes part of the instrument." />
+  <meta name="twitter:image" content="https://spif.amsterdam/img/live/crowd-tubes.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Non-render-blocking font load: preload as style, apply once loaded.
-       Cormorant Garamond italic 300/400/500 + roman 300/400; IBM Plex Mono 400/500;
-       IBM Plex Sans 300/400/500. font-display: swap so fallback shows immediately. -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" /></noscript>
+  <link rel="preload" as="image" href="/img/live/hero-poster.jpg" fetchpriority="high" />
   <link rel="stylesheet" href="styles.css?v=2026-05-13f" />
+  <link rel="stylesheet" href="live.css?v=2026-07-04a" />
 </head>
-<body data-mood="dusk" data-pace="monograph" data-plate="engraving">
+<body class="live" data-mood="velvet">
 
-  <!-- Skip link for keyboard users — visible only on focus -->
-  <a href="#main" class="skip-link">Skip to content</a>
+  <a href="#set" class="skip-link">Skip to the set</a>
 
-  <!-- Mobile-only toggle for the index sidebar -->
-  <button type="button" class="nav-toggle-button"
-          aria-expanded="false" aria-controls="sidenav"
-          aria-label="Toggle index of works">
-    <span class="nav-toggle-open">Index</span>
-    <span class="nav-toggle-close">Close</span>
-  </button>
-
-  <!-- Sticky right-edge sidebar — index of works -->
-  <nav class="sidenav" id="sidenav" aria-label="Index of works">
-    <div class="sidenav-head">
-      <span>Index</span>
-      <a href="#hero" class="sidenav-top" aria-label="Back to top">↑</a>
+  <!-- ===== Hero ===== -->
+  <header class="live-hero bleed">
+    <div class="live-hero-media" id="heroMedia">
+      <img class="live-hero-poster" src="/img/live/hero-poster.jpg" alt="A Tesla coil on a tripod arcs blue lightning inside a draped festival tent; fluorescent tubes glow around it against a warm-orange practical light" />
+      <video class="live-hero-video" muted loop playsinline preload="metadata" poster="/img/live/hero-poster.jpg" aria-hidden="true">
+        <source src="/img/live/hero-loop.webm" type="video/webm" />
+        <source src="/img/live/hero-loop.mp4" type="video/mp4" />
+      </video>
+      <div class="live-hero-scrim"></div>
     </div>
 
-    <ul class="sidenav-list">
-      <li><a href="#about"><span class="ttl">About</span></a></li>
-    </ul>
+    <div class="live-topbar">
+      <span class="mark">SPIF</span>
+      <nav aria-label="Sections">
+        <a href="#set">Listen</a>
+        <a href="#ritual">The ritual</a>
+        <a href="#book">Book</a>
+        <a href="/works" class="to-works">The works →</a>
+      </nav>
+    </div>
 
-    <h3 class="sidenav-group">Current</h3>
-    <ul class="sidenav-list">
-      <li><a href="#vox-arboris"><span class="ttl">Vox Arboris</span></a></li>
-      <li><a href="#meditation-station"><span class="ttl">Meditation Station</span></a></li>
-    </ul>
+    <div class="live-hero-inner">
+      <span class="eyebrow-chip">Live electronic set</span>
+      <h1>SPIF</h1>
+      <p class="live-hero-tag">Modular live set <span class="sep">/</span> Tesla-coil ritual</p>
+      <p class="live-hero-sub">A machine that arcs lightning into the crowd's hands — and a set built to earn the moment it does.</p>
+      <div class="live-hero-actions">
+        <span class="location-pill">Amsterdam · NL · will travel</span>
+        <a href="#set" class="live-cta">Listen <span class="arw">↓</span></a>
+      </div>
+    </div>
+  </header>
 
-    <h3 class="sidenav-group">Upcoming</h3>
-    <ul class="sidenav-list">
-      <li><a href="#vox-futuri"><span class="ttl">Vox Futuri</span></a></li>
-      <li><a href="#ignis"><span class="ttl">Vox Ignis</span></a></li>
-    </ul>
+  <main id="main" class="live">
 
-    <h3 class="sidenav-group">Retired</h3>
-    <ul class="sidenav-list">
-      <li><a href="#tardis"><span class="ttl">Tardis</span></a></li>
-      <li><a href="#cubic-reset"><span class="ttl">Cubic Reset</span></a></li>
-      <li><a href="#unicorn"><span class="ttl">Find Your Inner Unicorn</span></a></li>
-    </ul>
+    <!-- ===== The set (SoundCloud) ===== -->
+    <section id="set">
+      <div class="live-section-head">
+        <p class="live-kicker">№ 01 — The set</p>
+        <h2>Listen.</h2>
+      </div>
 
-    <h3 class="sidenav-group">Colophon</h3>
-    <ul class="sidenav-list">
-      <li><a href="#contact"><span class="ttl">Contact</span></a></li>
-    </ul>
-  </nav>
+      <!-- SoundCloud slot.
+           When the recorded set is live, replace the whole .sc-placeholder block
+           with the embed, e.g.:
+           <div class="sc-embed"><iframe height="480" scrolling="no" frameborder="no"
+             src="https://w.soundcloud.com/player/?url=SET_URL&color=%23ff7a1a&auto_play=false&visual=true">
+           </iframe></div>  -->
+      <a class="sc-placeholder" href="https://soundcloud.com/elspif" target="_blank" rel="noopener" aria-label="Follow Spif on SoundCloud — new live set coming soon">
+        <span class="sc-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+        <span class="sc-copy">
+          <span class="sc-title">A new live set, recorded to tape.</span>
+          <span class="sc-status"><b>Dropping this weekend</b> — follow on SoundCloud to catch it first.</span>
+        </span>
+        <span class="sc-follow">Follow ↗</span>
+      </a>
+      <p class="live-set-note">Recorded live · modular synthesis · one continuous take</p>
+    </section>
 
-  <main id="main">
+    <!-- ===== The ritual (gallery) ===== -->
+    <section id="ritual">
+      <div class="live-section-head">
+        <p class="live-kicker">№ 02 — The ritual</p>
+        <h2>Hands on the lightning.</h2>
+      </div>
 
-    <!-- 01 — Hero ============================================ -->
-    <section id="hero" data-screen-label="Hero" class="hero-brutalist">
-      <div class="hero-banner">
-        <div class="hero-banner-inner">
-          <div class="hero-banner-text">
-            <div class="eyebrow eyebrow-chip">Installation artist</div>
-            <h1>SPIF</h1>
-            <p class="tagline">
-              Live electronic rituals<br />
-              Immersive performance installations
-            </p>
-            <p class="credo">Installations that resonate, moving people to grow.</p>
-            <div class="hero-meta">
-              <div class="hero-meta-row hero-meta-secondary">
-                <span>Modular bio synthesis</span>
-                <span>High voltage healing</span>
-                <span>Visual emotion explosions</span>
-                <span>Hypnotic machine elves</span>
-              </div>
-            </div>
-            <div class="hero-location">
-              <span class="location-pill">Amsterdam · NL · 52°22′N 4°53′E</span>
-            </div>
-          </div>
-          <figure class="plate hero-image-banner has-image">
-            <img src="/img/hero-poster.jpg" width="1612" height="2400" loading="eager" fetchpriority="high" alt="Spif — illustrated poster: lone figure in long coat and top hat under branching white arcs, vintage television in the dirt, dusk sky" />
-            <span class="reg">PLATE I</span>
-            <figcaption class="caption">
-              <b>Spif</b>
-            </figcaption>
-          </figure>
-        </div>
+      <div class="live-gallery">
+        <figure class="live-shot">
+          <img src="/img/live/crowd-tubes.jpg" loading="lazy" alt="A crowd in headdresses and festival dress raises fluorescent tubes toward an arcing Tesla coil on a wooden plinth" />
+          <figcaption>Tubes to the coil</figcaption>
+        </figure>
+        <figure class="live-shot">
+          <img src="/img/live/altar-radiate.jpg" loading="lazy" alt="Fluorescent tubes radiate outward from the Tesla coil like spokes, held by cloaked figures around it" />
+          <figcaption>The altar, mid-arc</figcaption>
+        </figure>
+        <figure class="live-shot">
+          <img src="/img/live/coil-reach.jpg" loading="lazy" alt="Two feathered figures reach glowing tubes toward the top of the coil, blue light on their faces" />
+          <figcaption>Reaching the arc</figcaption>
+        </figure>
+        <figure class="live-shot">
+          <img src="/img/live/sabers-cross.jpg" loading="lazy" alt="Several people cross glowing blue tubes at the coil, forming a star of light in the tent" />
+          <figcaption>Crossed light</figcaption>
+        </figure>
+        <figure class="live-shot">
+          <img src="/img/live/coil-wide.jpg" loading="lazy" alt="Wide view of the coil on its tripod, crowd gathered around with tubes, purple and orange tent light" />
+          <figcaption>The coil on its tripod</figcaption>
+        </figure>
+        <figure class="live-shot">
+          <img src="/img/live/dancers-coil.jpg" loading="lazy" alt="Dancers in fur and feathers close to the coil, tubes glowing blue against the deep tent light" />
+          <figcaption>Feathers and current</figcaption>
+        </figure>
+        <figure class="live-shot">
+          <img src="/img/live/altar-crowd.jpg" loading="lazy" alt="The circle of participants forms around the coil, seated crowd behind, warm light beyond" />
+          <figcaption>The circle forms</figcaption>
+        </figure>
+        <figure class="live-shot">
+          <img src="/img/live/lighttrails-b.jpg" loading="lazy" alt="Long-exposure of the tent: glowing tubes streak the dark like a field of blue and orange rays around the coil" />
+          <figcaption>Long exposure — the field</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- 02 — About =========================================== -->
-    <section id="about" data-screen-label="About">
-      <div class="about-grid">
-        <div class="left">
-          <div class="section-label" style="position: static;">№ 01 — On the work</div>
-          <h2>An artist of<br />resonant systems.</h2>
-          <figure class="plate has-image about-portrait" style="aspect-ratio: 923/1518;">
-            <img src="/img/about-portrait.jpg" width="923" height="1518" loading="lazy" alt="Spif portrait — silver chrome jacket, futurist goggles with prismatic lenses, spiked hair, telephone-rotary necklace, smoky studio backdrop" />
-            <span class="reg">PLATE II</span>
-            <figcaption class="caption">
-              <b>Spif</b>
-              Portrait, MMXXVI
-            </figcaption>
-          </figure>
-        </div>
-        <div class="body">
+    <!-- ===== Light-trail divider ===== -->
+    <div class="live-divider bleed" role="img" aria-label="Long-exposure photograph: fluorescent tubes streak blue and orange around the Tesla coil in the dark tent" style="background-image: url('/img/live/lighttrails-a.jpg');">
+      <blockquote>Hold a tube to the lightning and it lights in your hand.</blockquote>
+    </div>
+
+    <!-- ===== What it is ===== -->
+    <section id="about-live">
+      <div class="live-section-head">
+        <p class="live-kicker">№ 03 — What it is</p>
+        <h2>The instrument is the room.</h2>
+      </div>
+
+      <div class="live-about-grid">
+        <div>
           <p class="lede">
-            Spif builds instruments to slow people down and lead them
-            somewhere they did not expect to go — across modular
-            performance, spoken-word ritual, AI installation, and
-            tactile interactive objects.
+            A live modular electronic set built around a Tesla coil.
+            The music is composed to move a room from stillness to release —
+            and at the peak, the coil sings: a musical arc of lightning the
+            audience can literally take in hand.
           </p>
           <p>
-            The vocabulary is vintage hardware and electric ritual:
-            bakelite cabinetry, brass-trimmed cockpit television,
-            eurorack patch cables, two-way mirror, warm signal lamps.
-            The intention is closer to ceremony than to spectacle —
-            a museum bookshop's hush, with a Tesla coil quietly
-            waiting in the wings.
+            Fluorescent tubes are passed into the crowd. Held up to the coil,
+            they light from the current in the air — no wires, no touch.
+            The people holding them stop being an audience and become part of
+            the instrument, a circle of light around the arc. It is closer to
+            ceremony than to a gig.
           </p>
           <p>
-            Based in Amsterdam, working toward a permanent
-            multidisciplinary space — <span class="serif-italic">Diepgang</span>
-            (Dutch for <span class="serif-italic">depth</span>) — that
-            holds the performances, the installations, and the workshops
-            in one room.
+            The set is played on eurorack modular synthesis and hardware — the
+            same rig behind <a class="inline-link" href="/works#vox-arboris">Vox Arboris</a> —
+            with the coil voiced as its own instrument in the mix. Built for
+            festivals, ceremonies, and the kind of late room that wants somewhere
+            to go.
           </p>
-
-          <dl class="kvs">
-            <dt>Based</dt><dd>Amsterdam, NL</dd>
-            <dt>Practice</dt><dd>Performance · installation · sound</dd>
-            <dt>In progress</dt><dd>Diepgang — permanent venue</dd>
-            <dt>Available for</dt><dd>Residency · commission · curation</dd>
-          </dl>
         </div>
-      </div>
-    </section>
-
-    <!-- Workshop image (unsectioned interstitial — not in the Index) ====== -->
-    <section id="studio" class="studio-image-only" data-screen-label="Workshop">
-      <figure class="plate pano has-image" style="aspect-ratio: 1874/418;">
-        <img src="/img/studio-pano.jpg" width="1874" height="418" loading="lazy" alt="Spif at a shared Amsterdam workshop, panoramic — wearing a top hat, working at a CNC machine, doubled by the panorama stitch artifact" />
-        <span class="reg">PLATE II</span>
-        <figcaption class="caption">
-          <b>Workshop</b>
-          Building Vox Arboris parts on the CNC. The panoramic stitch shows me twice — present + future, in the same frame.
-        </figcaption>
-      </figure>
-    </section>
-
-    <!-- 02 — Vox Arboris ===================================== -->
-    <section id="vox-arboris" class="work" data-screen-label="02 Vox Arboris">
-      <div class="work-head">
-        <div class="num">№ 02</div>
-        <h2 class="title">Vox Arboris</h2>
-        <div class="year"><b>2022 →</b><br />ongoing</div>
-      </div>
-      <div class="work-body">
-        <div class="gutter-meta">
-          <span>Live · A'dam Tower<em>Amsterdam — April 2026</em></span>
-          <span>Live · Odonien<em>Cologne, DE</em></span>
-          <span>Installation · WIHH Gallery<em>Amsterdam — Summer 2023, one-month residency</em></span>
-          <span>Live · Mayor Manor<em>Ten Club, Amsterdam — November 2022, one-month residency</em></span>
-          <span>Form<em>Modular performance + gallery installation</em></span>
-        </div>
-        <div class="content">
-          <p class="descr">
-            <span class="pull">Vox Arboris</span> began as a month-long residency
-            at Ten Club's <em>Mayor Manor</em> in November 2022, returned as a
-            one-month installation at WIHH Gallery in 2023 — a slow, branching
-            modular score the room learned by heart — and has since travelled:
-            a live set at <em>Odonien</em> in Cologne, and high above the IJ
-            at the A'dam Tower in April 2026. The piece treats the modular rig
-            like a tree: signals enter the roots, take their time, and only
-            certain frequencies make it to the canopy.
-          </p>
-          <div class="imgrow">
-            <figure class="plate a has-image" style="aspect-ratio: 665/1182;">
-              <img src="/img/vox-arboris-adam-tower.jpg" width="665" height="1182" loading="lazy" alt="Vox Arboris live performance at A'dam Tower, April 2026" />
-              <span class="reg">PLATE V·a</span>
-              <figcaption class="caption">
-                <b>Vox Arboris — A'dam Tower, 2026</b>
-                Live set, IJ skyline behind the rig
-              </figcaption>
-            </figure>
-            <figure class="plate b has-image" style="aspect-ratio: 900/1600;">
-              <img src="/img/vox-arboris-stage.jpg" width="900" height="1600" loading="lazy" alt="Vox Arboris stage at A'dam Tower — modular rig and white branching tree sculpture, sunset behind" />
-              <span class="reg">PLATE V·b</span>
-              <figcaption class="caption">
-                <b>Vox Arboris — stage, A'dam Tower, 2026</b>
-                The Arboris sculpture, modular rig, sunset over the IJ
-              </figcaption>
-            </figure>
-          </div>
-          <figure class="plate has-image has-video" style="aspect-ratio: 16/9; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <video controls preload="metadata" playsinline width="1280" height="720" poster="/img/vox-arboris-clip-poster.jpg">
-              <source src="/img/vox-arboris-clip.mp4" type="video/mp4" />
-              <track kind="captions" src="/img/vox-arboris-clip.vtt" srclang="en" label="English" default />
-            </video>
-            <span class="reg">PLATE V·c</span>
-            <figcaption class="caption">
-              <b>Vox Arboris — live, Odonien, Cologne</b>
-              From the floor, mid-set
-            </figcaption>
-          </figure>
-          <figure class="plate has-image" style="aspect-ratio: 1182/665; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <img src="/img/vox-arboris-wihh.jpg" width="1182" height="665" loading="lazy" alt="Vox Arboris installation at WIHH gallery, Summer 2023" />
-            <span class="reg">PLATE V·d</span>
-            <figcaption class="caption">
-              <b>Vox Arboris — WIHH, 2023</b>
-              Installation residency, gallery interior
-            </figcaption>
-          </figure>
-          <figure class="plate has-image" style="aspect-ratio: 4032/3024; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <img src="/img/mayor-manor.jpg" width="1600" height="1200" loading="lazy" alt="Mayor Manor stage at Ten Club — green and blue lights, white branching sculpture, modular rig, video screen with projection, mirrorball" />
-            <span class="reg">PLATE V·e</span>
-            <figcaption class="caption">
-              <b>Vox Arboris — Mayor Manor, Ten Club, 2022</b>
-              First staging, month-long residency
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- 03 — Meditation Station ============================== -->
-    <section id="meditation-station" class="work" data-screen-label="03 Meditation Station">
-      <div class="work-head">
-        <div class="num">№ 03</div>
-        <h2 class="title">Meditation Station</h2>
-        <div class="year"><b>2025</b></div>
-      </div>
-      <div class="work-body">
-        <div class="gutter-meta">
-          <span>Form<em>Tactile meditation installation</em></span>
-          <span>Vessel<em>1950s bakelite television</em></span>
-          <span>Internals<em>Raspberry Pi · dual rotary encoders · custom UI</em></span>
-        </div>
-        <div class="content">
-          <p class="descr">
-            A 1950s bakelite television, gutted and rewired with a
-            quiet new heart. Two rotary encoders sit where the tuning
-            and volume used to live; a Raspberry Pi runs a custom
-            interface behind the glass.
-            <span class="pull">Pull the cord, find your resonance.</span>
-          </p>
-          <figure class="plate tall has-image" style="aspect-ratio: 768/1024;">
-            <img src="/img/meditation-station.jpg" width="768" height="1024" loading="lazy" alt="Meditation Station — bakelite television on top of patched modular synthesizer" />
-            <span class="reg">PLATE VI</span>
-            <figcaption class="caption">
-              <b>Meditation Station</b>
-              Bakelite TV atop the modular rig
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04 — Vox Futuri ====================================== -->
-    <section id="vox-futuri" class="work featured" data-screen-label="04 Vox Futuri">
-      <div class="work-head">
-        <div class="num">№ 04</div>
-        <h2 class="title">
-          Vox Futuri
-          <span class="status-badge">In development · 2026</span>
-        </h2>
-        <div class="year"><b>2026</b><br />in development</div>
-      </div>
-      <div class="work-body">
-        <div class="content">
-          <div class="imgrow">
-            <figure class="plate a has-image" style="aspect-ratio: 1/1;">
-              <img src="/img/vox-futuri-broadside.png" width="1024" height="1024" loading="lazy" alt="Vox Futuri broadside — deep blue blueprint background with a human side-profile silhouette in cream containing faint technical schematics; centred in the head, a vintage cream television with a brass-gold bezel displays a black-and-white portrait of an older man in three-quarter view; a grey Soviet tank radio control panel sits below the screen" />
-              <span class="reg">PLATE III·a</span>
-              <figcaption class="caption">
-                <b>Vox Futuri — coming soon</b>
-              </figcaption>
-            </figure>
-            <figure class="plate b has-image" style="aspect-ratio: 1182/665;">
-              <img src="/img/vox-futuri-tv.jpg" width="1182" height="665" loading="lazy" alt="Vox Futuri — vintage brass-trimmed cockpit television" />
-              <span class="reg">PLATE III·b</span>
-              <figcaption class="caption">
-                <b>Vox Futuri — apparatus</b>
-                The cockpit television, lit blue
-              </figcaption>
-            </figure>
-          </div>
-          <div class="featured-text">
-            <p class="lede">
-              An oracle for one.<br />
-              Tune a brass dial; a rendering of you, thirty years on, appears on the screen and answers.<br />
-              The trick — proven by the analog predecessor — is that the future self knows nothing you don't.<br />
-              The device just asks the questions that release the answer.
-            </p>
-            <p>
-              Vintage brass-trimmed cockpit television. Stripped Soviet
-              tank radio for the dial. Two-way mirror over an LCD; a
-              hidden camera reads the face. A Raspberry Pi underneath
-              keeps the ritual running. The oracle does not predict —
-              it gives you back to yourself, late.
-            </p>
-            <dl class="meta-block">
-              <dt>Form</dt>     <dd>Single-participant installation</dd>
-              <dt>Materials</dt><dd>Brass cockpit TV · Soviet tank radio · 2-way mirror · Raspberry Pi</dd>
-              <dt>Lineage</dt>  <dd>Successor to <span class="serif-italic">Tardis</span> (2017)</dd>
-            </dl>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 05 — Vox Ignis / Diepgang ============================ -->
-    <section id="ignis" class="work featured" data-screen-label="05 Vox Ignis / Diepgang">
-      <div class="work-head">
-        <div class="num">№ 05</div>
-        <h2 class="title">
-          Vox Ignis
-          <span class="status-badge">Premiering · 30 May 2026</span>
-        </h2>
-        <div class="year"><b>2026</b><br />premiere</div>
-      </div>
-      <div class="work-body">
-        <div class="content">
-          <figure class="plate feature has-image" style="aspect-ratio: 1/1;">
-            <img src="/img/spark-broadside.webp" width="2048" height="2048" loading="lazy" alt="Vox Ignis broadside — linocut figure in profile carrying a bouquet, swirling foliage, decorative botanical border panel" />
-            <span class="reg">PLATE IV</span>
-            <figcaption class="caption">
-              <b>Vox Ignis</b>
-              Premiere art, WAAN/ZIN 2026
-            </figcaption>
-          </figure>
-          <div class="featured-text">
-            <p class="lede">
-              A 30-minute spoken-word and live electronic ritual.
-              Guided from silence to movement — a search for the signal
-              that lives beneath the everyday noise, and a glimpse,
-              somewhere, of the one thing that counts.
-            </p>
-            <p>
-              An evening that holds the audience the way a good ceremony does:
-              gradual descent, a long middle, a release that earns itself.
-              Composed for modular synthesis, voice, and one act of light
-              that arrives only when the room is ready.
-            </p>
-            <dl class="meta-block">
-              <dt>Premiere</dt>  <dd>30 May 2026 · WAAN/ZIN Festival · De Lievelinge</dd>
-              <dt>Duration</dt>  <dd>≈ 30 minutes</dd>
-              <dt>Form</dt>      <dd>Spoken word · live electronics · staged ritual</dd>
-            </dl>
-            <a class="callout" href="https://lievelinge.nl/waanzin/" target="_blank" rel="noopener">
-              <span class="label">Dates</span>
-              <span>WAAN/ZIN — 29 May → 1 June 2026 — De Lievelinge, NL</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 06 — Tardis ========================================== -->
-    <section id="tardis" class="work" data-screen-label="06 Tardis">
-      <div class="work-head">
-        <div class="num">№ 06</div>
-        <h2 class="title">Tardis</h2>
-        <div class="year"><b>2017</b></div>
-      </div>
-      <div class="work-body">
-        <div class="gutter-meta">
-          <span>Venue<em>The Next Web Conference · Amsterdam</em></span>
-          <span>Form<em>Participatory psychological installation · 20 min</em></span>
-          <span>Team<em>Five collaborators · hired actors</em></span>
-        </div>
-        <div class="content">
-          <p class="descr">
-            A 20-minute participatory installation. The participant travels
-            five years into the future and meets the version of themselves
-            that has already accomplished what they came to do. Built by a
-            five-person team and performed with hired actors.
-            <span class="pull">The conceptual prototype for Vox Futuri.</span>
-          </p>
-          <figure class="plate has-image" style="aspect-ratio: 768/1024; max-width: 600px;">
-            <img src="/img/tardis-portrait.jpg" width="768" height="1024" loading="lazy" alt="Spif at the Tardis — top hat with monocle, long grey wool coat, beaded necklaces, holding a wooden tool, Tardis police box behind" />
-            <span class="reg">PLATE VIII·a</span>
-            <figcaption class="caption">
-              <b>Tardis — TNW, 2017</b>
-              Spif as the Time Lord
-            </figcaption>
-          </figure>
-          <figure class="plate has-image" style="aspect-ratio: 4032/3024; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <img src="/img/tardis-closeup.jpg" width="1600" height="1200" loading="lazy" alt="The TARDIS — life-sized blue police box recreation in a brick-vaulted hall, red lighting overhead, signage reading 'PR.CO PUBLIC BOX' and 'POLICE TELEPHONE FREE FOR USE OF PUBLIC'" />
-            <span class="reg">PLATE VIII·b</span>
-            <figcaption class="caption">
-              <b>Tardis — TNW, 2017</b>
-              The chamber, exterior
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- 09 — Cubic Reset — Unscramble Your Life ============== -->
-    <section id="cubic-reset" class="work" data-screen-label="07 Cubic Reset">
-      <div class="work-head">
-        <div class="num">№ 07</div>
-        <h2 class="title">Cubic Reset <span class="serif-italic" style="opacity:0.6">—</span> Unscramble Your Life</h2>
-        <div class="year"><b>2015</b></div>
-      </div>
-      <div class="work-body">
-        <div class="gutter-meta">
-          <span>Venue<em>Brave Festival (~5000 attendees) · Tuinen van West · Amsterdam</em></span>
-          <span>Scale<em>3 × 3 metres</em></span>
-          <span>State<em>Lit from within at night</em></span>
-        </div>
-        <div class="content">
-          <p class="descr">
-            A three-metre interactive Rubik's cube installed in the gardens
-            of Tuinen van West, Amsterdam — one corner deliberately skewed.
-            Visitors stepped inside, chose a single topic to change in their
-            life (finances, a relationship, a worry), and were led through a
-            breathing exercise to release it. <span class="pull">Press the
-            RESET button to open the WINDOW to the rest of your life.</span>
-          </p>
-          <div class="imgrow">
-            <figure class="plate has-image" style="aspect-ratio: 1024/1024;">
-              <img src="/img/cubic-reset-day.jpg" width="1024" height="1024" loading="lazy" alt="Cubic Reset cube installation, Brave Festival 2015, daytime" />
-              <span class="reg">PLATE IX·a</span>
-              <figcaption class="caption">
-                <b>Cubic Reset — Brave Festival, 2015</b>
-                Daytime, three-metre scale
-              </figcaption>
-            </figure>
-            <figure class="plate has-image" style="aspect-ratio: 4/3;">
-              <img src="/img/cubic-reset-night.jpg" width="1600" height="1200" loading="lazy" alt="Cubic Reset cube installation, Brave Festival 2015, nighttime" />
-              <span class="reg">PLATE IX·b</span>
-              <figcaption class="caption">
-                <b>Cubic Reset — Brave Festival, 2015</b>
-                Night, lit from within
-              </figcaption>
-            </figure>
-          </div>
-          <div class="imgrow" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <figure class="plate has-image" style="aspect-ratio: 4/3;">
-              <img src="/img/cubic-reset-life-reset.jpg" width="1024" height="768" loading="lazy" alt="LIFE RESET — interior projection text from the Cubic Reset cube" />
-              <span class="reg">PLATE IX·c</span>
-              <figcaption class="caption">
-                <b>Cubic Reset — interior projection</b>
-                "A moment to reflect has occurred"
-              </figcaption>
-            </figure>
-            <figure class="plate has-image" style="aspect-ratio: 4/3;">
-              <img src="/img/cubic-reset-interior.jpg" width="1600" height="1200" loading="lazy" alt="Inside the Cubic Reset cube — confetti and torn papers on the floor under blacklight" />
-              <span class="reg">PLATE IX·d</span>
-              <figcaption class="caption">
-                <b>Cubic Reset — interior</b>
-                Floor: torn papers under blacklight
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 10 — Find Your Inner Unicorn ========================= -->
-    <section id="unicorn" class="work" data-screen-label="08 Find Your Inner Unicorn">
-      <div class="work-head">
-        <div class="num">№ 08</div>
-        <h2 class="title">Find Your Inner Unicorn</h2>
-        <div class="year"><b>2014</b></div>
-      </div>
-      <div class="work-body">
-        <div class="gutter-meta">
-          <span>Venue<em>Brave Festival · Tuinen van West · Amsterdam</em></span>
-          <span>Form<em>Interactive installation</em></span>
-          <span>Note<em>First public work</em></span>
-        </div>
-        <div class="content">
-          <p class="descr">
-            An interactive installation. A small ritual disguised as a
-            game — visitors entered alone and left holding something they
-            didn't know they were looking for. The earliest public seed
-            of the practice that would become Spif.
-          </p>
-          <figure class="plate has-image" style="aspect-ratio: 686/1146; max-width: 500px;">
-            <img src="/img/find-your-inner-unicorn.jpg" width="686" height="1146" loading="lazy" alt="Find Your Inner Unicorn caravan installation, Brave Festival 2014 — caravan with painted aztec pattern and unicorn banner on top" />
-            <span class="reg">PLATE X</span>
-            <figcaption class="caption">
-              <b>Find Your Inner Unicorn — Brave Festival, 2014</b>
-              The hand-painted caravan with Spif as host
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- 11 — Contact ========================================= -->
-    <section id="contact" data-screen-label="Contact" class="contact-brutalist">
-      <div class="contact-banner">
-        <div class="contact-banner-inner">
-          <div class="eyebrow">№ 11 — Contact · Amsterdam · MMXXVI</div>
-          <h2>Find me.</h2>
-          <p class="lede">
-            For residencies, commissions, exhibitions, and Diepgang —
-            slide into the DMs.
-          </p>
-          <a class="contact-link" href="https://instagram.com/elspif" target="_blank" rel="noopener">@elspif</a>
-        </div>
+        <dl class="live-facts">
+          <dt>Form</dt><dd>Live modular set · Tesla-coil ritual</dd>
+          <dt>Length</dt><dd>Flexible — <span class="hi">30 to 90 min</span></dd>
+          <dt>The coil</dt><dd>Musical Tesla coil, tube-to-hand arc</dd>
+          <dt>Rig</dt><dd>Eurorack modular · hardware voices</dd>
+          <dt>Needs</dt><dd>Power, cover, headroom above the coil</dd>
+          <dt>Based</dt><dd>Amsterdam, NL · will travel</dd>
+          <dt>For</dt><dd>Festivals · ceremonies · private events</dd>
+        </dl>
       </div>
     </section>
 
   </main>
 
-  <script>
-    // Mobile nav toggle — real button + aria-expanded state.
-    const navBtn = document.querySelector('.nav-toggle-button');
-    const setNavOpen = (open) => {
-      if (navBtn) navBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    };
-    if (navBtn) {
-      navBtn.addEventListener('click', () => {
-        setNavOpen(navBtn.getAttribute('aria-expanded') !== 'true');
-      });
-      // Escape closes the open sheet and returns focus to the toggle.
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navBtn.getAttribute('aria-expanded') === 'true') {
-          setNavOpen(false);
-          navBtn.focus();
-        }
-      });
-    }
-    // Close the sheet when a section link is tapped.
-    document.querySelectorAll('.sidenav-list a').forEach(a => {
-      a.addEventListener('click', () => setNavOpen(false));
-    });
+  <!-- ===== Book (amber bookend — echoes the tent practicals) ===== -->
+  <section id="book" class="live-book bleed">
+    <div class="contact-banner">
+      <div class="contact-banner-inner">
+        <div class="eyebrow">Booking · Amsterdam · MMXXVI</div>
+        <h2>Book the set.</h2>
+        <p class="lede">
+          For festivals, ceremonies, and private events —
+          slide into the DMs, or write.
+        </p>
+        <a class="contact-link" href="https://instagram.com/elspif" target="_blank" rel="noopener">@elspif</a>
+      </div>
+    </div>
+  </section>
 
-    // Scroll-triggered entrance for sections below the hero.
-    // Hero gets its own page-load animation (SPIF imprint, CSS only).
-    if ('IntersectionObserver' in window) {
-      const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            sectionObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-      document.querySelectorAll('main > section:not(#hero)').forEach(s => sectionObserver.observe(s));
-    } else {
-      // No IO — show everything so we don't leave sections invisible.
-      document.querySelectorAll('main > section').forEach(s => s.classList.add('in-view'));
-    }
-  </script>
-
-  <footer class="colophon">
+  <!-- ===== Footer ===== -->
+  <footer class="live-foot">
+    <div>Spif also builds installations — <a href="/works">the works →</a></div>
     <div>© MMXXVI · All rights reserved</div>
   </footer>
+
+  <script>
+    // Ambient hero loop: fade the muted video in once it can play.
+    // Respects prefers-reduced-motion (CSS hides the video; we also skip play()).
+    (function () {
+      var media = document.getElementById('heroMedia');
+      if (!media) return;
+      var video = media.querySelector('.live-hero-video');
+      if (!video) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+      var reveal = function () { media.classList.add('playing'); };
+      video.addEventListener('playing', reveal, { once: true });
+      // Attempt autoplay (muted autoplay is allowed on modern browsers).
+      var p = video.play();
+      if (p && typeof p.catch === 'function') { p.catch(function () { /* stay on poster */ }); }
+    })();
+
+    // Scroll-triggered section entrance (matches the portfolio's motion).
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('main > section').forEach(function (s) { io.observe(s); });
+    } else {
+      document.querySelectorAll('main > section').forEach(function (s) { s.classList.add('in-view'); });
+    }
+  </script>
 
 </body>
 </html>
