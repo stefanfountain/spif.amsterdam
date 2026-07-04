@@ -35,7 +35,7 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" /></noscript>
   <link rel="preload" as="image" href="/img/live/hero-poster.jpg?v=2" fetchpriority="high" />
   <link rel="stylesheet" href="styles.css?v=2026-05-13f" />
-  <link rel="stylesheet" href="live.css?v=2026-07-04c" />
+  <link rel="stylesheet" href="live.css?v=2026-07-04d" />
 </head>
 <body class="live" data-mood="velvet">
 
@@ -133,8 +133,12 @@
       </div>
     </section>
 
-    <!-- ===== Light-trail divider ===== -->
-    <div class="live-divider bleed" role="img" aria-label="Long-exposure photograph: fluorescent tubes streak blue and orange around the Tesla coil in the dark tent" style="background-image: url('/img/live/lighttrails-a.jpg');">
+    <!-- ===== Lightning divider (silent video backdrop) ===== -->
+    <div class="live-divider bleed" style="background-image: url('/img/live/divider-lightning.jpg?v=2');">
+      <video class="live-divider-video" autoplay muted loop playsinline preload="metadata" poster="/img/live/divider-lightning.jpg?v=2" aria-hidden="true">
+        <source src="/img/live/divider-lightning.webm?v=2" type="video/webm" />
+        <source src="/img/live/divider-lightning.mp4?v=2" type="video/mp4" />
+      </video>
       <blockquote>Hold a tube to the lightning and it lights in your hand.</blockquote>
     </div>
 
@@ -147,15 +151,15 @@
 
       <div class="live-about-grid">
         <div>
-          <p class="lede"><span class="hl-cool">A live modular electronic set built around a Tesla coil.
+          <p class="lede">A live modular electronic set built around a Tesla coil.
             The music is composed to move a room from stillness to release —
             and at the peak, the coil sings: a musical arc of lightning the
-            audience can literally take in hand.</span></p>
-          <p><span class="hl-cool">Fluorescent tubes are passed into the crowd. Held up to the coil,
+            audience can literally take in hand.</p>
+          <p>Fluorescent tubes are passed into the crowd. Held up to the coil,
             they light from the current in the air — no wires, no touch.
             The people holding them stop being an audience and become part of
             the instrument, a circle of light around the arc. It is closer to
-            ceremony than to a gig.</span></p>
+            ceremony than to a gig.</p>
           <p>
             The set is played on eurorack modular synthesis and hardware — the
             same rig behind <a class="inline-link" href="/works#vox-arboris">Vox Arboris</a> —
