@@ -121,7 +121,7 @@ html[data-mood="velvet"] body.live {
   letter-spacing: -0.045em;
   color: var(--paper);
   margin: 0 0 0 -0.03em;
-  text-shadow: 0 0 60px oklch(0.10 0.05 300 / 0.6);
+  text-shadow: 0 3px 26px oklch(0.08 0.04 300 / 0.92), 0 0 90px oklch(0.08 0.04 300 / 0.65);
 }
 .live-hero-tag {
   font-family: var(--mono);
@@ -147,6 +147,19 @@ html[data-mood="velvet"] body.live {
   display: flex; align-items: center; flex-wrap: wrap;
   gap: clamp(0.9rem, 2vw, 1.5rem);
   margin-top: clamp(1.4rem, 3vw, 2.25rem);
+}
+/* Two-column hero on wider screens: SPIF | (subtitle + copy), top-aligned —
+   keeps the wordmark clear of the lightning in the background video. */
+@media (min-width: 800px) {
+  .live-hero-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    column-gap: clamp(2rem, 5vw, 5rem);
+  }
+  .live-hero-inner > h1 { font-size: clamp(4.5rem, 12vw, 11rem); }
+  .live-hero-copy { align-self: start; }
+  .live-hero-copy > :first-child { margin-top: 0; }
 }
 .live-hero .location-pill { background: var(--ink-deep); color: var(--paper); border-color: var(--ink-deep); }
 .live-cta {
