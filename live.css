@@ -38,7 +38,7 @@ html[data-mood="velvet"] body.live {
   top: 0; left: 0; right: 0;
   z-index: 6;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 1rem;
   padding: clamp(1.1rem, 2.5vw, 1.75rem) clamp(1.25rem, 4vw, 3.5rem);
@@ -178,6 +178,16 @@ body.live .hl {
   border-radius: 1px;
 }
 body.live .hl .sep { color: var(--ink-deep); opacity: 0.55; }
+/* Cool variant — electric coil-blue swatch, for the subtitle + its paragraph,
+   so secondary copy reads distinct from the warm-orange titles. */
+body.live .hl-cool {
+  background: var(--coil-blue);
+  color: var(--ink-deep);
+  padding: 0.04em 0.28em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  border-radius: 1px;
+}
 /* Hero eyebrow chip becomes a solid highlighted stamp instead of an outline. */
 .live-hero .eyebrow-chip.hl {
   border-color: transparent;
