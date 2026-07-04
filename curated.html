@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en" data-mood="velvet" data-pace="broadside" data-plate="cyanotype">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spif — Live (curated frames)</title>
+  <meta name="description" content="A live modular electronic set built around a Tesla coil — the audience holds fluorescent tubes to the arc and becomes part of the instrument. Amsterdam-based. Will travel." />
+  <script>document.documentElement.classList.add('js');</script>
+  <!-- Legacy deep-links: the portfolio used to live at the root with #anchors.
+       It now lives at /works — bounce any known old hash there before paint. -->
+  <script>
+    (function () {
+      var h = (location.hash || '').replace('#', '');
+      var works = ['about','studio','vox-arboris','meditation-station','vox-futuri','ignis','tardis','cubic-reset','unicorn','contact'];
+      if (works.indexOf(h) !== -1) { location.replace('/works#' + h); }
+    })();
+  </script>
+
+  <!-- Social previews -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://spif.amsterdam" />
+  <meta property="og:title" content="Spif — live electronic set + Tesla coil" />
+  <meta property="og:description" content="A live modular set built around a Tesla coil. The crowd holds fluorescent tubes to the arc and becomes part of the instrument." />
+  <meta property="og:image" content="https://spif.amsterdam/img/live/crowd-tubes.jpg" />
+  <meta property="og:image:alt" content="A crowd in festival dress holds glowing fluorescent tubes up to an arcing Tesla coil inside a draped tent" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Spif — live electronic set + Tesla coil" />
+  <meta name="twitter:description" content="A live modular set built around a Tesla coil. The crowd holds fluorescent tubes to the arc and becomes part of the instrument." />
+  <meta name="twitter:image" content="https://spif.amsterdam/img/live/crowd-tubes.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" /></noscript>
+  <link rel="preload" as="image" href="/img/live/curated/hero-poster.jpg" fetchpriority="high" />
+  <link rel="stylesheet" href="styles.css?v=2026-05-13f" />
+  <link rel="stylesheet" href="live.css?v=2026-07-04c" />
+  <style>
+    /* Comparison badge — marks this as the alternative treatment. */
+    .ver-badge{position:fixed;left:12px;bottom:12px;z-index:80;
+      font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+      color:var(--ink-deep);background:var(--coil-blue);padding:.5rem .7rem;border-radius:1px;
+      box-shadow:0 6px 20px rgba(0,0,0,.4)}
+    .ver-badge a{color:var(--ink-deep);border-bottom:1px solid var(--ink-deep)}
+  </style>
+</head>
+<body class="live" data-mood="velvet">
+
+  <a href="#set" class="skip-link">Skip to the set</a>
+  <div class="ver-badge">Curated frames · <a href="/">see haze →</a></div>
+
+  <!-- ===== Hero ===== -->
+  <header class="live-hero bleed">
+    <div class="live-hero-media" id="heroMedia">
+      <img class="live-hero-poster" src="/img/live/curated/hero-poster.jpg" alt="A Tesla coil on a tripod inside a draped festival tent; fluorescent tubes streak the dark, people only as distant silhouettes" />
+      <div class="live-hero-scrim"></div>
+    </div>
+
+    <div class="live-topbar">
+      <nav aria-label="Sections">
+        <a href="#set">Listen</a>
+        <a href="#ritual">The ritual</a>
+        <a href="#book">Book</a>
+        <a href="/works" class="to-works">The works →</a>
+      </nav>
+    </div>
+
+    <div class="live-hero-inner">
+      <span class="eyebrow-chip hl">Live electronic set</span>
+      <h1>SPIF</h1>
+      <p class="live-hero-tag"><span class="hl">Modular live set <span class="sep">/</span> Tesla-coil ritual</span></p>
+      <p class="live-hero-sub"><span class="hl-cool">A machine that arcs lightning into the crowd's hands — and a set built to earn the moment it does.</span></p>
+      <div class="live-hero-actions">
+        <span class="location-pill">Amsterdam · NL · will travel</span>
+        <a href="#set" class="live-cta">Listen <span class="arw">↓</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="live">
+
+    <!-- ===== The set (SoundCloud) ===== -->
+    <section id="set">
+      <div class="live-section-head">
+        <p class="live-kicker"><span class="hl">№ 01 — The set</span></p>
+        <h2><span class="hl">Listen.</span></h2>
+      </div>
+
+      <!-- SoundCloud slot.
+           When the recorded set is live, replace the whole .sc-placeholder block
+           with the embed, e.g.:
+           <div class="sc-embed"><iframe height="480" scrolling="no" frameborder="no"
+             src="https://w.soundcloud.com/player/?url=SET_URL&color=%23ff7a1a&auto_play=false&visual=true">
+           </iframe></div>  -->
+      <a class="sc-placeholder" href="https://soundcloud.com/elspif" target="_blank" rel="noopener" aria-label="Follow Spif on SoundCloud — new live set coming soon">
+        <span class="sc-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+        <span class="sc-copy">
+          <span class="sc-title">A new live set, recorded to tape.</span>
+          <span class="sc-status"><b>Dropping this weekend</b> — follow on SoundCloud to catch it first.</span>
+        </span>
+        <span class="sc-follow">Follow ↗</span>
+      </a>
+      <p class="live-set-note">Recorded live · modular synthesis · one continuous take</p>
+    </section>
+
+    <!-- ===== The ritual (gallery) ===== -->
+    <section id="ritual">
+      <div class="live-section-head">
+        <p class="live-kicker"><span class="hl">№ 02 — The ritual</span></p>
+        <h2><span class="hl">Hands on the lightning.</span></h2>
+      </div>
+
+      <div class="live-gallery">
+        <figure class="live-shot">
+          <img src="/img/live/curated/coil-wide.jpg" loading="lazy" alt="The Tesla coil on its tripod in the tent; a figure in the foreground seen from behind, further people at a distance in the deep light" />
+        </figure>
+        <figure class="live-shot">
+          <img src="/img/live/curated/dancers-coil.jpg" loading="lazy" alt="Two people seen from behind, in fur and feathers, facing the coil under blue light" />
+        </figure>
+        <figure class="live-shot">
+          <img src="/img/live/curated/lighttrails-b.jpg" loading="lazy" alt="Long-exposure of the tent: fluorescent tubes streak blue and orange around the coil in the dark" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== Light-trail divider ===== -->
+    <div class="live-divider bleed" role="img" aria-label="Long-exposure photograph: fluorescent tubes streak blue and orange around the Tesla coil in the dark tent" style="background-image: url('/img/live/curated/lighttrails-a.jpg');">
+      <blockquote>Hold a tube to the lightning and it lights in your hand.</blockquote>
+    </div>
+
+    <!-- ===== What it is ===== -->
+    <section id="about-live">
+      <div class="live-section-head">
+        <p class="live-kicker"><span class="hl">№ 03 — What it is</span></p>
+        <h2><span class="hl">The instrument is the room.</span></h2>
+      </div>
+
+      <div class="live-about-grid">
+        <div>
+          <p class="lede"><span class="hl-cool">A live modular electronic set built around a Tesla coil.
+            The music is composed to move a room from stillness to release —
+            and at the peak, the coil sings: a musical arc of lightning the
+            audience can literally take in hand.</span></p>
+          <p><span class="hl-cool">Fluorescent tubes are passed into the crowd. Held up to the coil,
+            they light from the current in the air — no wires, no touch.
+            The people holding them stop being an audience and become part of
+            the instrument, a circle of light around the arc. It is closer to
+            ceremony than to a gig.</span></p>
+          <p>
+            The set is played on eurorack modular synthesis and hardware — the
+            same rig behind <a class="inline-link" href="/works#vox-arboris">Vox Arboris</a> —
+            with the coil voiced as its own instrument in the mix. Built for
+            festivals, ceremonies, and the kind of late room that wants somewhere
+            to go.
+          </p>
+        </div>
+        <dl class="live-facts">
+          <dt>Form</dt><dd>Live modular set · Tesla-coil ritual</dd>
+          <dt>Length</dt><dd>Flexible — <span class="hi">30 to 90 min</span></dd>
+          <dt>The coil</dt><dd>Musical Tesla coil, tube-to-hand arc</dd>
+          <dt>Rig</dt><dd>Eurorack modular · hardware voices</dd>
+          <dt>Needs</dt><dd>Power, cover, headroom above the coil</dd>
+          <dt>Based</dt><dd>Amsterdam, NL · will travel</dd>
+          <dt>For</dt><dd>Festivals · ceremonies · private events</dd>
+        </dl>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Book (amber bookend — echoes the tent practicals) ===== -->
+  <section id="book" class="live-book bleed">
+    <div class="contact-banner">
+      <div class="contact-banner-inner">
+        <div class="eyebrow">Booking · Amsterdam · MMXXVI</div>
+        <h2>Book the set.</h2>
+        <p class="lede">
+          For festivals, ceremonies, and private events —
+          slide into the DMs, or write.
+        </p>
+        <a class="contact-link" href="https://instagram.com/elspif" target="_blank" rel="noopener">@elspif</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="live-foot">
+    <div>Spif also builds installations — <a href="/works">the works →</a></div>
+    <div>© MMXXVI · All rights reserved</div>
+  </footer>
+
+  <script>
+    // Ambient hero loop: fade the muted video in once it can play.
+    // Respects prefers-reduced-motion (CSS hides the video; we also skip play()).
+    (function () {
+      var media = document.getElementById('heroMedia');
+      if (!media) return;
+      var video = media.querySelector('.live-hero-video');
+      if (!video) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+      var reveal = function () { media.classList.add('playing'); };
+      video.addEventListener('playing', reveal, { once: true });
+      // Attempt autoplay (muted autoplay is allowed on modern browsers).
+      var p = video.play();
+      if (p && typeof p.catch === 'function') { p.catch(function () { /* stay on poster */ }); }
+    })();
+
+    // Scroll-triggered section entrance (matches the portfolio's motion).
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('main > section').forEach(function (s) { io.observe(s); });
+    } else {
+      document.querySelectorAll('main > section').forEach(function (s) { s.classList.add('in-view'); });
+    }
+  </script>
+
+</body>
+</html>
