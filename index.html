@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spif — Melodic house DJ set &amp; lightning show</title>
-  <meta name="description" content="A live melodic house DJ set with an interactive Tesla-coil lightning machine — the crowd holds fluorescent tubes to the arc and it lights in their hands. Amsterdam." />
+  <title>Spif — Melodic techno DJ set &amp; lightning show</title>
+  <meta name="description" content="A live melodic techno DJ set with an interactive Tesla-coil lightning machine — the crowd holds fluorescent tubes to the arc and it lights in their hands. Amsterdam." />
   <script>document.documentElement.classList.add('js');</script>
   <!-- Legacy deep-links: the portfolio used to live at the root with #anchors.
        It now lives at /works — bounce any known old hash there before paint. -->
@@ -19,12 +19,12 @@
   <!-- Social previews -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://spif.amsterdam" />
-  <meta property="og:title" content="Spif — melodic house DJ set &amp; lightning show" />
+  <meta property="og:title" content="Spif — melodic techno DJ set &amp; lightning show" />
   <meta property="og:description" content="A live DJ set with an interactive musical Tesla-coil lightning machine. Real lightning, in the crowd's hands." />
   <meta property="og:image" content="https://spif.amsterdam/img/live/crowd-tubes.jpg" />
   <meta property="og:image:alt" content="A crowd in festival dress holds glowing fluorescent tubes up to an arcing Tesla coil inside a draped tent" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Spif — melodic house DJ set &amp; lightning show" />
+  <meta name="twitter:title" content="Spif — melodic techno DJ set &amp; lightning show" />
   <meta name="twitter:description" content="A live DJ set with an interactive musical Tesla-coil lightning machine. Real lightning, in the crowd's hands." />
   <meta name="twitter:image" content="https://spif.amsterdam/img/live/crowd-tubes.jpg" />
 
@@ -65,7 +65,7 @@
       <h1>SPIF</h1>
       <div class="live-hero-copy">
         <p class="live-hero-tag"><span class="hl">Put lightning into your crowd's hands</span></p>
-        <p class="live-hero-sub"><span class="hl-cool">A melodic house DJ set with a live Tesla coil that fires to the beat. Lane 8, Joachim Pastor, Worakls, Einmusik territory.</span></p>
+        <p class="live-hero-sub"><span class="hl-cool">A melodic techno DJ set with a live Tesla coil that fires to the beat. Stephan Bodzin, NTO, Kiasmos, Einmusik territory.</span></p>
         <div class="live-hero-actions">
           <span class="location-pill">Amsterdam · NL</span>
           <a href="#set" class="live-cta">Listen <span class="arw">↓</span></a>
@@ -83,23 +83,17 @@
         <h2><span class="hl">Listen.</span></h2>
       </div>
 
-      <!-- SoundCloud slot.
-           When the recorded set is live, replace the whole .sc-placeholder block
-           with the embed, e.g.:
-           <div class="sc-embed"><iframe height="480" scrolling="no" frameborder="no"
-             src="https://w.soundcloud.com/player/?url=SET_URL&color=%23ff7a1a&auto_play=false&visual=true">
-           </iframe></div>  -->
-      <a class="sc-placeholder" href="https://soundcloud.com/elspif" target="_blank" rel="noopener" aria-label="Follow Spif on SoundCloud — new live set coming soon">
-        <span class="sc-play" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        </span>
-        <span class="sc-copy">
-          <span class="sc-title">A new live set, recorded in one take.</span>
-          <span class="sc-status">Follow on SoundCloud to catch it first.</span>
-        </span>
-        <span class="sc-follow">Follow ↗</span>
-      </a>
-      <p class="live-set-note">Recorded live · one continuous take</p>
+      <!-- SoundCloud: track 2374559516 — "Burning Man NL (Sheep Sleep)".
+           Uses the api.soundcloud.com/tracks/<id> form rather than the permalink,
+           so the embed survives a slug rename. -->
+      <div class="sc-embed">
+        <iframe height="480" scrolling="no" frameborder="no" loading="lazy"
+          title="Spif — live set on SoundCloud"
+          allow="autoplay; encrypted-media"
+          src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F2374559516&color=%23ff7a1a&auto_play=false&hide_related=true&show_comments=false&show_reposts=false&show_teaser=false&show_user=true&visual=true">
+        </iframe>
+      </div>
+      <p class="live-set-note">80 minutes · 19 tracks · recorded live in one continuous take</p>
     </section>
 
     <!-- ===== The ritual (gallery) ===== -->
@@ -157,7 +151,7 @@
             the sound, ionising the air into notes.</p>
         </div>
         <dl class="live-facts">
-          <dt>Form</dt><dd>Melodic house DJ set · live Tesla coil</dd>
+          <dt>Form</dt><dd>Melodic techno DJ set · live Tesla coil</dd>
           <dt>Length</dt><dd><span class="hi">30 to 90 min</span></dd>
           <dt>The coil</dt><dd>Musical Tesla coil, tube-to-hand arc</dd>
           <dt>Rig</dt><dd>Eurorack modular · hardware voices</dd>
