@@ -143,7 +143,7 @@
 
   /* ---------- gallery ---------- */
   .gallery{display:grid;gap:.6rem;grid-template-columns:repeat(2,1fr)}
-  @media (min-width:52rem){.gallery{grid-template-columns:repeat(4,1fr)}}
+  @media (min-width:52rem){.gallery{grid-template-columns:repeat(5,1fr)}}
   .gallery figure{margin:0;border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--surface)}
   .gallery img{width:100%;aspect-ratio:1;object-fit:cover;transition:transform .5s ease}
   .gallery figure:hover img{transform:scale(1.03)}
@@ -276,7 +276,12 @@
 
     <div class="cap flip">
       <div class="cap-media">
-        <img src="/img/vox-arboris/wihh-plant-wide.jpg" alt="The whole instrument at WIHH Gallery in daylight — the tree and console on its green floor, with a living plant on a stool at the left, wired into the circuit" loading="lazy" />
+        <video autoplay muted loop playsinline preload="metadata"
+               poster="/img/vox-arboris/plant-wired-poster.jpg"
+               aria-label="The camera moves from the living plant, an electrode taped to one leaf, along its cable to the modular panels it feeds">
+          <source src="/img/vox-arboris/plant-wired.webm" type="video/webm" />
+          <source src="/img/vox-arboris/plant-wired.mp4" type="video/mp4" />
+        </video>
       </div>
       <div class="cap-body">
         <span class="cap-num">02</span>
@@ -329,6 +334,7 @@
       </video>
     </div>
     <div class="gallery" style="margin-top:1.4rem">
+      <figure><img src="/img/vox-arboris/wihh-plant-wide.jpg" alt="The whole instrument in daylight at WIHH Gallery, the plant on its stool at the left" loading="lazy" /></figure>
       <figure><img src="/img/vox-arboris/tree-full.jpg" alt="The full tree sculpture with its branching canopy, lit green and blue" loading="lazy" /></figure>
       <figure><img src="/img/vox-arboris/venue-blue.jpg" alt="The instrument on stage under blue light with a projection screen behind" loading="lazy" /></figure>
       <figure><img src="/img/vox-arboris/wihh-crowd.jpg" alt="Visitors gathered around the installation at WIHH Gallery" loading="lazy" /></figure>
