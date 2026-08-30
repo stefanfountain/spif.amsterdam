@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vox Arboris — a self-playing instrument</title>
+<meta name="description" content="A sculptural modular synthesizer that plays itself, listens to a living plant, and draws sound in fire. Available for acquisition. Amsterdam." />
+
+<link rel="canonical" href="https://spif.amsterdam/vox-arboris" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://spif.amsterdam/vox-arboris" />
+<meta property="og:title" content="Vox Arboris — a self-playing instrument" />
+<meta property="og:description" content="A sculptural modular synthesizer that plays itself, listens to a living plant, and draws sound in fire." />
+<meta property="og:image" content="https://spif.amsterdam/img/vox-arboris/flame-poster.jpg" />
+<meta property="og:image:alt" content="A row of gas flames along a metal tube, their heights tracing the shape of a sound wave" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Vox Arboris — a self-playing instrument" />
+<meta name="twitter:description" content="A sculptural modular synthesizer that plays itself, listens to a living plant, and draws sound in fire." />
+<meta name="twitter:image" content="https://spif.amsterdam/img/vox-arboris/flame-poster.jpg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
+
+<style>
+  :root{
+    --ground:#0A0E0C;
+    --ground-2:#101613;
+    --surface:#161E1A;
+    --ink:#EEF3F0;
+    --ink-2:#A5B2AB;
+    --ink-3:#75837C;
+    --rule:#232E28;
+    --rule-firm:#33423A;
+    --flame:#E8763190;
+    --flame-solid:#E87631;
+    --flame-soft:#2A1A10;
+    --leaf:#74C295;
+    --leaf-soft:#12241A;
+
+    --display:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --sans:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --measure:64ch;
+    --s-1:.8125rem; --s0:1.0625rem; --s1:1.3rem; --s2:1.75rem; --s3:2.4rem;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+  body{
+    background:var(--ground);color:var(--ink);
+    font-family:var(--sans);font-weight:300;font-size:var(--s0);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,video{max-width:100%;display:block}
+  a{color:var(--leaf);text-underline-offset:.2em}
+  a:hover{color:var(--ink)}
+  :focus-visible{outline:2px solid var(--leaf);outline-offset:3px;border-radius:2px}
+
+  .wrap{max-width:66rem;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.5rem)}
+  .label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;min-height:min(92svh,52rem);display:grid;align-items:end;overflow:hidden;border-bottom:1px solid var(--rule)}
+  .hero video,.hero .hero-fallback{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:saturate(1.05) contrast(1.05);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(to top,var(--ground) 2%,rgba(10,14,12,.82) 28%,rgba(10,14,12,.25) 62%,rgba(10,14,12,.55) 100%);
+  }
+  .hero-inner{position:relative;z-index:2;padding:clamp(2.5rem,7vw,5.5rem) 0 clamp(2rem,5vw,3.5rem)}
+  .hero h1{
+    font-family:var(--display);font-weight:300;font-size:clamp(3rem,11vw,7.5rem);
+    line-height:.92;letter-spacing:-.02em;text-wrap:balance;
+  }
+  .hero h1 em{font-style:italic;color:var(--flame-solid)}
+  .hero .standfirst{
+    font-family:var(--display);font-size:clamp(1.35rem,3.2vw,2.1rem);line-height:1.32;
+    color:var(--ink);max-width:34ch;margin-top:1.4rem;font-weight:300;text-wrap:pretty;
+  }
+  .hero-meta{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule-firm)}
+
+  /* ---------- rhythm ---------- */
+  section{padding:clamp(3.5rem,9vw,7rem) 0}
+  section+section{border-top:1px solid var(--rule)}
+  h2{
+    font-family:var(--display);font-weight:300;font-size:clamp(2rem,5.2vw,var(--s3));
+    line-height:1.08;letter-spacing:-.015em;text-wrap:balance;max-width:22ch;
+  }
+  h3{font-family:var(--display);font-weight:400;font-size:var(--s2);line-height:1.15;letter-spacing:-.01em}
+  p{max-width:var(--measure);text-wrap:pretty}
+  p+p{margin-top:1.1rem}
+  .lede{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.55;color:var(--ink);max-width:56ch}
+  .muted{color:var(--ink-2)}
+  strong{font-weight:500;color:var(--ink)}
+  .stack{display:flex;flex-direction:column;gap:1.5rem}
+  .stack-lg{display:flex;flex-direction:column;gap:clamp(2.5rem,6vw,4rem)}
+
+  /* ---------- capabilities ---------- */
+  .cap{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:center}
+  @media (min-width:52rem){
+    .cap{grid-template-columns:1fr 1fr}
+    .cap.flip .cap-media{order:2}
+  }
+  .cap-media{border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--surface)}
+  .cap-media img,.cap-media video{width:100%;aspect-ratio:4/3;object-fit:cover}
+  .cap-body{display:flex;flex-direction:column;gap:.9rem}
+  .cap-num{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;color:var(--flame-solid);font-weight:500}
+
+  /* ---------- pull ---------- */
+  .pull{
+    border-left:2px solid var(--flame-solid);background:var(--flame-soft);
+    padding:clamp(1.3rem,3vw,2rem) clamp(1.3rem,3vw,2.2rem);border-radius:0 2px 2px 0;
+  }
+  .pull p{font-family:var(--display);font-size:clamp(1.3rem,3vw,1.9rem);line-height:1.3;max-width:38ch;color:var(--ink)}
+  .pull.leaf{border-left-color:var(--leaf);background:var(--leaf-soft)}
+
+  /* ---------- provenance ---------- */
+  .prov{display:flex;flex-direction:column;gap:0;margin-top:2rem;border-top:1px solid var(--rule)}
+  .prov-row{display:grid;gap:.25rem 1.5rem;padding:1.05rem 0;border-bottom:1px solid var(--rule)}
+  @media (min-width:44rem){.prov-row{grid-template-columns:10rem 1fr auto;align-items:baseline}}
+  .prov-when{font-family:var(--mono);font-size:var(--s-1);color:var(--flame-solid)}
+  .prov-what{font-size:var(--s0)}
+  .prov-kind{font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+
+  /* ---------- gallery ---------- */
+  .gallery{display:grid;gap:.6rem;grid-template-columns:repeat(2,1fr)}
+  @media (min-width:52rem){.gallery{grid-template-columns:repeat(4,1fr)}}
+  .gallery figure{margin:0;border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--surface)}
+  .gallery img{width:100%;aspect-ratio:1;object-fit:cover;transition:transform .5s ease}
+  .gallery figure:hover img{transform:scale(1.03)}
+  .gallery .wide{grid-column:span 2}
+
+  /* ---------- spec ---------- */
+  .spec{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:2px;overflow:hidden;margin-top:1.8rem}
+  @media (min-width:40rem){.spec{grid-template-columns:minmax(9rem,15rem) 1fr}}
+  .spec dt{background:var(--ground-2);padding:.85rem 1.1rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .spec dd{background:var(--surface);padding:.85rem 1.1rem;font-size:var(--s-1);color:var(--ink-2)}
+  .spec dd b{color:var(--ink);font-weight:500}
+
+  /* ---------- audience ---------- */
+  .aud{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:2px;overflow:hidden;margin-top:2rem}
+  @media (min-width:46rem){.aud{grid-template-columns:repeat(2,1fr)}}
+  @media (min-width:68rem){.aud{grid-template-columns:repeat(4,1fr)}}
+  .aud div{background:var(--surface);padding:1.4rem 1.3rem;display:flex;flex-direction:column;gap:.5rem}
+  .aud h4{font-family:var(--display);font-weight:400;font-size:1.25rem;line-height:1.2}
+  .aud p{font-size:var(--s-1);color:var(--ink-2);max-width:none}
+
+  /* ---------- video block ---------- */
+  .filmstrip{border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:#000;margin-top:2rem}
+  .filmstrip video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+
+  /* ---------- acquire ---------- */
+  .acquire{border:1px solid var(--rule-firm);border-radius:2px;background:var(--ground-2);padding:clamp(1.8rem,5vw,3rem);display:flex;flex-direction:column;gap:1.4rem;margin-top:2rem}
+  .cta{
+    display:inline-flex;align-items:center;gap:.6rem;align-self:flex-start;
+    font-family:var(--mono);font-size:var(--s-1);letter-spacing:.08em;text-transform:uppercase;
+    padding:.9rem 1.5rem;border:1px solid var(--flame-solid);color:var(--flame-solid);
+    border-radius:2px;text-decoration:none;transition:background .25s ease,color .25s ease;
+  }
+  .cta:hover{background:var(--flame-solid);color:#0A0E0C}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--rule);padding:3rem 0 4.5rem;display:flex;flex-direction:column;gap:.8rem}
+  .foot-links{display:flex;flex-wrap:wrap;gap:.6rem 1.8rem}
+
+  ul.body-list{margin:0;padding-left:1.15rem;max-width:var(--measure);display:flex;flex-direction:column;gap:.6rem}
+  ul.body-list li::marker{color:var(--flame-solid)}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <video autoplay muted loop playsinline poster="/img/vox-arboris/flame-poster.jpg" aria-hidden="true">
+    <source src="/img/vox-arboris/flame-loop.webm" type="video/webm" />
+    <source src="/img/vox-arboris/flame-loop.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-inner wrap">
+    <span class="label">A work by Spif · Amsterdam · 2022 → ongoing</span>
+    <h1>Vox<br /><em>Arboris</em></h1>
+    <p class="standfirst">A sculptural modular synthesizer that plays itself, listens to a living plant, and draws sound in fire.</p>
+    <div class="hero-meta">
+      <span class="label">Available for acquisition</span>
+      <span class="label">Delivered installed &amp; playable</span>
+      <span class="label">Tuned to your room</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ THESIS ============ -->
+<section id="what">
+  <div class="wrap stack">
+    <span class="label">№ 01 — The work</span>
+    <h2>An instrument that does not need a player.</h2>
+    <p class="lede">Vox Arboris is a tree, cut from sheet and standing on its own floor, with a complete modular synthesizer built into its trunk. Two banks of electronics sit at playing height on either side of the console. Patch cables fall from the branches like aerial roots. Switch it on and it begins to play — slowly, deliberately, never quite repeating — and it keeps playing whether or not anyone is standing at it.</p>
+    <p class="muted">It has spent four years in galleries, clubs and museums: a month-long residency at Ten Club, a month at WIHH, a night at Odonien in Cologne, the Nieuwe Instituut in Rotterdam, and a set high above the IJ at the A'dam Tower. It is now looking for a permanent home.</p>
+  </div>
+</section>
+
+<!-- ============ CAPABILITIES ============ -->
+<section id="how">
+  <div class="wrap stack-lg">
+    <div class="stack">
+      <span class="label">№ 02 — What it does</span>
+      <h2>Three things, and it does them at once.</h2>
+    </div>
+
+    <div class="cap">
+      <div class="cap-media">
+        <img src="/img/vox-arboris/console-detail.jpg" alt="The tree's console: modular synthesizer panels set into a white sculpted desk beneath branching forms" loading="lazy" />
+      </div>
+      <div class="cap-body">
+        <span class="cap-num">01</span>
+        <h3>It plays itself</h3>
+        <p class="muted">The system is patched as a self-generating instrument. Clock, chance and slow modulation drive the voices; nothing is sequenced by hand and nothing loops back to the same bar. Left running in a room it produces a continuous evolving score for as long as it is switched on — a piece of music that is different every day and recognisably itself every time.</p>
+      </div>
+    </div>
+
+    <div class="cap flip">
+      <div class="cap-media">
+        <img src="/img/vox-arboris/instituut-plant.jpg" alt="The installation at Het Nieuwe Instituut, a living plant on a stool wired into the instrument" loading="lazy" />
+      </div>
+      <div class="cap-body">
+        <span class="cap-num">02</span>
+        <h3>It listens to a plant</h3>
+        <p class="muted">A living plant is wired into the circuit. Electrodes read the minute fluctuations in its surface conductivity — the plant's response to light, water, touch, the room — and a biodata module turns that signal into pitch and movement. A harmonic quantiser catches it and places it in key, so what you hear is not noise from a plant but the plant playing in tune.</p>
+        <p class="muted">It is not a metaphor and not a recording. Water the plant and the music changes.</p>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="cap-media">
+        <video autoplay muted loop playsinline poster="/img/vox-arboris/flame-poster.jpg" aria-label="A row of gas flames along a tube, their heights following the shape of the sound">
+          <source src="/img/vox-arboris/flame-loop.webm" type="video/webm" />
+          <source src="/img/vox-arboris/flame-loop.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="cap-body">
+        <span class="cap-num">03</span>
+        <h3>It draws sound in fire</h3>
+        <p class="muted">A metre-long Rubens' tube runs out along one branch: a sealed pipe of gas with a row of jets down its length and a driver at one end. Standing waves inside vary the pressure along the tube, so the flames stand tall where the pressure is high and low where it isn't. The row of flames becomes a picture of the sound, redrawing itself as the music moves.</p>
+        <p class="muted">Heinrich Rubens demonstrated the principle in 1905. It has lost none of its effect on a room.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE PLANT AT THE CENTRE ============ -->
+<section id="centre">
+  <div class="wrap stack">
+    <span class="label">№ 03 — The design</span>
+    <h2>Where the sequencer was, there is now a plant.</h2>
+    <p class="lede">For four years this instrument was driven by a rack of drum machines and samplers sitting at the centre of the console — the brain, flanked by two banks of modular.</p>
+    <p class="muted">In its acquired form that centre bay is empty of electronics. The two electronic wings remain either side, and the plant takes the middle: the thing that now decides what happens sits exactly where the machine that used to decide it was bolted down. The instrument was rebuilt around that substitution. Nothing in it depends on a laptop, a phone, or a sequencer you have to learn.</p>
+    <div class="pull leaf">
+      <p>The plant is not an input to the instrument. It is the part of the instrument that chooses.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FILM ============ -->
+<section id="film">
+  <div class="wrap stack">
+    <span class="label">№ 04 — In the room</span>
+    <h2>What it looks like when it is running.</h2>
+    <p class="muted">Filmed at Het Nieuwe Instituut, Rotterdam.</p>
+    <div class="filmstrip">
+      <video controls preload="none" poster="/img/vox-arboris/documentation-poster.jpg">
+        <source src="/img/vox-arboris/documentation.mp4" type="video/mp4" />
+        Your browser does not support embedded video.
+      </video>
+    </div>
+    <div class="gallery" style="margin-top:1.4rem">
+      <figure><img src="/img/vox-arboris/tree-full.jpg" alt="The full tree sculpture with its branching canopy, lit green and blue" loading="lazy" /></figure>
+      <figure><img src="/img/vox-arboris/venue-blue.jpg" alt="The instrument on stage under blue light with a projection screen behind" loading="lazy" /></figure>
+      <figure><img src="/img/vox-arboris/instituut-crowd.jpg" alt="Visitors gathered around the installation at Het Nieuwe Instituut" loading="lazy" /></figure>
+      <figure><img src="/img/vox-arboris/performance.jpg" alt="Spif performing with the instrument" loading="lazy" /></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROVENANCE ============ -->
+<section id="history">
+  <div class="wrap stack">
+    <span class="label">№ 05 — Where it has been</span>
+    <h2>Four years of rooms.</h2>
+    <div class="prov">
+      <div class="prov-row"><span class="prov-when">Nov 2022</span><span class="prov-what">Mayor Manor, Ten Club — Amsterdam</span><span class="prov-kind">Month-long residency</span></div>
+      <div class="prov-row"><span class="prov-when">Summer 2023</span><span class="prov-what">WIHH Gallery — Amsterdam</span><span class="prov-kind">Month-long installation</span></div>
+      <div class="prov-row"><span class="prov-when">2024</span><span class="prov-what">Odonien — Cologne</span><span class="prov-kind">Live</span></div>
+      <div class="prov-row"><span class="prov-when">2026</span><span class="prov-what">Het Nieuwe Instituut — Rotterdam</span><span class="prov-kind">Installation</span></div>
+      <div class="prov-row"><span class="prov-when">Apr 2026</span><span class="prov-what">A'dam Tower — Amsterdam</span><span class="prov-kind">Live</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT YOU GET ============ -->
+<section id="included">
+  <div class="wrap stack">
+    <span class="label">№ 06 — What is acquired</span>
+    <h2>The whole instrument, installed and working.</h2>
+    <p class="lede">This is not a crate of parts. It arrives assembled, patched, tuned and playing, with everything needed to keep it that way.</p>
+
+    <dl class="spec">
+      <dt>The sculpture</dt>
+      <dd>Cut tree form with integrated console and sculpted floor element. Freestanding. <b>Approx. 2 m tall</b>, footprint approx. <b>2 × 1.5 m</b>.</dd>
+
+      <dt>The instrument</dt>
+      <dd>Two Eurorack banks flanking the plant bay: percussion voices, melodic and textural voices, granular and reverb processing, clock and chance generators, quantisers, mixing and balanced output. <b>Full module inventory supplied on request and in the manual.</b></dd>
+
+      <dt>Plant interface</dt>
+      <dd>Biodata module and electrodes. A second plant channel can be added on request.</dd>
+
+      <dt>Fire</dt>
+      <dd>One-metre Rubens' tube with driver and mounting. Runs on bottled propane, user-operated.</dd>
+
+      <dt>Documentation</dt>
+      <dd><b>A printed manual</b> — module inventory, signal path, per-module patch breakdowns explaining every connection and why it is made, the default patches with recall notes, and troubleshooting. Written so that someone who has never touched a modular system can switch it on, understand what they are hearing, and rebuild the patch from nothing if it is ever pulled apart. Two copies: one for you, one that lives with the work.</dd>
+
+      <dt>Installation</dt>
+      <dd>Delivered and installed on site in person, with a walkthrough for the people who will look after it.</dd>
+
+      <dt>Tuning</dt>
+      <dd><b>Two sessions included.</b> The final patch is developed with you — tempo, density, tonality, how strongly the plant drives it, how the fire is used. A laboratory foyer wants something different from a club.</dd>
+    </dl>
+
+    <div class="pull">
+      <p>A venue's real question is not what it costs. It is what happens when it stops working and nobody here knows modular. That is what the manual is for.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO IT IS FOR ============ -->
+<section id="for">
+  <div class="wrap stack">
+    <span class="label">№ 07 — Who it is for</span>
+    <h2>Rooms where people wait, gather, or need slowing down.</h2>
+    <div class="aud">
+      <div>
+        <h4>Music venues</h4>
+        <p>A permanent centrepiece that is not a screen. It plays on the nights nobody is booked, and it can be played by anyone you put in front of it.</p>
+      </div>
+      <div>
+        <h4>Labels &amp; studios</h4>
+        <p>A lobby instrument visitors actually touch. It says what the company is about before anyone has to.</p>
+      </div>
+      <div>
+        <h4>Biotech &amp; mycology</h4>
+        <p>An instrument that makes the living world audible — literally driven by an organism, in a building full of people who work on organisms.</p>
+      </div>
+      <div>
+        <h4>Collectors</h4>
+        <p>Functional sculpture with four years of exhibition history, delivered with full documentation and ongoing support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACQUIRE ============ -->
+<section id="acquire">
+  <div class="wrap stack">
+    <span class="label">№ 08 — Acquisition</span>
+    <h2>It is available, and it will be installed by the person who built it.</h2>
+    <div class="acquire">
+      <p class="lede" style="margin:0">Vox Arboris is offered as a single work, delivered installed and playing, with the printed manual, two tuning sessions and ongoing support. Price and terms on enquiry — including commissioning terms if you want a variation built for a specific room.</p>
+      <ul class="body-list muted">
+        <li><strong>Collection or delivery</strong> from Amsterdam. Delivery and installation within the Benelux by arrangement; further afield, ask.</li>
+        <li><strong>The fire element</strong> runs on bottled propane and is user-operated. Most venues will want it signed off under their own fire regulations — the instrument runs completely normally with the tube switched off.</li>
+        <li><strong>Ongoing support</strong> by arrangement: patch revisions, remote help, and a standing offer to come and look at it.</li>
+      </ul>
+      <!-- TODO: add a direct email address here for venue/company procurement — DMs are a poor route for institutional buyers. -->
+      <a class="cta" href="https://instagram.com/elspif">Enquire — @elspif &nearr;</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap stack" style="gap:.9rem">
+    <span class="label">Vox Arboris · 2022 → ongoing · Amsterdam</span>
+    <p class="muted" style="font-size:var(--s-1)">Spif builds instruments to slow people down and lead them somewhere they did not expect to go — across modular performance, spoken-word ritual, AI installation and tactile interactive objects.</p>
+    <div class="foot-links">
+      <a class="label" style="color:var(--leaf)" href="/">Live</a>
+      <a class="label" style="color:var(--leaf)" href="/works">Works</a>
+      <a class="label" style="color:var(--leaf)" href="https://instagram.com/elspif">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
