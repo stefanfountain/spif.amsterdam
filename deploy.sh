@@ -72,10 +72,17 @@ if [[ "${1:-}" == "--purge" ]]; then
 fi
 
 echo "→ Verifying"
-sleep 4
-probe="https://spif.amsterdam/vox-arboris/?probe=$(date +%s)"
-if curl -fsS "$probe" | grep -q "Vox Arboris"; then
+# Retry: straight after a cache purge the edge can take a few seconds to serve
+# the new deploy, and a single impatient probe reports a false failure.
+ok=0
+for attempt in 1 2 3 4 5 6; do
+  sleep 4
+  probe="https://spif.amsterdam/vox-arboris/?probe=$(date +%s)-$attempt"
+  if curl -fsSL "$probe" | grep -q "Vox Arboris"; then ok=1; break; fi
+  echo "  attempt $attempt: not yet…"
+done
+if [[ $ok == 1 ]]; then
   echo "✓ live — https://spif.amsterdam/vox-arboris"
 else
-  echo "✘ deployed but the page did not verify; check https://spif.amsterdam/vox-arboris manually"
+  echo "✘ deployed but the page did not verify after ~24s; check https://spif.amsterdam/vox-arboris manually"
 fi
