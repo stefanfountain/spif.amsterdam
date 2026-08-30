@@ -78,7 +78,11 @@ ok=0
 for attempt in 1 2 3 4 5 6; do
   sleep 4
   probe="https://spif.amsterdam/vox-arboris/?probe=$(date +%s)-$attempt"
-  if curl -fsSL "$probe" | grep -q "Vox Arboris"; then ok=1; break; fi
+  # Capture first, then match. Piping curl into `grep -q` under `set -o pipefail`
+  # reports a false failure: grep exits on the first match, curl takes SIGPIPE,
+  # and pipefail surfaces curl's non-zero status even though the page was fine.
+  body=$(curl -fsSL "$probe" || true)
+  if printf '%s' "$body" | grep -q "Vox Arboris"; then ok=1; break; fi
   echo "  attempt $attempt: not yet…"
 done
 if [[ $ok == 1 ]]; then
