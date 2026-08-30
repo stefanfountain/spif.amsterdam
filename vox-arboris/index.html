@@ -164,6 +164,40 @@
   }
   .cta:hover{background:var(--flame-solid);color:#0A0E0C}
 
+  /* ---------- form ---------- */
+  .form{display:flex;flex-direction:column;gap:1.1rem;margin-top:.4rem}
+  .field{display:flex;flex-direction:column;gap:.4rem}
+  .field label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+  .field label .opt{text-transform:none;letter-spacing:0;color:var(--ink-3);font-style:italic}
+  .field input,.field textarea{
+    font-family:var(--sans);font-size:var(--s0);font-weight:300;color:var(--ink);
+    background:var(--ground);border:1px solid var(--rule-firm);border-radius:2px;
+    padding:.8rem .9rem;width:100%;transition:border-color .2s ease;
+  }
+  .field textarea{min-height:9rem;resize:vertical;line-height:1.6}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--leaf)}
+  .field input::placeholder,.field textarea::placeholder{color:var(--ink-3);opacity:.7}
+  .field.invalid input,.field.invalid textarea{border-color:var(--flame-solid)}
+  .form-row{display:grid;gap:1.1rem}
+  @media (min-width:38rem){.form-row{grid-template-columns:1fr 1fr}}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .form button{
+    font-family:var(--mono);font-size:var(--s-1);letter-spacing:.08em;text-transform:uppercase;
+    padding:.9rem 1.6rem;border:1px solid var(--flame-solid);color:var(--flame-solid);
+    background:transparent;border-radius:2px;cursor:pointer;align-self:flex-start;
+    transition:background .25s ease,color .25s ease,opacity .2s ease;
+  }
+  .form button:hover:not(:disabled){background:var(--flame-solid);color:#0A0E0C}
+  .form button:disabled{opacity:.5;cursor:progress}
+  .form-status{font-size:var(--s-1);line-height:1.55;max-width:52ch}
+  .form-status:empty{display:none}
+  .form-status.err{color:var(--flame-solid)}
+  .form-status.ok{color:var(--leaf)}
+  .form-note{font-size:var(--s-1);color:var(--ink-3);max-width:52ch}
+  .sent{border:1px solid var(--leaf);background:var(--leaf-soft);border-radius:2px;padding:1.5rem 1.6rem}
+  .sent h3{color:var(--ink);margin-bottom:.5rem}
+  .sent p{color:var(--ink-2);font-size:var(--s0)}
+
   /* ---------- footer ---------- */
   footer{border-top:1px solid var(--rule);padding:3rem 0 4.5rem;display:flex;flex-direction:column;gap:.8rem}
   .foot-links{display:flex;flex-wrap:wrap;gap:.6rem 1.8rem}
@@ -200,7 +234,7 @@
     <span class="label">№ 01 — The work</span>
     <h2>An instrument that does not need a player.</h2>
     <p class="lede">Vox Arboris is a tree, cut from sheet and standing on its own floor, with a complete modular synthesizer built into its trunk. Two banks of electronics sit at playing height on either side of the console. Patch cables fall from the branches like aerial roots. Switch it on and it begins to play — slowly, deliberately, never quite repeating — and it keeps playing whether or not anyone is standing at it.</p>
-    <p class="muted">It has spent four years in galleries, clubs and museums: a month-long residency at Ten Club, a month at WIHH, a night at Odonien in Cologne, the Nieuwe Instituut in Rotterdam, and a set high above the IJ at the A'dam Tower. It is now looking for a permanent home.</p>
+    <p class="muted">It has spent four years in galleries and clubs: a month-long residency at Ten Club, a month at WIHH, a night at Odonien in Cologne, and a set high above the IJ at the A'dam Tower. It is now looking for a permanent home.</p>
   </div>
 </section>
 
@@ -225,7 +259,7 @@
 
     <div class="cap flip">
       <div class="cap-media">
-        <img src="/img/vox-arboris/instituut-plant.jpg" alt="The installation at Het Nieuwe Instituut, a living plant on a stool wired into the instrument" loading="lazy" />
+        <img src="/img/vox-arboris/wihh-plant.jpg" alt="WIHH Gallery — a living plant on a stool, wired into the instrument" loading="lazy" />
       </div>
       <div class="cap-body">
         <span class="cap-num">02</span>
@@ -270,7 +304,7 @@
   <div class="wrap stack">
     <span class="label">№ 04 — In the room</span>
     <h2>What it looks like when it is running.</h2>
-    <p class="muted">Filmed at Het Nieuwe Instituut, Rotterdam.</p>
+    <p class="muted">Filmed at WIHH Gallery, Amsterdam.</p>
     <div class="filmstrip">
       <video controls preload="none" poster="/img/vox-arboris/documentation-poster.jpg">
         <source src="/img/vox-arboris/documentation.mp4" type="video/mp4" />
@@ -280,7 +314,7 @@
     <div class="gallery" style="margin-top:1.4rem">
       <figure><img src="/img/vox-arboris/tree-full.jpg" alt="The full tree sculpture with its branching canopy, lit green and blue" loading="lazy" /></figure>
       <figure><img src="/img/vox-arboris/venue-blue.jpg" alt="The instrument on stage under blue light with a projection screen behind" loading="lazy" /></figure>
-      <figure><img src="/img/vox-arboris/instituut-crowd.jpg" alt="Visitors gathered around the installation at Het Nieuwe Instituut" loading="lazy" /></figure>
+      <figure><img src="/img/vox-arboris/wihh-crowd.jpg" alt="Visitors gathered around the installation at WIHH Gallery" loading="lazy" /></figure>
       <figure><img src="/img/vox-arboris/performance.jpg" alt="Spif performing with the instrument" loading="lazy" /></figure>
     </div>
   </div>
@@ -295,7 +329,6 @@
       <div class="prov-row"><span class="prov-when">Nov 2022</span><span class="prov-what">Mayor Manor, Ten Club — Amsterdam</span><span class="prov-kind">Month-long residency</span></div>
       <div class="prov-row"><span class="prov-when">Summer 2023</span><span class="prov-what">WIHH Gallery — Amsterdam</span><span class="prov-kind">Month-long installation</span></div>
       <div class="prov-row"><span class="prov-when">2024</span><span class="prov-what">Odonien — Cologne</span><span class="prov-kind">Live</span></div>
-      <div class="prov-row"><span class="prov-when">2026</span><span class="prov-what">Het Nieuwe Instituut — Rotterdam</span><span class="prov-kind">Installation</span></div>
       <div class="prov-row"><span class="prov-when">Apr 2026</span><span class="prov-what">A'dam Tower — Amsterdam</span><span class="prov-kind">Live</span></div>
     </div>
   </div>
@@ -375,8 +408,49 @@
         <li><strong>The fire element</strong> runs on bottled propane and is user-operated. Most venues will want it signed off under their own fire regulations — the instrument runs completely normally with the tube switched off.</li>
         <li><strong>Ongoing support</strong> by arrangement: patch revisions, remote help, and a standing offer to come and look at it.</li>
       </ul>
-      <!-- TODO: add a direct email address here for venue/company procurement — DMs are a poor route for institutional buyers. -->
-      <a class="cta" href="https://instagram.com/elspif">Enquire — @elspif &nearr;</a>
+    </div>
+
+    <div id="enquire" style="margin-top:clamp(2rem,5vw,3rem)">
+      <h3 style="margin-bottom:.9rem">Enquire</h3>
+      <p class="muted" style="font-size:var(--s-1);max-width:52ch">Tell me a little about the room it would live in. I answer everything myself, usually within a day or two.</p>
+
+      <form class="form" id="enquiry-form" method="post" action="/api/enquiry" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-org">Venue, company or collection <span class="opt">— optional</span></label>
+          <input id="f-org" name="org" type="text" autocomplete="organization" maxlength="160" />
+        </div>
+        <div class="field">
+          <label for="f-message">What are you thinking?</label>
+          <textarea id="f-message" name="message" required maxlength="4000"
+            placeholder="Where it would go, roughly when, and whether you're thinking acquisition or a commission for a specific space."></textarea>
+        </div>
+
+        <!-- Honeypot: hidden from people, catnip for bots. -->
+        <div class="hp" aria-hidden="true">
+          <label for="f-website">Leave this field empty</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <input type="hidden" name="elapsed" id="f-elapsed" value="" />
+
+        <button type="submit" id="f-submit">Send enquiry</button>
+        <p class="form-status" id="f-status" role="status" aria-live="polite"></p>
+        <p class="form-note">Or find me on Instagram — <a href="https://instagram.com/elspif">@elspif</a>.</p>
+      </form>
+
+      <div class="sent" id="enquiry-sent" hidden>
+        <h3>Thank you — that's arrived.</h3>
+        <p>I'll come back to you personally, usually within a day or two. If it's urgent, Instagram is faster: <a href="https://instagram.com/elspif">@elspif</a>.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -394,6 +468,77 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var form = document.getElementById('enquiry-form');
+  if (!form) return;
+
+  var status  = document.getElementById('f-status');
+  var button  = document.getElementById('f-submit');
+  var sent    = document.getElementById('enquiry-sent');
+  var elapsed = document.getElementById('f-elapsed');
+  var loadedAt = Date.now();
+
+  function setStatus(msg, kind) {
+    status.textContent = msg || '';
+    status.className = 'form-status' + (kind ? ' ' + kind : '');
+  }
+
+  function markInvalid(names) {
+    Array.prototype.forEach.call(form.querySelectorAll('.field'), function (f) {
+      f.classList.remove('invalid');
+    });
+    (names || []).forEach(function (n) {
+      var el = form.querySelector('[name="' + n + '"]');
+      if (el && el.parentElement) el.parentElement.classList.add('invalid');
+    });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    elapsed.value = String(Date.now() - loadedAt);
+
+    var missing = [];
+    if (!form.name.value.trim()) missing.push('name');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.value.trim())) missing.push('email');
+    if (!form.message.value.trim()) missing.push('message');
+    if (missing.length) {
+      markInvalid(missing);
+      setStatus('Please fill in your name, a valid email, and a message.', 'err');
+      var first = form.querySelector('[name="' + missing[0] + '"]');
+      if (first) first.focus();
+      return;
+    }
+    markInvalid([]);
+
+    button.disabled = true;
+    setStatus('Sending…');
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(new FormData(form)))
+    })
+      .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, body: b }; }); })
+      .then(function (res) {
+        if (res.ok && res.body && res.body.ok) {
+          form.hidden = true;
+          sent.hidden = false;
+          sent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        markInvalid((res.body && res.body.fields) || []);
+        setStatus((res.body && res.body.error) || 'That did not send. Please try Instagram.', 'err');
+        button.disabled = false;
+      })
+      .catch(function () {
+        setStatus('No connection. Please try again, or reach me on Instagram.', 'err');
+        button.disabled = false;
+      });
+  });
+})();
+</script>
 
 </body>
 </html>
