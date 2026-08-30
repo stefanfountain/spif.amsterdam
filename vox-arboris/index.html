@@ -47,6 +47,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
+  body{overflow-x:hidden}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 
   body{
@@ -64,15 +65,20 @@
 
   /* ---------- hero ---------- */
   .hero{position:relative;min-height:min(92svh,52rem);display:grid;align-items:end;overflow:hidden;border-bottom:1px solid var(--rule)}
-  .hero video,.hero .hero-fallback{
+  .hero video,.hero .hero-img{
     position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    filter:saturate(1.05) contrast(1.05);
+    object-position:58% 46%;
+    filter:saturate(1.02) contrast(1.03);
   }
+  /* The establishing shot is a bright white room, so the scrim has to work
+     harder than it would over the flame footage to keep the type readable. */
   .hero::after{
     content:"";position:absolute;inset:0;
-    background:linear-gradient(to top,var(--ground) 2%,rgba(10,14,12,.82) 28%,rgba(10,14,12,.25) 62%,rgba(10,14,12,.55) 100%);
+    background:linear-gradient(to top,var(--ground) 1%,rgba(10,14,12,.90) 30%,rgba(10,14,12,.55) 58%,rgba(10,14,12,.35) 80%,rgba(10,14,12,.5) 100%);
   }
-  .hero-inner{position:relative;z-index:2;padding:clamp(2.5rem,7vw,5.5rem) 0 clamp(2rem,5vw,3.5rem)}
+  /* padding-block, not the shorthand: this element also carries .wrap, whose
+     horizontal padding a `padding: x 0 y` shorthand would silently zero out. */
+  .hero-inner{position:relative;z-index:2;padding-block:clamp(2.5rem,7vw,5.5rem) clamp(2rem,5vw,3.5rem)}
   .hero h1{
     font-family:var(--display);font-weight:300;font-size:clamp(3rem,11vw,7.5rem);
     line-height:.92;letter-spacing:-.02em;text-wrap:balance;
@@ -82,7 +88,15 @@
     font-family:var(--display);font-size:clamp(1.35rem,3.2vw,2.1rem);line-height:1.32;
     color:var(--ink);max-width:34ch;margin-top:1.4rem;font-weight:300;text-wrap:pretty;
   }
+  .hero-inner>.label,.hero-meta .label{color:#C6D2CB}
+  .hero-inner>.label,.hero h1,.hero .standfirst{text-shadow:0 1px 24px rgba(6,10,8,.65)}
   .hero-meta{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule-firm)}
+  /* On narrow screens these three labels don't fit two-up; stack them rather
+     than letting the last one run past the edge. */
+  @media (max-width:30rem){
+    .hero-meta{flex-direction:column;gap:.45rem}
+    .hero-inner>.label{letter-spacing:.12em}
+  }
 
   /* ---------- rhythm ---------- */
   section{padding:clamp(3.5rem,9vw,7rem) 0}
@@ -210,10 +224,8 @@
 
 <!-- ============ HERO ============ -->
 <header class="hero">
-  <video autoplay muted loop playsinline poster="/img/vox-arboris/flame-poster.jpg" aria-hidden="true">
-    <source src="/img/vox-arboris/flame-loop.webm" type="video/webm" />
-    <source src="/img/vox-arboris/flame-loop.mp4" type="video/mp4" />
-  </video>
+  <img class="hero-img" src="/img/vox-arboris/hero-wihh.jpg" fetchpriority="high"
+       alt="Vox Arboris installed at WIHH Gallery — a white cut-sheet tree over a console of modular synthesizer panels, a curtain of red patch cables hanging from one branch, a living plant on a stool alongside, all standing on a green sculpted floor" />
   <div class="hero-inner wrap">
     <span class="label">A work by Spif · Amsterdam · 2022 → ongoing</span>
     <h1>Vox<br /><em>Arboris</em></h1>
