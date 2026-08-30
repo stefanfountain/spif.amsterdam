@@ -17,7 +17,9 @@ wrangler pages deploy . --project-name=spif-amsterdam --branch=main --commit-dir
 
 Run from this repo's root (`spif.amsterdam/`), after committing. Live site updates in ~30 seconds.
 
-Wrangler is installed globally (`/opt/homebrew/bin/wrangler`) and authenticated via OAuth as `stefan.j.fountain@gmail.com` (`pages:write` scope is present).
+Wrangler is installed globally (`/opt/homebrew/bin/wrangler`) and must be authenticated via OAuth as **`stefan.j.fountain@gmail.com`** (`pages:write` scope required).
+
+> ⚠️ **Check the account before deploying.** Run `wrangler whoami` first. On 2026-08-30 a deploy failed with `Authentication error [code: 10000]` because wrangler had been switched to the **Setso work account** (`stefan@setso.com` / Setflow BV, `e0c8e6d9…`), which cannot see this Pages project — it lives under the personal account (`994ef655…`). Fix: `wrangler logout && wrangler login`, then sign in with the **personal** Google account. Alternatively set `CLOUDFLARE_API_TOKEN` for the personal account.
 
 ## Cloudflare zone info
 
