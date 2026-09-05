@@ -33,3 +33,18 @@ Wrangler is installed globally (`/opt/homebrew/bin/wrangler`) and must be authen
 2. `git add` specific files + commit. Push to GitHub for source-of-truth history.
 3. `wrangler pages deploy . --project-name=spif-amsterdam --branch=main --commit-dirty=true`.
 4. Verify with `curl -s "https://spif.amsterdam/?probe=$(date +%s)" | grep <expected-token>`.
+
+## /spif-unleashed — password-gated folder
+
+`functions/spif-unleashed/_middleware.js` gates everything under
+`/spif-unleashed/` behind a shared passphrase, checked at the edge on every
+request. The passphrase is the Pages secret `UNLEASHED_PASSWORD`
+(`wrangler pages secret put UNLEASHED_PASSWORD --project-name spif-amsterdam`);
+with it absent the folder answers 503. Cookie lasts 30 days;
+`/spif-unleashed/logout` clears it.
+
+The **content** of `spif-unleashed/` is gitignored — this repo is public — and
+is copied in immediately before a deploy from a private repo elsewhere. Wrangler
+uploads it regardless of `.gitignore`. If you deploy from a checkout without
+that folder, the gated page simply disappears from the live site until the
+next deploy that includes it.
