@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Modular — Spif, live take, 18 October 2026</title>
+<meta name="description" content="A live modular take: six voices played from one string controller, chords by hand, no computer. Recorded in Amsterdam, 18 October 2026." />
+
+<link rel="canonical" href="https://spif.amsterdam/modular" />
+<meta property="og:type" content="video.other" />
+<meta property="og:url" content="https://spif.amsterdam/modular" />
+<meta property="og:title" content="Modular — Spif, live take" />
+<meta property="og:description" content="Six voices played from one string controller, chords by hand, no computer. Amsterdam, 18 October 2026." />
+<meta property="og:image" content="https://img.youtube.com/vi/GQjdnuMca5w/maxresdefault.jpg" />
+<meta name="twitter:card" content="player" />
+<meta name="twitter:title" content="Modular — Spif, live take" />
+<meta name="twitter:image" content="https://img.youtube.com/vi/GQjdnuMca5w/maxresdefault.jpg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
+
+<style>
+  :root{
+    --ground:#0A0E0C; --surface:#161E1A; --ink:#EEF3F0; --ink-2:#A5B2AB; --ink-3:#75837C;
+    --rule:#232E28; --flame-solid:#E87631; --leaf:#74C295;
+    --display:"Cormorant Garamond", Georgia, serif;
+    --sans:"IBM Plex Sans", system-ui, sans-serif;
+    --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-weight:300;font-size:1.0625rem;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--leaf);text-underline-offset:.2em} a:hover{color:var(--ink)}
+  :focus-visible{outline:2px solid var(--leaf);outline-offset:3px}
+  .wrap{max-width:66rem;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.5rem)}
+  .label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+  header{padding:clamp(2.5rem,7vw,5rem) 0 clamp(1.5rem,4vw,2.5rem)}
+  h1{font-family:var(--display);font-weight:300;font-size:clamp(2.6rem,8vw,5.5rem);line-height:.95;letter-spacing:-.02em;margin-top:.8rem}
+  h1 em{font-style:italic;color:var(--flame-solid)}
+  .standfirst{font-family:var(--display);font-size:clamp(1.3rem,3vw,1.9rem);line-height:1.32;max-width:34ch;margin-top:1.2rem}
+  .player{position:relative;aspect-ratio:16/9;background:var(--surface);border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+  .player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  section{padding:clamp(2.5rem,6vw,4rem) 0}
+  p{max-width:64ch;text-wrap:pretty;color:var(--ink-2)} p+p{margin-top:1.1rem}
+  ul{max-width:64ch;color:var(--ink-2);padding-left:1.2rem} li+li{margin-top:.35rem}
+  footer{border-top:1px solid var(--rule);padding:3rem 0 4.5rem}
+  .foot-links{display:flex;gap:1.6rem;margin-top:.9rem}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <span class="label">Spif · Amsterdam · 18 October 2026</span>
+  <h1>Modular, <em>one take</em></h1>
+  <p class="standfirst">Six voices played from one string. Chords by hand. No computer, no undo.</p>
+</header>
+
+<div class="wrap">
+  <div class="player">
+    <iframe src="https://www.youtube-nocookie.com/embed/GQjdnuMca5w?rel=0" title="Modular, one take — Spif" loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <p class="label" style="margin-top:.8rem">Also on <a href="https://www.youtube.com/watch?v=GQjdnuMca5w">YouTube</a></p>
+</div>
+
+<section>
+  <div class="wrap">
+    <p>Drums, bass, chord swells, stabs and granular textures come from a small sequencer I wrote for the Ornate Criminal, a Eurorack module built around a Teensy. Each voice has a bank of patterns and three levels of intensity. One string controller sets how busy the drums and bass are and sweeps the effects; the chords are played by hand on a keyboard and harmonised in the case.</p>
+    <p>The audio is the direct recording from the mixer, lined up with the room video afterwards.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="label">Spif · modular performance · Amsterdam</span>
+    <div class="foot-links">
+      <a class="label" style="color:var(--leaf)" href="/">Live</a>
+      <a class="label" style="color:var(--leaf)" href="/works">Works</a>
+      <a class="label" style="color:var(--leaf)" href="https://instagram.com/elspif">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
