@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          "modular/index.html"
+        ],
+        "createdAt": "2026-10-18T00:15:07.540Z",
+        "reason": "site convention: every spif.amsterdam page sets h1 in Cormorant with an italic accent (see /vox-arboris, /)"
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "modular/index.html"
+        ],
+        "createdAt": "2026-10-18T00:15:07.561Z",
+        "reason": "site convention: .label is a short mono uppercase kicker (one line), not body text, same as /vox-arboris"
+      }
+    ]
+  }
+}
