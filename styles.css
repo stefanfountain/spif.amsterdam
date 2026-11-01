@@ -867,9 +867,9 @@ section:first-of-type { border-top: 0; }
 }
 .status-badge.calm { color: var(--brass); border-color: var(--brass); }
 
-/* "For sale" pill linking a work to its own page — sidebar yellow, rounded
+/* Pill linking a work to its own page ("For sale", "See it live") — sidebar yellow, rounded
    like the Vox Arboris page's badge and buttons. */
-.sale-pill {
+.work-pill {
   justify-self: start;
   display: inline-flex;
   align-items: center;
@@ -886,8 +886,8 @@ section:first-of-type { border-top: 0; }
   padding: 0.8rem 1.4rem;
   transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
-.sale-pill:hover { background: var(--sidebar-ink); color: var(--sidebar-bg); }
-.sale-pill:active { transform: translateY(1px); }
+.work-pill:hover { background: var(--sidebar-ink); color: var(--sidebar-bg); }
+.work-pill:active { transform: translateY(1px); }
 .status-badge.calm::before { background: var(--brass); box-shadow: none; animation: none; }
 
 .work-body {
