@@ -1,15 +1,13 @@
 <!doctype html>
-<html lang="en" data-mood="velvet" data-pace="broadside" data-plate="cyanotype">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Spif — Melodic techno DJ set &amp; lightning show</title>
   <meta name="description" content="A live melodic techno DJ set with an interactive Tesla-coil lightning machine — the crowd holds fluorescent tubes to the arc and it lights in their hands. Amsterdam." />
-  <script>document.documentElement.classList.add('js');</script>
 
-  <!-- Social previews -->
-  <meta property="og:type" content="website" />
   <link rel="canonical" href="https://spif.amsterdam/live/" />
+  <meta property="og:type" content="website" />
   <meta property="og:url" content="https://spif.amsterdam/live/" />
   <meta property="og:title" content="Spif — melodic techno DJ set &amp; lightning show" />
   <meta property="og:description" content="A live DJ set with an interactive musical Tesla-coil lightning machine. Real lightning, in the crowd's hands." />
@@ -22,191 +20,301 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" /></noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
   <link rel="preload" as="image" href="/img/live/hero-poster.jpg?v=3" fetchpriority="high" />
   <link rel="stylesheet" href="/styles.css?v=2026-11-02" />
-  <link rel="stylesheet" href="/live.css?v=2026-07-04h" />
-</head>
-<body class="live" data-mood="velvet">
 
-  <a href="#set" class="skip-link">Skip to the set</a>
+<style>
+  /* /live/ page layer on top of the shared site stylesheet (styles.css), in
+     the same dialect as /vox-arboris/: amber brutalist hero, yellow index,
+     navy ground, a black-violet Velvet panel, rounded media and pill controls. */
+  :root{
+    --radius-card:22px;
+    --radius-well:14px;
+    --radius-pill:999px;
+    --on-amber:var(--ink-deep);
+    --measure:64ch;
+    --s-1:.8125rem;
+  }
+  html,body{overflow-x:clip}
+  p,ul,dl,dd,figure,h1,h2,h3{margin:0}
+  img,video,iframe{max-width:100%;display:block}
 
-  <!-- ===== Hero ===== -->
-  <header class="live-hero bleed">
-    <div class="live-hero-media" id="heroMedia">
-      <img class="live-hero-poster" src="/img/live/hero-poster.jpg?v=3" alt="Close on the Tesla coil: a thread of white lightning arcs from the toroid to a glowing blue tube held up to it" />
-      <video class="live-hero-video" muted loop playsinline preload="metadata" poster="/img/live/hero-poster.jpg?v=3" aria-hidden="true">
-        <source src="/img/live/hero-loop.webm?v=3" type="video/webm" />
-        <source src="/img/live/hero-loop.mp4?v=3" type="video/mp4" />
-      </video>
-      <div class="live-hero-scrim"></div>
-    </div>
+  .wrap{max-width:66rem;margin:0 auto}
+  .label{font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);font-weight:500}
 
-    <div class="live-topbar">
-      <nav aria-label="Sections">
-        <a href="#set">Listen</a>
-        <a href="#ritual">The ritual</a>
-        <a href="#book">Book</a>
-        <a href="/" class="to-works">The works →</a>
-        <a href="/vox-arboris" class="to-works">Vox Arboris, for sale →</a>
-      </nav>
-    </div>
+  /* ---------- hero: amber brutalist banner ---------- */
+  .live-hero .hero-banner-inner{
+    display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:0;
+    grid-template-areas:"chip" "title" "media" "tag" "stand" "cta";
+  }
+  .live-hero .eyebrow-chip{grid-area:chip;justify-self:start;margin-bottom:clamp(.9rem,1.6vw,1.3rem)}
+  .live-hero h1{grid-area:title}
+  .live-hero .tagline{grid-area:tag}
+  .live-hero .credo{grid-area:stand;max-width:34ch}
+  .hero-actions{grid-area:cta;display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.3rem;margin-top:clamp(1.1rem,2vw,1.6rem)}
 
-    <div class="live-hero-inner">
-      <h1>SPIF</h1>
-      <div class="live-hero-copy">
-        <p class="live-hero-tag"><span class="hl">Put lightning into your crowd's hands</span></p>
-        <p class="live-hero-sub"><span class="hl-cool">A melodic techno DJ set with a live Tesla coil that fires to the beat. Stephan Bodzin, NTO, Kiasmos, Einmusik territory.</span></p>
-        <div class="live-hero-actions">
-          <span class="location-pill">Amsterdam · NL</span>
-          <a href="#set" class="live-cta">Listen <span class="arw">↓</span></a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main id="main" class="live">
-
-    <!-- ===== The set (SoundCloud) ===== -->
-    <section id="set">
-      <div class="live-section-head">
-        <p class="live-kicker"><span class="hl">№ 01 — The set</span></p>
-        <h2><span class="hl">Listen.</span></h2>
-      </div>
-
-      <!-- SoundCloud: track 2374559516 — "Burning Man NL (Sheep Sleep)".
-           Uses the api.soundcloud.com/tracks/<id> form rather than the permalink,
-           so the embed survives a slug rename. -->
-      <div class="sc-embed">
-        <iframe height="480" scrolling="no" frameborder="no" loading="lazy"
-          title="Spif — live set on SoundCloud"
-          allow="autoplay; encrypted-media"
-          src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F2374559516&color=%23ff7a1a&auto_play=false&hide_related=true&show_comments=false&show_reposts=false&show_teaser=false&show_user=true&visual=true">
-        </iframe>
-      </div>
-      <p class="live-set-note">80 minutes · 19 tracks · recorded live in one continuous take</p>
-    </section>
-
-    <!-- ===== The ritual (gallery) ===== -->
-    <section id="ritual">
-      <div class="live-section-head">
-        <p class="live-kicker"><span class="hl">№ 02 — The ritual</span></p>
-        <h2><span class="hl">Hands on the lightning.</span></h2>
-      </div>
-
-      <div class="live-gallery">
-        <figure class="live-shot">
-          <img src="/img/live/crowd-tubes.jpg?v=2" loading="lazy" alt="A crowd raises glowing tubes toward an arcing Tesla coil on a wooden plinth in a draped tent" />
-        </figure>
-        <figure class="live-shot">
-          <img src="/img/live/coil-tubes.jpg?v=2" loading="lazy" alt="The Tesla coil arcs blue lightning; glowing tubes radiate around it in the tent" />
-        </figure>
-        <figure class="live-shot">
-          <img src="/img/live/coil-reach.jpg?v=2" loading="lazy" alt="Figures reach glowing tubes toward the top of the coil under blue light" />
-        </figure>
-        <figure class="live-shot">
-          <img src="/img/live/coil-radiate.jpg?v=2" loading="lazy" alt="Glowing tubes fan out from the coil like spokes against the dark tent, orange glow beyond" />
-        </figure>
-        <figure class="live-shot">
-          <img src="/img/live/sabers-cross.jpg?v=2" loading="lazy" alt="People cross glowing blue tubes at the coil, forming a star of light in the tent" />
-        </figure>
-        <figure class="live-shot">
-          <img src="/img/live/dancers-coil.jpg?v=2" loading="lazy" alt="Figures in fur and feathers near the coil, tubes glowing blue in the deep tent light" />
-        </figure>
-        <figure class="live-shot">
-          <img src="/img/live/lighttrails-b.jpg?v=2" loading="lazy" alt="Long-exposure: glowing tubes streak the dark like a field of blue and orange rays around the coil" />
-        </figure>
-      </div>
-    </section>
-
-    <!-- ===== Lightning divider (silent video backdrop) ===== -->
-    <div class="live-divider bleed" style="background-image: url('/img/live/divider-lightning.jpg?v=2');">
-      <video class="live-divider-video" autoplay muted loop playsinline preload="metadata" poster="/img/live/divider-lightning.jpg?v=2" aria-hidden="true">
-        <source src="/img/live/divider-lightning.webm?v=2" type="video/webm" />
-        <source src="/img/live/divider-lightning.mp4?v=2" type="video/mp4" />
-      </video>
-    </div>
-
-    <!-- ===== What it is ===== -->
-    <section id="about-live">
-      <div class="live-section-head">
-        <p class="live-kicker"><span class="hl">№ 03 — What it is</span></p>
-        <h2><span class="hl">The instrument is the room.</span></h2>
-      </div>
-
-      <div class="live-about-grid">
-        <div>
-          <p class="lede">The crowd plays with fluorescent tubes, becoming part of the music:
-            hold one up and it lights, drawing lightning from the coil.
-            The coil is a speaker as well as a spectacle: the arc itself makes
-            the sound, ionising the air into notes.</p>
-        </div>
-        <dl class="live-facts">
-          <dt>Form</dt><dd>Melodic techno DJ set · live Tesla coil</dd>
-          <dt>Length</dt><dd><span class="hi">30 to 90 min</span></dd>
-          <dt>The coil</dt><dd>Musical Tesla coil, tube-to-hand arc</dd>
-          <dt>Rig</dt><dd>Eurorack modular · hardware voices</dd>
-          <dt>Needs</dt><dd>Power, cover, headroom above the coil</dd>
-          <dt>Played</dt><dd>A'dam Tower · De Lievelinge · Burning Man NL</dd>
-          <dt>Based</dt><dd>Amsterdam, NL</dd>
-          <dt>For</dt><dd>Festivals · clubs · art spaces</dd>
-        </dl>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ===== Book (amber bookend — echoes the tent practicals) ===== -->
-  <section id="book" class="live-book bleed">
-    <div class="contact-banner">
-      <div class="contact-banner-inner">
-        <div class="eyebrow">Booking · Amsterdam · MMXXVI</div>
-        <h2>Book the set.</h2>
-        <p class="lede">
-          For festivals, clubs, and art spaces — slide into the DMs.
-        </p>
-        <a class="contact-link" href="https://instagram.com/elspif" target="_blank" rel="noopener">@elspif</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Footer ===== -->
-  <footer class="live-foot">
-    <div>Spif also builds installations — <a href="/">the works →</a> · <a href="/vox-arboris">Vox Arboris is for sale →</a></div>
-    <div>© MMXXVI · All rights reserved</div>
-  </footer>
-
-  <script>
-    // Ambient hero loop: fade the muted video in once it can play.
-    // Respects prefers-reduced-motion (CSS hides the video; we also skip play()).
-    (function () {
-      var media = document.getElementById('heroMedia');
-      if (!media) return;
-      var video = media.querySelector('.live-hero-video');
-      if (!video) return;
-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce) return;
-      var reveal = function () { media.classList.add('playing'); };
-      video.addEventListener('playing', reveal, { once: true });
-      // Attempt autoplay (muted autoplay is allowed on modern browsers).
-      var p = video.play();
-      if (p && typeof p.catch === 'function') { p.catch(function () { /* stay on poster */ }); }
-    })();
-
-    // Scroll-triggered section entrance (matches the portfolio's motion).
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-      document.querySelectorAll('main > section').forEach(function (s) { io.observe(s); });
-    } else {
-      document.querySelectorAll('main > section').forEach(function (s) { s.classList.add('in-view'); });
+  /* THE HERO VIDEO SLOT — one element. To swap the film, change the poster
+     <img> and the two <source> files inside #heroMedia (16:9). */
+  .hero-video{grid-area:media;position:relative;margin-top:clamp(1rem,2vw,1.5rem);aspect-ratio:16/9;
+    border:3px solid var(--on-amber);border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep)}
+  .hero-video img,.hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hero-video video{opacity:0;transition:opacity .6s ease}
+  .hero-video.playing video{opacity:1}
+  @media (min-width:56rem){
+    .live-hero .hero-banner-inner{
+      grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);column-gap:clamp(2rem,4vw,3.5rem);
+      grid-template-rows:auto 1fr auto auto auto auto 1fr;
+      grid-template-areas:"chip chip" ". media" "title media" "tag media" "stand media" "cta media" ". media";
     }
-  </script>
+    .hero-video{margin:0;align-self:center}
+  }
+
+  /* ---------- pill controls ---------- */
+  .cta{
+    display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;
+    font-family:var(--mono);font-size:var(--s-1);font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+    padding:0 1.6rem;border-radius:var(--radius-pill);
+    background:var(--on-amber);color:var(--paper);border:2px solid var(--on-amber);
+    transition:background .2s ease,color .2s ease,transform .1s ease;
+  }
+  .cta:hover{background:var(--sidebar-bg);color:var(--sidebar-ink-deep)}
+  .cta.ghost{background:transparent;color:var(--on-amber)}
+  .cta.ghost:hover{background:var(--on-amber);color:var(--paper)}
+  .cta:active{transform:translateY(1px)}
+
+  /* ---------- rhythm ---------- */
+  main > section{padding:clamp(4rem,9vw,7rem) 0}
+  #hero + section{border-top:0}
+  main h2{
+    font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(2.25rem,5vw,3.75rem);
+    line-height:1.02;letter-spacing:-.015em;text-wrap:balance;max-width:20ch;color:var(--paper);
+  }
+  p{max-width:var(--measure);text-wrap:pretty}
+  .stack{display:flex;flex-direction:column;gap:1.4rem}
+
+  /* ---------- the set: Velvet panel ---------- */
+  #set.mood-velvet{
+    background:var(--ink);color:var(--paper);border:0;border-radius:var(--radius-card);
+    padding:clamp(2.5rem,6vw,4.5rem) clamp(1.25rem,4vw,3.5rem);margin-block:clamp(1rem,3vw,2rem);
+  }
+  #set.mood-velvet + section{border-top:0}
+  .sc-embed{border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep);margin-top:clamp(1.6rem,3vw,2.2rem)}
+  .sc-embed iframe{width:100%;height:480px;border:0}
+  .set-note{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-dim);margin-top:1rem;font-variant-numeric:tabular-nums}
+
+  /* ---------- the ritual: photo bento ---------- */
+  .bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(.6rem,1.4vw,1rem);margin-top:clamp(1.6rem,3vw,2.2rem)}
+  .bento figure{border-radius:var(--radius-well);overflow:hidden;background:var(--ink-deep);border:1px solid var(--rule);transition:border-color .25s ease}
+  .bento figure:hover{border-color:var(--brass)}
+  .bento img{width:100%;height:100%;aspect-ratio:1;object-fit:cover}
+  .bento .big{grid-column:1 / -1}
+  .bento .big img{aspect-ratio:4/3}
+  @media (min-width:52rem){
+    .bento{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .bento .big{grid-column:1 / span 2;grid-row:1 / span 2}
+    .bento .big img{aspect-ratio:auto}
+    .bento .half{grid-column:span 2}
+    .bento .half img{aspect-ratio:2/1}
+  }
+
+  /* ---------- lightning band ---------- */
+  .band{margin:clamp(1rem,3vw,2rem) 0;border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep)}
+  .band video{width:100%;height:clamp(14rem,36vw,30rem);object-fit:cover}
+  .band + section{border-top:0}
+  @media (prefers-reduced-motion:reduce){.band video{display:none}.band{height:clamp(14rem,36vw,30rem);background:var(--ink-deep) center/cover no-repeat}}
+
+  /* ---------- what it is ---------- */
+  .about-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(2rem,5vw,3.5rem);margin-top:clamp(1.6rem,3vw,2.2rem);align-items:start}
+  @media (min-width:60rem){.about-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
+  .facts{display:grid;grid-template-columns:minmax(6.5rem,9rem) minmax(0,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius-well);overflow:hidden}
+  .facts dt{background:var(--ink-deep);padding:.85rem 1.05rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+  .facts dd{background:var(--ink-soft);padding:.85rem 1.05rem;font-size:var(--s-1);color:var(--paper-dim)}
+  .facts .hi{color:var(--paper);font-weight:500}
+
+  /* ---------- book: amber bookend (shared .contact-banner) ---------- */
+  #book{padding:clamp(1rem,3vw,2rem) 0 clamp(3rem,6vw,5rem);border-top:0}
+  #book .contact-banner{border:3px solid var(--on-amber);border-radius:var(--radius-card);overflow:hidden}
+  #book .contact-banner-inner{padding-right:var(--gutter)}
+  .contact-banner .contact-link{border-bottom:0;padding:.35em .6em;border:3px solid var(--ink-deep);border-radius:var(--radius-pill);line-height:1}
+  .contact-banner .contact-link:hover{opacity:1;background:var(--ink-deep);color:var(--amber)}
+  .contact-banner .contact-link:active{transform:translateY(2px)}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--rule);padding:2.5rem var(--gutter) 4rem;padding-right:calc(var(--gutter) + var(--sidebar-rail));
+    display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-faint);position:relative;z-index:2}
+  footer a{color:var(--brass);border-bottom:1px solid currentColor}
+  footer a:hover{color:var(--amber)}
+</style>
+</head>
+<body data-mood="dusk" data-pace="monograph" data-plate="engraving">
+
+<a href="#set" class="skip-link">Skip to the set</a>
+
+<button type="button" class="nav-toggle-button" aria-expanded="false" aria-controls="sidenav" aria-label="Toggle page index">
+  <span class="nav-toggle-open">Index</span>
+  <span class="nav-toggle-close">Close</span>
+</button>
+
+<nav class="sidenav" id="sidenav" aria-label="Page index">
+  <div class="sidenav-head">
+    <span>Index</span>
+    <a href="#hero" class="sidenav-top" aria-label="Back to top">↑</a>
+  </div>
+  <ul class="sidenav-list">
+    <li><a href="/"><span class="ttl">← The works</span></a></li>
+    <li><a href="#set"><span class="ttl">Listen</span></a></li>
+    <li><a href="#ritual"><span class="ttl">The ritual</span></a></li>
+    <li><a href="#about-live"><span class="ttl">What it is</span></a></li>
+    <li><a href="#book"><span class="ttl">Book</span></a></li>
+    <li><a href="/vox-arboris/"><span class="ttl">Vox Arboris, for sale →</span></a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="hero-brutalist live-hero">
+  <div class="hero-banner">
+    <div class="hero-banner-inner">
+      <span class="eyebrow-chip">Live DJ set · Amsterdam · NL</span>
+      <h1>SPIF</h1>
+      <!-- ===== HERO VIDEO SLOT (swap here) ===== -->
+      <figure class="hero-video" id="heroMedia">
+        <img src="/img/live/hero-poster.jpg?v=3" width="1920" height="1080" alt="Close on the Tesla coil: a thread of white lightning arcs from the toroid to a glowing blue tube held up to it" />
+        <video muted loop playsinline preload="metadata" poster="/img/live/hero-poster.jpg?v=3" aria-hidden="true">
+          <source src="/img/live/hero-loop.webm?v=3" type="video/webm" />
+          <source src="/img/live/hero-loop.mp4?v=3" type="video/mp4" />
+        </video>
+      </figure>
+      <!-- ===== /HERO VIDEO SLOT ===== -->
+      <p class="tagline">Put lightning into your crowd’s hands</p>
+      <p class="credo">A melodic techno DJ set with a live Tesla coil that fires to the beat. Stephan Bodzin, NTO, Kiasmos, Einmusik territory.</p>
+      <div class="hero-actions">
+        <a href="#set" class="cta">Listen <span aria-hidden="true">↓</span></a>
+        <a href="#book" class="cta ghost">Book the set</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE SET ============ -->
+<section id="set" class="mood-velvet">
+  <div class="wrap">
+    <div class="stack">
+      <span class="label">№ 01 — The set</span>
+      <h2>Listen.</h2>
+    </div>
+    <!-- SoundCloud: track 2374559516 — "Burning Man NL (Sheep Sleep)".
+         Uses the api.soundcloud.com/tracks/<id> form rather than the permalink,
+         so the embed survives a slug rename. -->
+    <div class="sc-embed">
+      <iframe height="480" scrolling="no" loading="lazy"
+        title="Spif — live set on SoundCloud"
+        allow="autoplay; encrypted-media"
+        src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F2374559516&color=%23ff7a1a&auto_play=false&hide_related=true&show_comments=false&show_reposts=false&show_teaser=false&show_user=true&visual=true"></iframe>
+    </div>
+    <p class="set-note">80 minutes · 19 tracks · recorded live in one continuous take</p>
+  </div>
+</section>
+
+<!-- ============ THE RITUAL ============ -->
+<section id="ritual">
+  <div class="wrap">
+    <div class="stack">
+      <span class="label">№ 02 — The ritual</span>
+      <h2>Hands on the lightning.</h2>
+    </div>
+    <div class="bento">
+      <figure class="big"><img src="/img/live/crowd-tubes.jpg?v=2" width="900" height="1200" loading="lazy" alt="A crowd raises glowing tubes toward an arcing Tesla coil on a wooden plinth in a draped tent" /></figure>
+      <figure><img src="/img/live/coil-tubes.jpg?v=2" width="1200" height="900" loading="lazy" alt="The Tesla coil arcs blue lightning; glowing tubes radiate around it in the tent" /></figure>
+      <figure><img src="/img/live/coil-reach.jpg?v=2" width="900" height="1200" loading="lazy" alt="Figures reach glowing tubes toward the top of the coil under blue light" /></figure>
+      <figure><img src="/img/live/coil-radiate.jpg?v=2" width="1200" height="900" loading="lazy" alt="Glowing tubes fan out from the coil like spokes against the dark tent, orange glow beyond" /></figure>
+      <figure><img src="/img/live/dancers-coil.jpg?v=2" width="900" height="1200" loading="lazy" alt="Figures in fur and feathers near the coil, tubes glowing blue in the deep tent light" /></figure>
+      <figure class="half"><img src="/img/live/sabers-cross.jpg?v=2" width="1200" height="900" loading="lazy" alt="People cross glowing blue tubes at the coil, forming a star of light in the tent" /></figure>
+      <figure class="half"><img src="/img/live/lighttrails-b.jpg?v=2" width="1200" height="900" loading="lazy" alt="Long-exposure: glowing tubes streak the dark like a field of blue and orange rays around the coil" /></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIGHTNING BAND (silent video) ============ -->
+<figure class="band" style="background-image:url('/img/live/divider-lightning.jpg?v=2')">
+  <video autoplay muted loop playsinline preload="metadata" poster="/img/live/divider-lightning.jpg?v=2" aria-hidden="true">
+    <source src="/img/live/divider-lightning.webm?v=2" type="video/webm" />
+    <source src="/img/live/divider-lightning.mp4?v=2" type="video/mp4" />
+  </video>
+</figure>
+
+<!-- ============ WHAT IT IS ============ -->
+<section id="about-live">
+  <div class="wrap">
+    <div class="stack">
+      <span class="label">№ 03 — What it is</span>
+      <h2>The instrument is the room.</h2>
+    </div>
+    <div class="about-grid">
+      <p class="lede">The crowd plays with fluorescent tubes, becoming part of the music:
+        hold one up and it lights, drawing lightning from the coil.
+        The coil is a speaker as well as a spectacle: the arc itself makes
+        the sound, ionising the air into notes.</p>
+      <dl class="facts">
+        <dt>Form</dt><dd>Melodic techno DJ set · live Tesla coil</dd>
+        <dt>Length</dt><dd><span class="hi">30 to 90 min</span></dd>
+        <dt>The coil</dt><dd>Musical Tesla coil, tube-to-hand arc</dd>
+        <dt>Rig</dt><dd>Eurorack modular · hardware voices</dd>
+        <dt>Needs</dt><dd>Power, cover, headroom above the coil</dd>
+        <dt>Played</dt><dd>A’dam Tower · De Lievelinge · Burning Man NL</dd>
+        <dt>Based</dt><dd>Amsterdam, NL</dd>
+        <dt>For</dt><dd>Festivals · clubs · art spaces</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOK (amber bookend, shared contact banner) ============ -->
+<section id="book" class="contact-brutalist">
+  <div class="contact-banner">
+    <div class="contact-banner-inner">
+      <div class="eyebrow">Booking · Amsterdam · MMXXVI</div>
+      <h2>Book the set.</h2>
+      <p class="lede">For festivals, clubs, and art spaces: slide into the DMs.</p>
+      <a class="contact-link" href="https://instagram.com/elspif" target="_blank" rel="noopener">@elspif</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>Spif also builds installations: <a href="/">the works →</a> · <a href="/vox-arboris/">Vox Arboris is for sale →</a></div>
+  <div>© MMXXVI · All rights reserved</div>
+</footer>
+
+<script>
+  // Hero loop: play the muted video and fade it in over the poster once it
+  // runs. Skipped under prefers-reduced-motion (the poster stays).
+  (function () {
+    var media = document.getElementById('heroMedia');
+    var video = media && media.querySelector('video');
+    if (!video) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    video.addEventListener('playing', function () { media.classList.add('playing'); }, { once: true });
+    var p = video.play();
+    if (p && typeof p.catch === 'function') { p.catch(function () {}); }
+  })();
+
+  // Index sheet toggle (phones), as on the works page.
+  (function () {
+    var navBtn = document.querySelector('.nav-toggle-button');
+    if (!navBtn) return;
+    function setOpen(open) { navBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+    navBtn.addEventListener('click', function () { setOpen(navBtn.getAttribute('aria-expanded') !== 'true'); });
+    document.querySelectorAll('.sidenav a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navBtn.getAttribute('aria-expanded') === 'true') { setOpen(false); navBtn.focus(); }
+    });
+  })();
+</script>
 
 </body>
 </html>
