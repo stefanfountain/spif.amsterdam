@@ -14,7 +14,7 @@ Personal artist site for **Spif** — Amsterdam-based artist working at the inte
 
 ## Tech
 
-Static site. Single `index.html` + `styles.css`. Hosted on **Cloudflare Pages** (project `spif-amsterdam`). Custom domain: [spif.amsterdam](https://spif.amsterdam).
+Static site, shared `styles.css`. `/` is the portfolio (works); `/live/` is the Tesla-coil DJ set & lightning show; `/vox-arboris/` is the acquisition page. `_redirects` sends the old `/works` address to `/`. Hosted on **Cloudflare Pages** (project `spif-amsterdam`). Custom domain: [spif.amsterdam](https://spif.amsterdam).
 
 ## Deploy
 

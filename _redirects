@@ -1,0 +1,7 @@
+# Cloudflare Pages redirects (https://developers.cloudflare.com/pages/configuration/redirects/)
+# The portfolio ("works") is the homepage again; /works was its address from
+# July to November 2026. Browsers keep the #fragment across a redirect, so
+# /works#vox-arboris lands on /#vox-arboris.
+/works       /   301
+/works/      /   301
+/works.html  /   301
