@@ -129,6 +129,10 @@
   .prov-row{display:grid;gap:.25rem 1.5rem;padding:1.05rem 0;border-bottom:1px solid var(--rule)}
   @media (min-width:44rem){.prov-row{grid-template-columns:10rem minmax(0,1fr) auto;align-items:baseline}}
   .prov-when{font-family:var(--mono);font-size:var(--s-1);color:var(--amber)}
+  .history-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(2rem,5vw,3.5rem);align-items:center}
+  .tower{border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep);max-width:min(100%,26rem);justify-self:center}
+  .tower img{width:100%;height:auto}
+  @media (min-width:60rem){.history-grid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
   .prov-kind{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-faint)}
 
   /* ---------- film + gallery ---------- */
@@ -347,7 +351,8 @@
 
 <!-- ============ PROVENANCE ============ -->
 <section id="history">
-  <div class="wrap stack">
+  <div class="wrap history-grid">
+    <div class="stack">
     <span class="label">№ 05 — Where it has been</span>
     <h2>Four years of rooms.</h2>
     <div class="prov">
@@ -356,6 +361,11 @@
       <div class="prov-row"><span class="prov-when">2024</span><span class="prov-what">Odonien — Cologne</span><span class="prov-kind">Live</span></div>
       <div class="prov-row"><span class="prov-when">Apr 2026</span><span class="prov-what">A’dam Tower — Amsterdam</span><span class="prov-kind">Live</span></div>
     </div>
+    </div>
+    <figure class="tower">
+      <img src="/img/vox-arboris-adam-tower.jpg" width="665" height="1182" loading="lazy"
+           alt="Vox Arboris on stage at A’dam Tower at sunset: the white tree in silhouette against tall windows over Amsterdam and the IJ, blue stage lights above, Spif at the console" />
+    </figure>
   </div>
 </section>
 
