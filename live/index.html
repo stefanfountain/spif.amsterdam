@@ -21,7 +21,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
-  <link rel="preload" as="image" href="/img/live/hero-poster.jpg?v=3" fetchpriority="high" />
+  <link rel="preload" as="image" href="/img/live/2026-10/spif-live-hero-poster.jpg" media="(orientation: landscape)" fetchpriority="high" />
+  <link rel="preload" as="image" href="/img/live/2026-10/spif-live-mobile-poster.jpg" media="(orientation: portrait)" fetchpriority="high" />
   <link rel="stylesheet" href="/styles.css?v=2026-11-02" />
 
 <style>
@@ -59,6 +60,8 @@
   .hero-video{grid-area:media;position:relative;margin-top:clamp(1rem,2vw,1.5rem);aspect-ratio:16/9;
     border:3px solid var(--on-amber);border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep)}
   .hero-video img,.hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  @media (orientation:portrait){.hero-video{aspect-ratio:1}}
+  @media (prefers-reduced-motion:reduce){.hero-video video{display:none}}
   .hero-video video{opacity:0;transition:opacity .6s ease}
   .hero-video.playing video{opacity:1}
   @media (min-width:56rem){
@@ -118,11 +121,9 @@
     .bento .half img{aspect-ratio:2/1}
   }
 
-  /* ---------- lightning band ---------- */
-  .band{margin:clamp(1rem,3vw,2rem) 0;border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep)}
-  .band video{width:100%;height:clamp(14rem,36vw,30rem);object-fit:cover}
-  .band + section{border-top:0}
-  @media (prefers-reduced-motion:reduce){.band video{display:none}.band{height:clamp(14rem,36vw,30rem);background:var(--ink-deep) center/cover no-repeat}}
+  /* ---------- watch ---------- */
+  .watch{border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep);margin-top:clamp(1.6rem,3vw,2.2rem)}
+  .watch video{width:100%;height:auto;aspect-ratio:16/9;background:var(--ink-deep)}
 
   /* ---------- what it is ---------- */
   .about-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(2rem,5vw,3.5rem);margin-top:clamp(1.6rem,3vw,2.2rem);align-items:start}
@@ -165,6 +166,7 @@
     <li><a href="/"><span class="ttl">← The works</span></a></li>
     <li><a href="#set"><span class="ttl">Listen</span></a></li>
     <li><a href="#ritual"><span class="ttl">The ritual</span></a></li>
+    <li><a href="#watch"><span class="ttl">Watch</span></a></li>
     <li><a href="#about-live"><span class="ttl">What it is</span></a></li>
     <li><a href="#book"><span class="ttl">Book</span></a></li>
     <li><a href="/vox-arboris/"><span class="ttl">Vox Arboris, for sale →</span></a></li>
@@ -179,12 +181,19 @@
     <div class="hero-banner-inner">
       <span class="eyebrow-chip">Live DJ set · Amsterdam · NL</span>
       <h1>SPIF</h1>
-      <!-- ===== HERO VIDEO SLOT (swap here) ===== -->
+      <!-- ===== HERO VIDEO SLOT (swap here) =====
+           Landscape: 16:9 loop + poster. Portrait screens: the 9:16 loop and
+           poster, chosen by the media attributes (no JS). -->
       <figure class="hero-video" id="heroMedia">
-        <img src="/img/live/hero-poster.jpg?v=3" width="1920" height="1080" alt="Close on the Tesla coil: a thread of white lightning arcs from the toroid to a glowing blue tube held up to it" />
-        <video muted loop playsinline preload="metadata" poster="/img/live/hero-poster.jpg?v=3" aria-hidden="true">
-          <source src="/img/live/hero-loop.webm?v=3" type="video/webm" />
-          <source src="/img/live/hero-loop.mp4?v=3" type="video/mp4" />
+        <picture>
+          <source media="(orientation: portrait)" srcset="/img/live/2026-10/spif-live-mobile-poster.jpg" width="576" height="1024" />
+          <img src="/img/live/2026-10/spif-live-hero-poster.jpg" width="1024" height="576" alt="Night, purple light: a V-shaped arc of Tesla-coil lightning leaps from the top of the coil to a glowing fluorescent tube held up to it" />
+        </picture>
+        <video autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+          <source media="(orientation: portrait)" src="/img/live/2026-10/spif-live-mobile-loop.webm" type="video/webm" />
+          <source media="(orientation: portrait)" src="/img/live/2026-10/spif-live-mobile-loop.mp4" type="video/mp4" />
+          <source src="/img/live/2026-10/spif-live-hero-loop.webm" type="video/webm" />
+          <source src="/img/live/2026-10/spif-live-hero-loop.mp4" type="video/mp4" />
         </video>
       </figure>
       <!-- ===== /HERO VIDEO SLOT ===== -->
@@ -226,30 +235,39 @@
       <h2>Hands on the lightning.</h2>
     </div>
     <div class="bento">
-      <figure class="big"><img src="/img/live/crowd-tubes.jpg?v=2" width="900" height="1200" loading="lazy" alt="A crowd raises glowing tubes toward an arcing Tesla coil on a wooden plinth in a draped tent" /></figure>
-      <figure><img src="/img/live/coil-tubes.jpg?v=2" width="1200" height="900" loading="lazy" alt="The Tesla coil arcs blue lightning; glowing tubes radiate around it in the tent" /></figure>
-      <figure><img src="/img/live/coil-reach.jpg?v=2" width="900" height="1200" loading="lazy" alt="Figures reach glowing tubes toward the top of the coil under blue light" /></figure>
-      <figure><img src="/img/live/coil-radiate.jpg?v=2" width="1200" height="900" loading="lazy" alt="Glowing tubes fan out from the coil like spokes against the dark tent, orange glow beyond" /></figure>
-      <figure><img src="/img/live/dancers-coil.jpg?v=2" width="900" height="1200" loading="lazy" alt="Figures in fur and feathers near the coil, tubes glowing blue in the deep tent light" /></figure>
-      <figure class="half"><img src="/img/live/sabers-cross.jpg?v=2" width="1200" height="900" loading="lazy" alt="People cross glowing blue tubes at the coil, forming a star of light in the tent" /></figure>
-      <figure class="half"><img src="/img/live/lighttrails-b.jpg?v=2" width="1200" height="900" loading="lazy" alt="Long-exposure: glowing tubes streak the dark like a field of blue and orange rays around the coil" /></figure>
+      <figure class="big"><img src="/img/live/2026-10/coil-crowd-tubes-02-1000.jpg" srcset="/img/live/2026-10/coil-crowd-tubes-02-1000.jpg 1000w, /img/live/2026-10/coil-crowd-tubes-02.jpg 2000w" sizes="(min-width:52rem) 50vw, 100vw" width="1506" height="2000" loading="lazy" alt="Night, from behind the crowd: glowing fluorescent tubes raised into a peak over the Tesla coil" /></figure>
+      <figure><img src="/img/live/2026-10/coil-crowd-tubes-01-1000.jpg" srcset="/img/live/2026-10/coil-crowd-tubes-01-1000.jpg 1000w, /img/live/2026-10/coil-crowd-tubes-01.jpg 2000w" sizes="(min-width:52rem) 25vw, 50vw" width="1506" height="2000" loading="lazy" alt="A crowd under crossed, glowing tubes at the coil, lit blue and violet in the dark" /></figure>
+      <figure><img src="/img/live/2026-10/coil-arc-tube-04-1000.jpg" srcset="/img/live/2026-10/coil-arc-tube-04-1000.jpg 1000w, /img/live/2026-10/coil-arc-tube-04.jpg 2000w" sizes="(min-width:52rem) 25vw, 50vw" width="1506" height="2000" loading="lazy" alt="Someone reaches a lit tube to the top of the coil and a small arc jumps to it" /></figure>
+      <figure><img src="/img/live/2026-10/coil-arc-tubes-03-1000.jpg" srcset="/img/live/2026-10/coil-arc-tubes-03-1000.jpg 1000w, /img/live/2026-10/coil-arc-tubes-03.jpg 2000w" sizes="(min-width:52rem) 25vw, 50vw" width="1506" height="2000" loading="lazy" alt="People hold glowing tubes around the coil on its table while a thin arc reaches one of them" /></figure>
+      <figure><img src="/img/live/2026-10/coil-tube-raised-06-1000.jpg" srcset="/img/live/2026-10/coil-tube-raised-06-1000.jpg 1000w, /img/live/2026-10/coil-tube-raised-06.jpg 2000w" sizes="(min-width:52rem) 25vw, 50vw" width="1506" height="2000" loading="lazy" alt="In purple light, a person in a patterned robe raises a lit tube toward the coil" /></figure>
+      <figure class="half"><img src="/img/live/2026-10/performer-tube-dj-booth-07-1000.jpg" srcset="/img/live/2026-10/performer-tube-dj-booth-07-1000.jpg 1000w, /img/live/2026-10/performer-tube-dj-booth-07.jpg 2000w" sizes="(min-width:52rem) 50vw, 100vw" width="2000" height="1500" loading="lazy" alt="Seen from behind the DJ gear: the performer holds a lit tube up beside the coil, more tubes glowing around it" /></figure>
+      <figure class="half"><img src="/img/live/lighttrails-b.jpg?v=2" width="1200" height="900" loading="lazy" alt="Long exposure in the tent: glowing tubes streak the dark like a field of blue and orange rays around the coil" /></figure>
     </div>
   </div>
 </section>
 
-<!-- ============ LIGHTNING BAND (silent video) ============ -->
-<figure class="band" style="background-image:url('/img/live/divider-lightning.jpg?v=2')">
-  <video autoplay muted loop playsinline preload="metadata" poster="/img/live/divider-lightning.jpg?v=2" aria-hidden="true">
-    <source src="/img/live/divider-lightning.webm?v=2" type="video/webm" />
-    <source src="/img/live/divider-lightning.mp4?v=2" type="video/mp4" />
-  </video>
-</figure>
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="wrap">
+    <div class="stack">
+      <span class="label">№ 03 — Watch</span>
+      <h2>Lightning, to the beat.</h2>
+    </div>
+    <figure class="watch">
+      <video controls preload="none" playsinline width="1024" height="576" poster="/img/live/2026-10/spif-live-hero-poster.jpg">
+        <source src="/img/live/2026-10/spif-live-highlight.mp4" type="video/mp4" />
+        Your browser does not support embedded video.
+      </video>
+    </figure>
+    <p class="set-note">58 seconds · with sound, recorded on a phone at the coil</p>
+  </div>
+</section>
 
 <!-- ============ WHAT IT IS ============ -->
 <section id="about-live">
   <div class="wrap">
     <div class="stack">
-      <span class="label">№ 03 — What it is</span>
+      <span class="label">№ 04 — What it is</span>
       <h2>The instrument is the room.</h2>
     </div>
     <div class="about-grid">
