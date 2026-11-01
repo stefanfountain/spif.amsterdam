@@ -866,6 +866,28 @@ section:first-of-type { border-top: 0; }
   background: var(--amber);
 }
 .status-badge.calm { color: var(--brass); border-color: var(--brass); }
+
+/* "For sale" pill linking a work to its own page — sidebar yellow, rounded
+   like the Vox Arboris page's badge and buttons. */
+.sale-pill {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sidebar-ink-deep);
+  background: var(--sidebar-bg);
+  border: 2px solid var(--ink-deep);
+  border-radius: 999px;
+  padding: 0.8rem 1.4rem;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+.sale-pill:hover { background: var(--sidebar-ink); color: var(--sidebar-bg); }
+.sale-pill:active { transform: translateY(1px); }
 .status-badge.calm::before { background: var(--brass); box-shadow: none; animation: none; }
 
 .work-body {
