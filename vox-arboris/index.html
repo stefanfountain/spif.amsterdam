@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vox Arboris — a self-playing instrument</title>
-<meta name="description" content="A sculptural modular synthesizer that plays itself, listens to a living plant, and draws sound in fire. Available for acquisition. Amsterdam." />
+<meta name="description" content="A sculptural modular synthesizer that plays itself, listens to a living plant, and draws sound in fire. For sale. Amsterdam." />
 
 <link rel="canonical" href="https://spif.amsterdam/vox-arboris" />
 <meta property="og:type" content="website" />
@@ -58,60 +58,52 @@
   img,video{max-width:100%;display:block}
   a{color:var(--leaf);text-underline-offset:.2em}
   a:hover{color:var(--ink)}
+  ::selection{background:var(--flame-solid);color:var(--ground)}
   :focus-visible{outline:2px solid var(--leaf);outline-offset:3px;border-radius:2px}
 
   .wrap{max-width:66rem;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.5rem)}
   .label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
 
   /* ---------- hero ---------- */
-  .hero{position:relative;min-height:min(92svh,52rem);display:grid;align-items:end;overflow:hidden;border-bottom:1px solid var(--rule)}
-  .hero video,.hero .hero-img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    object-position:58% 46%;
-    filter:saturate(1.02) contrast(1.03);
-  }
-  /* The establishing shot is a bright white room, so the scrim has to work
-     harder than it would over the flame footage to keep the type readable. */
-  .hero::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(to top,var(--ground) 1%,rgba(10,14,12,.90) 30%,rgba(10,14,12,.55) 58%,rgba(10,14,12,.35) 80%,rgba(10,14,12,.5) 100%);
-  }
+  /* A plain dark section: title and intro on one side, the whole instrument
+     in a framed box on the other (photo directly under the title on phones),
+     so a buyer arriving from the QR code sees the complete piece straight away. */
+  .hero{border-bottom:1px solid var(--rule)}
   /* padding-block, not the shorthand: this element also carries .wrap, whose
      horizontal padding a `padding: x 0 y` shorthand would silently zero out. */
-  .hero-inner{position:relative;z-index:2;padding-block:clamp(2.5rem,7vw,5.5rem) clamp(2rem,5vw,3.5rem)}
+  .hero-inner{
+    padding-block:clamp(2rem,6vw,4.5rem) clamp(2.5rem,6vw,4.5rem);
+    display:grid;grid-template-columns:minmax(0,1fr);
+    grid-template-areas:"label" "title" "photo" "stand" "meta";
+  }
+  .hero-inner>.label{grid-area:label;margin-bottom:1rem}
   .hero h1{
-    font-family:var(--display);font-weight:300;font-size:clamp(3rem,11vw,7.5rem);
+    grid-area:title;font-family:var(--display);font-weight:300;font-size:clamp(3rem,11vw,6rem);
     line-height:.92;letter-spacing:-.02em;text-wrap:balance;
   }
   .hero h1 em{font-style:italic;color:var(--flame-solid)}
   .hero .standfirst{
-    font-family:var(--display);font-size:clamp(1.35rem,3.2vw,2.1rem);line-height:1.32;
-    color:var(--ink);max-width:34ch;margin-top:1.4rem;font-weight:300;text-wrap:pretty;
+    grid-area:stand;font-family:var(--display);font-size:clamp(1.3rem,2.6vw,1.75rem);line-height:1.32;
+    color:var(--ink);max-width:30ch;margin-top:1.4rem;font-weight:300;text-wrap:pretty;
   }
-  .hero-inner>.label,.hero-meta .label{color:#C6D2CB}
-  .hero-inner>.label,.hero h1,.hero .standfirst{text-shadow:0 1px 24px rgba(6,10,8,.65)}
-  /* Full, uncropped view of the instrument in a framed box beside the title
-     (stacked under the title on phones), so a buyer arriving from the QR code
-     sees the whole piece, canopy included, straight away. Never cropped. */
-  .hero-inner{width:100%;display:grid;grid-template-columns:minmax(0,1fr);
-    grid-template-areas:"label" "title" "photo" "stand" "meta";align-items:start}
-  .hero-inner>.label{grid-area:label}
-  .hero h1{grid-area:title}
-  .hero .standfirst{grid-area:stand}
-  .hero-meta{grid-area:meta}
-  .hero-full{grid-area:photo;position:relative;margin:1.2rem 0 0;padding:.5rem;
+  .hero-full{grid-area:photo;position:relative;margin:1.4rem 0 0;padding:clamp(.4rem,1vw,.6rem);
     background:var(--surface);border:1px solid var(--rule-firm);border-radius:2px}
-  .hero-full img{display:block;width:100%;height:auto}
-  .sale-badge{position:absolute;top:1rem;left:1rem;font-family:var(--mono);font-weight:500;
-    font-size:.8125rem;letter-spacing:.08em;line-height:1;padding:.5rem .7rem;
-    background:var(--flame-solid);color:var(--ground);border-radius:2px}
+  .hero-full img{width:100%;height:auto}
+  .sale-badge{position:absolute;top:clamp(.9rem,2vw,1.4rem);left:clamp(.9rem,2vw,1.4rem);
+    font-family:var(--mono);font-weight:500;font-size:clamp(.8125rem,1.4vw,.9375rem);letter-spacing:.06em;line-height:1;
+    padding:.55em .8em;background:var(--flame-solid);color:var(--ground);border-radius:2px;
+    box-shadow:0 2px 10px rgba(6,10,8,.35)}
+  .hero-meta{grid-area:meta;display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;margin-top:1.8rem;padding-top:1.1rem;border-top:1px solid var(--rule-firm)}
+  .hero-meta .label{color:var(--ink-2)}
   @media (min-width:52rem){
-    .hero-inner{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);column-gap:clamp(2rem,4vw,3.5rem);
-      grid-template-areas:"label photo" "title photo" "stand photo" "meta meta";align-items:end}
-    .hero-full{margin:0;align-self:end}
+    .hero-inner{
+      grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);column-gap:clamp(2.5rem,5vw,4.5rem);
+      grid-template-rows:1fr auto auto auto auto 1fr;
+      grid-template-areas:". photo" "label photo" "title photo" "stand photo" "meta photo" ". photo";
+    }
+    .hero-full{margin:0;align-self:center}
   }
-  .hero-meta{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule-firm)}
-  /* On narrow screens these three labels don't fit two-up; stack them rather
+  /* On narrow screens these labels don't fit two-up; stack them rather
      than letting the last one run past the edge. */
   @media (max-width:30rem){
     .hero-meta{flex-direction:column;gap:.45rem}
@@ -244,8 +236,6 @@
 
 <!-- ============ HERO ============ -->
 <header class="hero">
-  <img class="hero-img" src="/img/vox-arboris/hero-wihh.jpg" fetchpriority="high"
-       alt="Vox Arboris installed at WIHH Gallery — a white cut-sheet tree over a console of modular synthesizer panels, a curtain of red patch cables hanging from one branch, a living plant on a stool alongside, all standing on a green sculpted floor" />
   <div class="hero-inner wrap">
     <span class="label">A work by Spif · Amsterdam · 2022 → ongoing</span>
     <h1>Vox<br /><em>Arboris</em></h1>
@@ -269,8 +259,8 @@
   <div class="wrap stack">
     <span class="label">№ 01 — The work</span>
     <h2>An instrument that does not need a player.</h2>
-    <p class="lede">Vox Arboris is a tree, cut from sheet and standing on its own floor, with a complete modular synthesizer built into its trunk. Two banks of electronics sit at playing height on either side of the console. Patch cables fall from the branches like aerial roots. Switch it on and it begins to play — slowly, deliberately, never quite repeating — and it keeps playing whether or not anyone is standing at it.</p>
-    <p class="muted">It has spent four years in galleries and clubs: a month-long residency at Ten Club, a month at WIHH, a night at Odonien in Cologne, and a set high above the IJ at the A'dam Tower. It is now looking for a permanent home.</p>
+    <p class="lede">Vox Arboris is a tree cut from sheet, standing on its own floor, with a complete modular synthesizer built into its trunk. Two banks of electronics sit at playing height either side of the console, and patch cables hang from the branches like aerial roots. Switch it on and it plays, slowly and never quite repeating, whether or not anyone is standing at it.</p>
+    <p class="muted">It has spent four years in galleries and clubs: a month-long residency at Ten Club, a month at WIHH, a night at Odonien in Cologne and a set above the IJ at the A'dam Tower. Now it needs a permanent home.</p>
   </div>
 </section>
 
@@ -279,7 +269,7 @@
   <div class="wrap stack-lg">
     <div class="stack">
       <span class="label">№ 02 — What it does</span>
-      <h2>Three things, and it does them at once.</h2>
+      <h2>Three things, all at once.</h2>
     </div>
 
     <div class="cap">
@@ -294,7 +284,7 @@
       <div class="cap-body">
         <span class="cap-num">01</span>
         <h3>It plays itself</h3>
-        <p class="muted">The system is patched as a self-generating instrument. Clock, chance and slow modulation drive the voices; nothing is sequenced by hand and nothing loops back to the same bar. Left running in a room it produces a continuous evolving score for as long as it is switched on — a piece of music that is different every day and recognisably itself every time.</p>
+        <p class="muted">It is patched to make its own music. Clock, chance and slow modulation drive the voices; nothing is sequenced by hand and nothing loops back to the same bar. Left running, it plays one continuous score that is different every day and still recognisably itself.</p>
       </div>
     </div>
 
@@ -310,8 +300,8 @@
       <div class="cap-body">
         <span class="cap-num">02</span>
         <h3>It listens to a plant</h3>
-        <p class="muted">A living plant is wired into the circuit, and what it does in response to light, water, touch and the people in the room becomes what you hear. Not noise from a plant — the plant playing in tune.</p>
-        <p class="muted">It is not a metaphor and not a recording. Water it and the music changes. Put a different plant on the stool and you get a different player.</p>
+        <p class="muted">A living plant is wired into the circuit. How it responds to light, water, touch and the people in the room is what you hear, in tune.</p>
+        <p class="muted">It isn't a recording. Water it and the music changes. Put a different plant on the stool and you get a different player.</p>
       </div>
     </div>
 
@@ -325,8 +315,8 @@
       <div class="cap-body">
         <span class="cap-num">03</span>
         <h3>It draws sound in fire</h3>
-        <p class="muted">A metre-long Rubens' tube runs out along one branch: a sealed pipe of gas with a row of jets down its length and a driver at one end. Standing waves inside vary the pressure along the tube, so the flames stand tall where the pressure is high and low where it isn't. The row of flames becomes a picture of the sound, redrawing itself as the music moves.</p>
-        <p class="muted">Heinrich Rubens demonstrated the principle in 1905. It has lost none of its effect on a room.</p>
+        <p class="muted">A metre-long Rubens' tube runs along one branch: a sealed gas pipe with a row of jets and a driver at one end. Standing waves change the pressure along the tube, so the flames burn tall where it is high and low where it isn't. The flames draw the sound and redraw it as the music moves.</p>
+        <p class="muted">Heinrich Rubens demonstrated the principle in 1905. It still works on a room.</p>
       </div>
     </div>
   </div>
@@ -336,11 +326,11 @@
 <section id="centre">
   <div class="wrap stack">
     <span class="label">№ 03 — The design</span>
-    <h2>The plant provides the signal that the synth plays.</h2>
-    <p class="lede">Electrodes read the tiny changes across a leaf — the plant's response to light, water, touch, the room. Those become voltage, and the voltage is set into a musical key. Whatever plant stands on the stool is the thing deciding what happens next. Any plant will do it, and each one does it differently.</p>
-    <p class="muted">For four years those decisions came from a rack of drum machines and samplers at the centre of the console. In the acquired instrument that centre bay holds no electronics: the two banks of synthesizer stay either side, and the plant takes the middle — standing where the machine that used to decide was bolted down. Nothing depends on a laptop, a phone, or anything anyone has to learn. Change the plant and the character of the music changes with it.</p>
+    <h2>The plant decides what the synth plays.</h2>
+    <p class="lede">Electrodes read small changes across a leaf as the plant responds to light, water, touch and the room. Those changes become voltage, and the voltage is set to a musical key. Any plant works, and each one plays differently.</p>
+    <p class="muted">For four years a rack of drum machines and samplers at the centre of the console made those decisions. In the instrument you buy, the centre bay holds no electronics: the two synthesizer banks stay either side and the plant stands in the middle, where that rack was bolted down. Nothing depends on a laptop, a phone or anything you have to learn.</p>
     <div class="pull leaf">
-      <p>The plant is not an input to the instrument. It is the part of the instrument that chooses.</p>
+      <p>The plant is the part of the instrument that chooses.</p>
     </div>
   </div>
 </section>
@@ -349,7 +339,7 @@
 <section id="film">
   <div class="wrap stack">
     <span class="label">№ 04 — In the room</span>
-    <h2>What it looks like when it is running.</h2>
+    <h2>What it looks like running.</h2>
     <p class="muted">Filmed at WIHH Gallery, Amsterdam.</p>
     <div class="filmstrip">
       <video controls preload="none" poster="/img/vox-arboris/documentation-poster.jpg">
@@ -386,14 +376,14 @@
   <div class="wrap stack">
     <span class="label">№ 06 — What is acquired</span>
     <h2>The whole instrument, installed and working.</h2>
-    <p class="lede">This is not a crate of parts. It arrives assembled, patched, tuned and playing, with everything needed to keep it that way.</p>
+    <p class="lede">It arrives assembled, patched, tuned and playing, with everything needed to keep it that way.</p>
 
     <dl class="spec">
       <dt>The sculpture</dt>
       <dd>Cut tree form with integrated console and sculpted floor element. Freestanding. <b>Approx. 2 m tall</b>, footprint approx. <b>2 × 1.5 m</b>.</dd>
 
       <dt>The instrument</dt>
-      <dd>Two Eurorack banks flanking the plant bay: percussion voices, melodic and textural voices, granular and reverb processing, clock and chance generators, quantisers, mixing and balanced output. <b>Full module inventory supplied on request and in the manual.</b></dd>
+      <dd>Two Eurorack banks flanking the plant bay: percussion voices, melodic and textural voices, granular and reverb processing, clock and chance generators, quantisers, mixing and balanced output. <b>Full module inventory in the manual, or on request.</b></dd>
 
       <dt>Plant interface</dt>
       <dd>Biodata module and electrodes. A second plant channel can be added on request.</dd>
@@ -402,13 +392,13 @@
       <dd>One-metre Rubens' tube with driver and mounting. Runs on bottled propane, user-operated.</dd>
 
       <dt>Documentation</dt>
-      <dd><b>A printed manual</b> — module inventory, signal path, per-module patch breakdowns explaining every connection and why it is made, the default patches with recall notes, and troubleshooting. Written so that someone who has never touched a modular system can switch it on, understand what they are hearing, and rebuild the patch from nothing if it is ever pulled apart. Two copies: one for you, one that lives with the work.</dd>
+      <dd><b>A printed manual</b>: module inventory, signal path, every connection in each patch and why it is there, the default patches with recall notes, and troubleshooting. Someone who has never touched a modular system can switch it on, understand what they hear, and rebuild the patch from scratch if it is ever pulled apart. Two copies: one for you, one that stays with the work.</dd>
 
       <dt>Installation</dt>
-      <dd>Delivered and installed on site in person, with a walkthrough for the people who will look after it.</dd>
+      <dd>Delivered and installed on site in person, with a walkthrough for whoever will look after it.</dd>
 
       <dt>Tuning</dt>
-      <dd><b>Two sessions included.</b> The final patch is developed with you — tempo, density, tonality, how strongly the plant drives it, how the fire is used. A laboratory foyer wants something different from a club.</dd>
+      <dd><b>Two sessions included.</b> We develop the final patch together: tempo, density, tonality, how strongly the plant drives it, how the fire is used. A laboratory foyer wants something different from a club.</dd>
     </dl>
 
   </div>
@@ -422,7 +412,7 @@
     <div class="aud">
       <div>
         <h4>Music venues</h4>
-        <p>A permanent centrepiece that is not a screen. It plays on the nights nobody is booked, and it can be played by anyone you put in front of it.</p>
+        <p>A permanent centrepiece that isn't a screen. It plays on nights nobody is booked, and anyone you put in front of it can play it.</p>
       </div>
       <div>
         <h4>Labels &amp; studios</h4>
@@ -430,11 +420,11 @@
       </div>
       <div>
         <h4>Biotech &amp; mycology</h4>
-        <p>An instrument that makes the living world audible — literally driven by an organism, in a building full of people who work on organisms.</p>
+        <p>An instrument driven by a living organism, in a building full of people who work on organisms.</p>
       </div>
       <div>
         <h4>Collectors</h4>
-        <p>Functional sculpture with four years of exhibition history, delivered with full documentation and ongoing support.</p>
+        <p>Working sculpture with four years of exhibition history, full documentation and ongoing support.</p>
       </div>
     </div>
   </div>
@@ -444,19 +434,19 @@
 <section id="acquire">
   <div class="wrap stack">
     <span class="label">№ 08 — Acquisition</span>
-    <h2>It is available, and it will be installed by the person who built it.</h2>
+    <h2>For sale, installed by the person who built it.</h2>
     <div class="acquire">
-      <p class="lede" style="margin:0">Vox Arboris is offered as a single work, delivered installed and playing, with the printed manual, two tuning sessions and ongoing support. Price and terms on enquiry — including commissioning terms if you want a variation built for a specific room.</p>
+      <p class="lede" style="margin:0">Vox Arboris is sold as a single work, delivered installed and playing, with the printed manual, two tuning sessions and ongoing support. Price and terms on enquiry, including commissioning terms if you want a variation built for a specific room.</p>
       <ul class="body-list muted">
-        <li><strong>Collection or delivery</strong> from Amsterdam. Delivery and installation within the Benelux by arrangement; further afield, ask.</li>
-        <li><strong>The fire element</strong> runs on bottled propane and is user-operated. Most venues will want it signed off under their own fire regulations — the instrument runs completely normally with the tube switched off.</li>
+        <li><strong>Collection or delivery</strong> from Amsterdam. Delivery and installation in the Benelux by arrangement; further afield, ask.</li>
+        <li><strong>The fire element</strong> runs on bottled propane and is user-operated. Most venues will want it signed off under their own fire regulations. The instrument runs normally with the tube switched off.</li>
         <li><strong>Ongoing support</strong> by arrangement: patch revisions, remote help, and a standing offer to come and look at it.</li>
       </ul>
     </div>
 
     <div id="enquire" style="margin-top:clamp(2rem,5vw,3rem)">
       <h3 style="margin-bottom:.9rem">Enquire</h3>
-      <p class="muted" style="font-size:var(--s-1);max-width:52ch">Tell me a little about the room it would live in. I answer everything myself, usually within a day or two.</p>
+      <p class="muted" style="font-size:var(--s-1);max-width:52ch">Tell me about the room it would live in. I answer everything myself, usually within a day or two.</p>
 
       <form class="form" id="enquiry-form" method="post" action="/api/enquiry" novalidate>
         <div class="form-row">
@@ -470,7 +460,7 @@
           </div>
         </div>
         <div class="field">
-          <label for="f-org">Venue, company or collection <span class="opt">— optional</span></label>
+          <label for="f-org">Venue, company or collection <span class="opt">(optional)</span></label>
           <input id="f-org" name="org" type="text" autocomplete="organization" maxlength="160" />
         </div>
         <div class="field">
@@ -488,11 +478,11 @@
 
         <button type="submit" id="f-submit">Send enquiry</button>
         <p class="form-status" id="f-status" role="status" aria-live="polite"></p>
-        <p class="form-note">Or find me on Instagram — <a href="https://instagram.com/elspif">@elspif</a>.</p>
+        <p class="form-note">Or find me on Instagram: <a href="https://instagram.com/elspif">@elspif</a>.</p>
       </form>
 
       <div class="sent" id="enquiry-sent" hidden>
-        <h3>Thank you — that's arrived.</h3>
+        <h3>Thanks, that's arrived.</h3>
         <p>I'll come back to you personally, usually within a day or two. If it's urgent, Instagram is faster: <a href="https://instagram.com/elspif">@elspif</a>.</p>
       </div>
     </div>
@@ -504,7 +494,7 @@
 <footer>
   <div class="wrap stack" style="gap:.9rem">
     <span class="label">Vox Arboris · 2022 → ongoing · Amsterdam</span>
-    <p class="muted" style="font-size:var(--s-1)">Spif builds instruments to slow people down and lead them somewhere they did not expect to go — across modular performance, spoken-word ritual, AI installation and tactile interactive objects.</p>
+    <p class="muted" style="font-size:var(--s-1)">Spif builds instruments that slow people down and take them somewhere unexpected: modular performance, spoken-word ritual, AI installation and tactile interactive objects.</p>
     <div class="foot-links">
       <a class="label" style="color:var(--leaf)" href="/">Live</a>
       <a class="label" style="color:var(--leaf)" href="/works">Works</a>
