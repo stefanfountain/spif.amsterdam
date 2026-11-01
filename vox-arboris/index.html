@@ -22,261 +22,234 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" />
 
+<link rel="stylesheet" href="/styles.css?v=2026-11-01" />
+
 <style>
+  /* Vox Arboris page layer on top of the shared site stylesheet (styles.css):
+     same tokens (navy --ink, --paper, --amber, --brass, sidebar yellow),
+     same brutalist amber banner and yellow index, plus rounded frames and
+     pill controls for this page. */
   :root{
-    --ground:#0A0E0C;
-    --ground-2:#101613;
-    --surface:#161E1A;
-    --ink:#EEF3F0;
-    --ink-2:#A5B2AB;
-    --ink-3:#75837C;
-    --rule:#232E28;
-    --rule-firm:#33423A;
-    --flame:#E8763190;
-    --flame-solid:#E87631;
-    --ink-on-flame:var(--ground);
-    --black:#050807;
-    --shadow:rgba(6,10,8,.35);
-    --flame-soft:#2A1A10;
-    --glow:color-mix(in srgb,var(--flame-solid) 30%,transparent);
-    --glow-faint:color-mix(in srgb,var(--flame-solid) 9%,transparent);
-    --leaf:#74C295;
-    --leaf-soft:#12241A;
-
-    --display:"Cormorant Garamond", Georgia, "Times New Roman", serif;
-    --sans:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
-    --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-
+    --radius-card:22px;
+    --radius-well:14px;
+    --radius-pill:999px;
+    --on-amber:var(--ink-deep);
+    --shadow:color-mix(in oklch,var(--ink-deep) 45%,transparent);
     --measure:64ch;
-    --s-1:.8125rem; --s0:1.0625rem; --s1:1.3rem; --s2:1.75rem; --s3:2.4rem;
+    --s-1:.8125rem; --s0:1.0625rem;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
   html,body{overflow-x:clip}
-  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-
-  body{
-    background:var(--ground);color:var(--ink);
-    font-family:var(--sans);font-weight:300;font-size:var(--s0);line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
+  p,ul,dl,dd,figure,h1,h2,h3{margin:0}
   img,video{max-width:100%;display:block}
-  a{color:var(--leaf);text-underline-offset:.2em}
-  a:hover{color:var(--ink)}
-  ::selection{background:var(--flame-solid);color:var(--ground)}
-  :focus-visible{outline:2px solid var(--leaf);outline-offset:3px;border-radius:2px}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
-  .wrap{max-width:66rem;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.5rem)}
-  .label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+  .wrap{max-width:66rem;margin:0 auto}
+  .label{font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);font-weight:500}
 
-  /* ---------- hero ---------- */
-  /* A plain dark section: title and intro on one side, the whole instrument
-     in a framed box on the other (photo directly under the title on phones),
-     so a buyer arriving from the QR code sees the complete piece straight away. */
-  .hero{position:relative;isolation:isolate;overflow:hidden;border-bottom:1px solid var(--rule)}
-  /* Firelight: a warm glow from below and behind the title, in the flame token.
-     One slow breath of brightness; off under reduced motion. */
-  .hero::before{
-    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-    background:
-      radial-gradient(ellipse 70% 60% at 18% 62%,var(--glow),transparent 70%),
-      radial-gradient(ellipse 60% 50% at 70% 100%,var(--glow-faint),transparent 75%);
-    animation:ember 7s ease-in-out infinite alternate;
+  /* ---------- hero: the site's amber brutalist banner ---------- */
+  .vox-hero .hero-banner-inner{
+    display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:0;
+    grid-template-areas:"chip" "title" "photo" "stand" "cta" "meta";
   }
-  @keyframes ember{from{opacity:.72}to{opacity:1}}
-  /* padding-block, not the shorthand: this element also carries .wrap, whose
-     horizontal padding a `padding: x 0 y` shorthand would silently zero out. */
-  .hero-inner{
-    max-width:84rem;
-    padding-block:clamp(1.75rem,5vw,4rem) clamp(2.25rem,5vw,4rem);
-    display:grid;grid-template-columns:minmax(0,1fr);
-    grid-template-areas:"label" "title" "photo" "stand" "cta" "meta";
-  }
-  .hero-inner>.label{grid-area:label;margin-bottom:1rem;color:var(--ink-2)}
-  .hero h1{
-    grid-area:title;font-family:var(--display);font-weight:400;
-    font-size:clamp(4.5rem,23vw,6.5rem);line-height:.84;letter-spacing:-.03em;
-  }
-  .hero h1 em{font-style:italic;color:var(--flame-solid)}
-  .hero .standfirst{
-    grid-area:stand;font-family:var(--display);font-size:clamp(1.35rem,2.4vw,1.9rem);line-height:1.28;
-    color:var(--ink);max-width:28ch;margin-top:1.3rem;font-weight:400;text-wrap:pretty;
-  }
-  .hero-full{grid-area:photo;position:relative;margin:1.3rem 0 0;padding:clamp(.4rem,.9vw,.7rem);
-    background:var(--surface);border:1px solid var(--flame);border-radius:2px}
-  .hero-full img{width:100%;height:auto}
-  .sale-badge{position:absolute;top:clamp(.9rem,2vw,1.5rem);left:clamp(.9rem,2vw,1.5rem);
-    font-family:var(--mono);font-weight:500;font-size:clamp(.8125rem,1.4vw,1rem);letter-spacing:.06em;line-height:1;
-    padding:.55em .8em;background:var(--flame-solid);color:var(--ground);border-radius:2px;
-    box-shadow:0 2px 10px var(--shadow)}
-  .hero-actions{grid-area:cta;display:flex;flex-wrap:wrap;align-items:center;gap:.9rem 1.4rem;margin-top:1.5rem}
-  .hero-actions .cta{border-color:var(--flame-solid);background:var(--flame-solid);color:var(--ink-on-flame)}
-  .hero-actions .cta:hover{background:transparent;color:var(--flame-solid)}
-  .hero-actions .label{color:var(--ink-2)}
-  .hero-meta{grid-area:meta;display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;margin-top:1.6rem;padding-top:1rem;border-top:1px solid var(--rule-firm)}
-  .hero-meta .label{color:var(--ink-2)}
-  @media (min-width:52rem){
-    .hero-inner{
-      grid-template-columns:minmax(0,1fr) minmax(0,1.55fr);column-gap:clamp(2.5rem,4.5vw,4.5rem);
-      grid-template-rows:1fr auto auto auto auto auto 1fr;
-      grid-template-areas:". photo" "label photo" "title photo" "stand photo" "cta photo" "meta photo" ". photo";
+  .vox-hero .eyebrow-chip{grid-area:chip;justify-self:start;margin-bottom:clamp(.9rem,1.6vw,1.3rem)}
+  .vox-hero h1{grid-area:title;font-size:clamp(4.5rem,19vw,6.5rem);line-height:.86}
+  .vox-hero h1 .roman{font-style:normal}
+  .vox-photo{grid-area:photo;position:relative;margin-top:clamp(1rem,2vw,1.5rem);
+    border:3px solid var(--on-amber);border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep)}
+  .vox-photo img{width:100%;height:auto}
+  .sale-badge{position:absolute;top:clamp(.75rem,1.6vw,1.2rem);left:clamp(.75rem,1.6vw,1.2rem);
+    font-family:var(--mono);font-weight:500;font-size:clamp(.8125rem,1.2vw,.95rem);letter-spacing:.06em;line-height:1;
+    padding:.6em 1em;border-radius:var(--radius-pill);
+    background:var(--sidebar-bg);color:var(--sidebar-ink-deep);border:2px solid var(--on-amber)}
+  .vox-hero .credo{grid-area:stand;max-width:30ch}
+  .hero-actions{grid-area:cta;display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.3rem;margin-top:clamp(1.1rem,2vw,1.6rem)}
+  .hero-actions .label{color:var(--on-amber)}
+  .vox-hero .hero-meta{grid-area:meta}
+  @media (min-width:56rem){
+    .vox-hero .hero-banner-inner{
+      grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);column-gap:clamp(2rem,4vw,3.5rem);
+      grid-template-rows:auto 1fr auto auto auto auto 1fr;
+      grid-template-areas:"chip chip" ". photo" "title photo" "stand photo" "cta photo" "meta photo" ". photo";
     }
-    .hero h1{font-size:clamp(5.5rem,11.5vw,10.5rem)}
-    .hero-full{margin:0;align-self:center}
-  }
-  /* On narrow screens these labels don't fit two-up; stack them rather
-     than letting the last one run past the edge. */
-  @media (max-width:30rem){
-    .hero-meta{flex-direction:column;gap:.45rem}
-    .hero-inner>.label{letter-spacing:.12em}
+    .vox-hero h1{font-size:clamp(5rem,8.5vw,9.5rem)}
+    .vox-photo{margin:0;align-self:center}
   }
 
-  /* ---------- cinematic band ---------- */
-  .cinema{margin:0;border-top:1px solid var(--rule);background:var(--black)}
-  .cinema img{width:100%;height:clamp(16rem,46vw,40rem);object-fit:cover;object-position:35% 55%}
-  .cinema+section{border-top:1px solid var(--rule)}
+  /* ---------- pill controls ---------- */
+  .cta{
+    display:inline-flex;align-items:center;justify-content:center;min-height:3rem;align-self:flex-start;
+    font-family:var(--mono);font-size:var(--s-1);font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+    padding:0 1.6rem;border-radius:var(--radius-pill);
+    background:var(--on-amber);color:var(--paper);border:2px solid var(--on-amber);
+    text-decoration:none;transition:background .2s ease,color .2s ease,transform .1s ease;
+  }
+  .cta:hover{background:var(--sidebar-bg);color:var(--sidebar-ink-deep)}
+  .cta:active{transform:translateY(1px)}
 
   /* ---------- rhythm ---------- */
-  section{padding:clamp(3.5rem,9vw,7rem) 0}
-  section+section{border-top:1px solid var(--rule)}
-  h2{
-    font-family:var(--display);font-weight:300;font-size:clamp(2rem,5.2vw,var(--s3));
-    line-height:1.08;letter-spacing:-.015em;text-wrap:balance;max-width:22ch;
+  main > section{padding:clamp(4rem,9vw,7rem) 0}
+  #hero + section{border-top:0}
+  main h2{
+    font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(2.25rem,5vw,3.75rem);
+    line-height:1.02;letter-spacing:-.015em;text-wrap:balance;max-width:20ch;color:var(--paper);
   }
-  h3{font-family:var(--display);font-weight:400;font-size:var(--s2);line-height:1.15;letter-spacing:-.01em}
+  main h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,2.2vw,1.9rem);line-height:1.15;color:var(--paper)}
   p{max-width:var(--measure);text-wrap:pretty}
   p+p{margin-top:1.1rem}
-  .lede{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.55;color:var(--ink);max-width:56ch}
-  .muted{color:var(--ink-2)}
-  strong{font-weight:500;color:var(--ink)}
-  .stack{display:flex;flex-direction:column;gap:1.5rem}
-  .stack-lg{display:flex;flex-direction:column;gap:clamp(2.5rem,6vw,4rem)}
+  .lede{max-width:56ch}
+  .muted{color:var(--paper-dim)}
+  strong{font-weight:500;color:var(--paper)}
+  .stack{display:flex;flex-direction:column;gap:1.4rem}
 
-  /* ---------- capabilities ---------- */
-  .cap{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:center}
-  @media (min-width:52rem){
-    .cap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-    .cap.flip .cap-media{order:2}
+  /* ---------- the three films: Velvet panel, Kiln bento ---------- */
+  #how.mood-velvet{
+    background:var(--ink);color:var(--paper);border:0;border-radius:var(--radius-card);
+    padding:clamp(2.5rem,6vw,4.5rem) clamp(1.25rem,4vw,3.5rem);margin-block:clamp(1rem,3vw,2rem);
   }
-  .cap-media{border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--surface)}
-  .cap-media img,.cap-media video{width:100%;aspect-ratio:4/3;object-fit:cover}
-  .cap-body{display:flex;flex-direction:column;gap:.9rem}
-  .cap-num{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:.6875rem;letter-spacing:.16em;color:var(--flame-solid);font-weight:500}
+  #how.mood-velvet + section{border-top:0}
+  .bento{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(1.5rem,3vw,2rem);margin-top:clamp(1.8rem,4vw,2.6rem)}
+  .tile{display:flex;flex-direction:column;gap:.6rem}
+  .tile .well{border-radius:var(--radius-well);overflow:hidden;background:var(--ink-deep);margin-bottom:.4rem}
+  .tile video{width:100%;aspect-ratio:4/3;object-fit:cover}
+  .tile p{color:var(--paper-dim);max-width:44ch}
+  .cap-num{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;color:var(--brass);font-weight:500}
+  @media (min-width:60rem){
+    .bento{grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-rows:auto auto}
+    .tile--fire{grid-column:1;grid-row:1 / span 2}
+    .tile--fire video{aspect-ratio:5/6}
+  }
+
+  /* ---------- night band ---------- */
+  .cinema{margin:clamp(1rem,3vw,2rem) 0;border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep)}
+  .cinema img{width:100%;height:clamp(16rem,40vw,36rem);object-fit:cover;object-position:35% 55%}
+  .cinema + section{border-top:0}
 
   /* ---------- provenance ---------- */
-  .prov{display:flex;flex-direction:column;gap:0;margin-top:2rem;border-top:1px solid var(--rule)}
+  .prov{display:flex;flex-direction:column;margin-top:1.4rem;border-top:1px solid var(--rule)}
   .prov-row{display:grid;gap:.25rem 1.5rem;padding:1.05rem 0;border-bottom:1px solid var(--rule)}
-  @media (min-width:44rem){.prov-row{grid-template-columns:10rem 1fr auto;align-items:baseline}}
-  .prov-when{font-family:var(--mono);font-size:var(--s-1);color:var(--flame-solid)}
-  .prov-what{font-size:var(--s0)}
-  .prov-kind{font-family:var(--mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  @media (min-width:44rem){.prov-row{grid-template-columns:10rem minmax(0,1fr) auto;align-items:baseline}}
+  .prov-when{font-family:var(--mono);font-size:var(--s-1);color:var(--amber)}
+  .prov-kind{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-faint)}
 
-  /* ---------- gallery ---------- */
-  .gallery{display:grid;gap:.6rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* ---------- film + gallery ---------- */
+  .filmstrip{border-radius:var(--radius-card);overflow:hidden;background:var(--ink-deep);margin-top:1.4rem}
+  .filmstrip video{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--ink-deep)}
+  .gallery{display:grid;gap:.7rem;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:.7rem}
   @media (min-width:52rem){.gallery{grid-template-columns:repeat(5,minmax(0,1fr))}}
-  .gallery figure{margin:0;border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--surface);transition:border-color .25s ease}
+  .gallery figure{border:1px solid var(--rule);border-radius:var(--radius-well);overflow:hidden;background:var(--ink-deep);transition:border-color .25s ease}
   .gallery img{width:100%;aspect-ratio:1;object-fit:cover}
-  .gallery figure:hover{border-color:var(--ink-3)}
-  .gallery .wide{grid-column:span 2}
+  .gallery figure:hover{border-color:var(--brass)}
 
-  /* ---------- spec ---------- */
-  .spec{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:2px;overflow:hidden;margin-top:1.8rem}
-  @media (min-width:40rem){.spec{grid-template-columns:minmax(9rem,15rem) 1fr}}
-  .spec dt{background:var(--ground-2);padding:.85rem 1.1rem;font-family:var(--mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-  .spec dd{background:var(--surface);padding:.85rem 1.1rem;font-size:var(--s-1);color:var(--ink-2)}
-  .spec dd b{color:var(--ink);font-weight:500}
+  /* ---------- spec + audience ---------- */
+  .spec{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius-well);overflow:hidden;margin-top:1.4rem}
+  @media (min-width:40rem){.spec{grid-template-columns:minmax(9rem,15rem) minmax(0,1fr)}}
+  .spec dt{background:var(--ink-deep);padding:.9rem 1.15rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+  .spec dd{background:var(--ink-soft);padding:.9rem 1.15rem;font-size:var(--s-1);color:var(--paper-dim)}
+  .spec dd b{color:var(--paper);font-weight:500}
+  .aud{display:grid;gap:.7rem;margin-top:1.4rem}
+  @media (min-width:46rem){.aud{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (min-width:68rem){.aud{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  .aud div{background:var(--ink-soft);border:1px solid var(--rule);border-radius:var(--radius-well);padding:1.4rem 1.3rem;display:flex;flex-direction:column;gap:.5rem}
+  .aud h3{font-size:1.35rem;line-height:1.2}
+  .aud p{font-size:var(--s-1);color:var(--paper-dim);max-width:none}
 
-  /* ---------- audience ---------- */
-  .aud{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:2px;overflow:hidden;margin-top:2rem}
-  @media (min-width:46rem){.aud{grid-template-columns:repeat(2,1fr)}}
-  @media (min-width:68rem){.aud{grid-template-columns:repeat(4,1fr)}}
-  .aud div{background:var(--surface);padding:1.4rem 1.3rem;display:flex;flex-direction:column;gap:.5rem}
-  .aud h3{font-family:var(--display);font-weight:400;font-size:1.25rem;line-height:1.2}
-  .aud p{font-size:var(--s-1);color:var(--ink-2);max-width:none}
-
-  /* ---------- video block ---------- */
-  .filmstrip{border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--black);margin-top:2rem}
-  .filmstrip video{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--black)}
-
-  /* ---------- acquire ---------- */
-  .acquire{border:1px solid var(--rule-firm);border-radius:2px;background:var(--ground-2);padding:clamp(1.8rem,5vw,3rem);display:flex;flex-direction:column;gap:1.4rem;margin-top:2rem}
-  .cta{
-    display:inline-flex;align-items:center;gap:.6rem;align-self:flex-start;
-    font-family:var(--mono);font-size:var(--s-1);letter-spacing:.08em;text-transform:uppercase;
-    padding:.9rem 1.5rem;border:1px solid var(--flame-solid);color:var(--flame-solid);
-    border-radius:2px;text-decoration:none;transition:background .25s ease,color .25s ease,opacity .2s ease,transform .1s ease;
-  }
-  .cta:hover{background:var(--flame-solid);color:var(--ink-on-flame)}
-  .cta:active{transform:translateY(1px);opacity:.85}
-
-  /* ---------- form ---------- */
-  .form{display:flex;flex-direction:column;gap:1.1rem;margin-top:.4rem}
+  /* ---------- acquire + form ---------- */
+  .acquire{border:2px solid var(--amber);border-radius:var(--radius-card);background:var(--ink-deep);padding:clamp(1.6rem,5vw,3rem);display:flex;flex-direction:column;gap:1.4rem;margin-top:1.4rem}
+  ul.body-list{padding-left:1.15rem;max-width:var(--measure);display:flex;flex-direction:column;gap:.6rem}
+  ul.body-list li::marker{color:var(--amber)}
+  #enquire h3{margin-bottom:.9rem}
+  .form{display:flex;flex-direction:column;gap:1.1rem;margin-top:1rem}
   .field{display:flex;flex-direction:column;gap:.4rem}
-  .field label{font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
-  .field label .opt{text-transform:none;letter-spacing:0;color:var(--ink-3);font-style:italic}
+  .field label{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-faint)}
+  .field label .opt{text-transform:none;letter-spacing:0;font-style:italic}
   .field input,.field textarea{
-    font-family:var(--sans);font-size:var(--s0);font-weight:300;color:var(--ink);
-    background:var(--ground);border:1px solid var(--rule-firm);border-radius:2px;
-    padding:.8rem .9rem;width:100%;transition:border-color .2s ease;
+    font-family:var(--sans);font-size:var(--s0);font-weight:300;color:var(--paper);
+    background:var(--ink-deep);border:1px solid var(--rule);border-radius:var(--radius-well);
+    padding:.85rem 1rem;width:100%;transition:border-color .2s ease;
   }
   .field textarea{min-height:9rem;resize:vertical;line-height:1.6}
-  .field input:focus,.field textarea:focus{outline:none;border-color:var(--leaf)}
-  .field input::placeholder,.field textarea::placeholder{color:var(--ink-3);opacity:.7}
-  .field.invalid input,.field.invalid textarea{border-color:var(--flame-solid)}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--brass)}
+  .field input::placeholder,.field textarea::placeholder{color:var(--paper-faint)}
+  .field.invalid input,.field.invalid textarea{border-color:var(--amber)}
   .form-row{display:grid;gap:1.1rem}
-  @media (min-width:38rem){.form-row{grid-template-columns:1fr 1fr}}
+  @media (min-width:38rem){.form-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
   .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   .form button{
-    font-family:var(--mono);font-size:var(--s-1);letter-spacing:.08em;text-transform:uppercase;
-    padding:.9rem 1.6rem;border:1px solid var(--flame-solid);color:var(--flame-solid);
-    background:transparent;border-radius:2px;cursor:pointer;align-self:flex-start;
-    transition:background .25s ease,color .25s ease,opacity .2s ease,transform .1s ease;
+    font-family:var(--mono);font-size:var(--s-1);font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+    min-height:3rem;padding:0 1.7rem;border:2px solid var(--amber);color:var(--amber);
+    background:transparent;border-radius:var(--radius-pill);cursor:pointer;align-self:flex-start;
+    transition:background .2s ease,color .2s ease,transform .1s ease;
   }
-  .form button:hover:not(:disabled){background:var(--flame-solid);color:var(--ink-on-flame)}
+  .form button:hover:not(:disabled){background:var(--amber);color:var(--on-amber)}
   .form button:active:not(:disabled){transform:translateY(1px)}
-  .form button:disabled{cursor:not-allowed;background:var(--surface);color:var(--ink-2);border-color:var(--rule-firm)}
+  .form button:disabled{cursor:not-allowed;background:var(--ink-soft);color:var(--paper-dim);border-color:var(--rule)}
   .form-status{font-variant-numeric:tabular-nums;font-size:var(--s-1);line-height:1.55;max-width:52ch}
   .form-status:empty{display:none}
-  .form-status.err{color:var(--flame-solid)}
-  .form-status.ok{color:var(--leaf)}
-  .form-note{font-size:var(--s-1);color:var(--ink-3);max-width:52ch}
-  .sent{border:1px solid var(--leaf);background:var(--leaf-soft);border-radius:2px;padding:1.5rem 1.6rem}
-  .sent h3{color:var(--ink);margin-bottom:.5rem}
-  .sent p{color:var(--ink-2);font-size:var(--s0)}
+  .form-status.err{color:var(--amber)}
+  .form-status.ok{color:var(--brass)}
+  .form-note{font-size:var(--s-1);color:var(--paper-faint);max-width:52ch}
+  .form-note a,.sent a,.foot-links a{color:var(--brass);border-bottom:1px solid currentColor}
+  .sent{border:1px solid var(--brass);background:var(--ink-soft);border-radius:var(--radius-well);padding:1.5rem 1.6rem}
+  .sent h3{margin-bottom:.5rem}
+  .sent p{color:var(--paper-dim)}
 
   /* ---------- footer ---------- */
-  footer{border-top:1px solid var(--rule);padding:3rem 0 4.5rem;display:flex;flex-direction:column;gap:.8rem}
+  footer{border-top:1px solid var(--rule);padding:3rem var(--gutter) 4.5rem;padding-right:calc(var(--gutter) + var(--sidebar-rail));position:relative;z-index:2}
   .foot-links{display:flex;flex-wrap:wrap;gap:.6rem 1.8rem}
-
-  ul.body-list{margin:0;padding-left:1.15rem;max-width:var(--measure);display:flex;flex-direction:column;gap:.6rem}
-  ul.body-list li::marker{color:var(--flame-solid)}
 </style>
 </head>
-<body>
+<body data-mood="dusk" data-pace="monograph" data-plate="engraving">
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<button type="button" class="nav-toggle-button" aria-expanded="false" aria-controls="sidenav" aria-label="Toggle page index">
+  <span class="nav-toggle-open">Index</span>
+  <span class="nav-toggle-close">Close</span>
+</button>
+
+<nav class="sidenav" id="sidenav" aria-label="Page index">
+  <div class="sidenav-head">
+    <span>Index</span>
+    <a href="#hero" class="sidenav-top" aria-label="Back to top">↑</a>
+  </div>
+  <ul class="sidenav-list">
+    <li><a href="/works"><span class="ttl">← All works</span></a></li>
+    <li><a href="#what"><span class="ttl">The work</span></a></li>
+    <li><a href="#how"><span class="ttl">What it does</span></a></li>
+    <li><a href="#film"><span class="ttl">In the room</span></a></li>
+    <li><a href="#history"><span class="ttl">Where it has been</span></a></li>
+    <li><a href="#included"><span class="ttl">What is acquired</span></a></li>
+    <li><a href="#enquire"><span class="ttl">Enquire</span></a></li>
+  </ul>
+</nav>
+
+<main id="main">
 
 <!-- ============ HERO ============ -->
-<header class="hero">
-  <div class="hero-inner wrap">
-    <span class="label">A work by Spif · Amsterdam · 2022 → ongoing</span>
-    <h1>Vox<br /><em>Arboris</em></h1>
-    <figure class="hero-full">
-      <span class="sale-badge">For sale</span>
-      <img src="/img/vox-arboris/wihh-plant-wide.jpg" width="1800" height="1350" fetchpriority="high"
-           alt="The whole of Vox Arboris in daylight at WIHH Gallery: a white cut-sheet tree with branching canopy rising from a three-bay console of modular synthesizer panels, red patch cables hanging from one branch, standing on a green floor, with a rubber plant on a stool at the left" />
-    </figure>
-    <p class="standfirst">A self-playing synthesizer, driven by a living plant, drawing sound in fire.</p>
-    <div class="hero-actions">
-      <a class="cta" href="#enquire">Enquire</a>
-      <span class="label">Price on enquiry</span>
-    </div>
-    <div class="hero-meta">
-      <span class="label">Delivered installed &amp; playable</span>
-      <span class="label">Tuned to your room</span>
+<section id="hero" class="hero-brutalist vox-hero">
+  <div class="hero-banner">
+    <div class="hero-banner-inner">
+      <span class="eyebrow-chip">A work by Spif · Amsterdam · 2022 → ongoing</span>
+      <h1><span class="roman">Vox</span><br />Arboris</h1>
+      <figure class="vox-photo">
+        <span class="sale-badge">For sale</span>
+        <img src="/img/vox-arboris/wihh-plant-wide.jpg" width="1800" height="1350" fetchpriority="high"
+             alt="The whole of Vox Arboris in daylight at WIHH Gallery: a white cut-sheet tree with branching canopy rising from a three-bay console of modular synthesizer panels, red patch cables hanging from one branch, standing on a green floor, with a rubber plant on a stool at the left" />
+      </figure>
+      <p class="credo">A self-playing synthesizer, driven by a living plant, drawing sound in fire.</p>
+      <div class="hero-actions">
+        <a class="cta" href="#enquire">Enquire</a>
+        <span class="label">Price on enquiry</span>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-row hero-meta-secondary">
+          <span>Delivered installed &amp; playable</span>
+          <span>Tuned to your room</span>
+        </div>
+      </div>
     </div>
   </div>
-</header>
-
-<main>
+</section>
 
 <!-- ============ THESIS ============ -->
 <section id="what">
@@ -289,56 +262,49 @@
 </section>
 
 <!-- ============ CAPABILITIES ============ -->
-<section id="how">
-  <div class="wrap stack-lg">
+<section id="how" class="mood-velvet">
+  <div class="wrap">
     <div class="stack">
       <span class="label">№ 02 — What it does</span>
       <h2>Three things, all at once.</h2>
     </div>
-
-    <div class="cap">
-      <div class="cap-media">
+    <div class="bento">
+      <div class="tile tile--fire">
+        <figure class="well">
+        <video autoplay muted loop playsinline poster="/img/vox-arboris/flame-poster.jpg" aria-label="A row of gas flames along a tube, their heights following the shape of the sound">
+          <source src="/img/vox-arboris/flame-loop.webm" type="video/webm" />
+          <source src="/img/vox-arboris/flame-loop.mp4" type="video/mp4" />
+        </video>
+        </figure>
+        <span class="cap-num">01</span>
+        <h3>It draws sound in fire</h3>
+        <p>A metre-long Rubens’ tube on one branch: the sound sets each flame’s height, so the fire draws the music.</p>
+      </div>
+      <div class="tile">
+        <figure class="well">
         <video autoplay muted loop playsinline preload="metadata"
                poster="/img/vox-arboris/plays-itself-poster.jpg"
                aria-label="Close view of the modular panels while the instrument runs unattended — patch cables still, indicator lights moving on their own">
           <source src="/img/vox-arboris/plays-itself.webm" type="video/webm" />
           <source src="/img/vox-arboris/plays-itself.mp4" type="video/mp4" />
         </video>
-      </div>
-      <div class="cap-body">
-        <span class="cap-num">01</span>
+        </figure>
+        <span class="cap-num">02</span>
         <h3>It plays itself</h3>
-        <p class="muted">Clock, chance and slow modulation drive the voices; nothing is sequenced or looped.</p>
+        <p>Clock, chance and slow modulation drive the voices; nothing is sequenced or looped.</p>
       </div>
-    </div>
-
-    <div class="cap flip">
-      <div class="cap-media">
+      <div class="tile">
+        <figure class="well">
         <video autoplay muted loop playsinline preload="metadata"
                poster="/img/vox-arboris/plant-wired-poster.jpg"
                aria-label="The camera moves from the living plant, an electrode taped to one leaf, along its cable to the modular panels it feeds">
           <source src="/img/vox-arboris/plant-wired.webm" type="video/webm" />
           <source src="/img/vox-arboris/plant-wired.mp4" type="video/mp4" />
         </video>
-      </div>
-      <div class="cap-body">
-        <span class="cap-num">02</span>
-        <h3>It listens to a plant</h3>
-        <p class="muted">A living plant is wired into the circuit. Light, water and touch change what it plays.</p>
-      </div>
-    </div>
-
-    <div class="cap">
-      <div class="cap-media">
-        <video autoplay muted loop playsinline poster="/img/vox-arboris/flame-poster.jpg" aria-label="A row of gas flames along a tube, their heights following the shape of the sound">
-          <source src="/img/vox-arboris/flame-loop.webm" type="video/webm" />
-          <source src="/img/vox-arboris/flame-loop.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <div class="cap-body">
+        </figure>
         <span class="cap-num">03</span>
-        <h3>It draws sound in fire</h3>
-        <p class="muted">A metre-long Rubens’ tube on one branch: the sound sets each flame’s height, so the fire draws the music.</p>
+        <h3>It listens to a plant</h3>
+        <p>A living plant is wired into the circuit. Light, water and touch change what it plays.</p>
       </div>
     </div>
   </div>
@@ -466,7 +432,7 @@
     </div>
 
     <div id="enquire" style="margin-top:clamp(2rem,5vw,3rem)">
-      <h3 style="margin-bottom:.9rem">Enquire</h3>
+      <h3>Enquire</h3>
       <p class="muted" style="font-size:var(--s-1);max-width:52ch">Tell me about the room. I reply myself, within a day or two.</p>
 
       <form class="form" id="enquiry-form" method="post" action="/api/enquiry" novalidate>
@@ -517,9 +483,9 @@
     <span class="label">Vox Arboris · 2022 → ongoing · Amsterdam</span>
     <p class="muted" style="font-size:var(--s-1)">Spif builds instruments that slow people down.</p>
     <div class="foot-links">
-      <a class="label" style="color:var(--leaf)" href="/">Live</a>
-      <a class="label" style="color:var(--leaf)" href="/works">Works</a>
-      <a class="label" style="color:var(--leaf)" href="https://instagram.com/elspif">Instagram</a>
+      <a class="label" href="/">Live</a>
+      <a class="label" href="/works">Works</a>
+      <a class="label" href="https://instagram.com/elspif">Instagram</a>
     </div>
   </div>
 </footer>
@@ -594,6 +560,19 @@
         button.disabled = false;
         button.removeAttribute('disabled');
       });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var navBtn = document.querySelector('.nav-toggle-button');
+  if (!navBtn) return;
+  function setOpen(open) { navBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  navBtn.addEventListener('click', function () { setOpen(navBtn.getAttribute('aria-expanded') !== 'true'); });
+  document.querySelectorAll('.sidenav a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && navBtn.getAttribute('aria-expanded') === 'true') { setOpen(false); navBtn.focus(); }
   });
 })();
 </script>

@@ -78,7 +78,8 @@ html[data-mood="dusk"] {
 }
 
 /* Velvet — black-violet ground, dust-rose paper, ultramarine accent */
-html[data-mood="velvet"] {
+html[data-mood="velvet"],
+.mood-velvet {
   --ink:        oklch(0.15 0.05 305);
   --ink-deep:   oklch(0.10 0.04 305);
   --ink-soft:   oklch(0.21 0.06 305);
